@@ -17,7 +17,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      router.replace('/planner')
+      router.replace('/home')
     }
   }, [authLoading, user, router])
 

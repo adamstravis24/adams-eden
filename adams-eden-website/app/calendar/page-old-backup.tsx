@@ -280,7 +280,7 @@ export default function CalendarPage() {
               <div className="flex items-center justify-between mb-3">
                 <div className="text-sm font-semibold text-green-900">📍 {location}</div>
                 <Link 
-                  href="/profile"
+                  href="/settings/profile"
                   className="text-xs text-primary-600 hover:text-primary-700 underline"
                 >
                   Change ZIP Code
@@ -317,7 +317,7 @@ export default function CalendarPage() {
                 Add your ZIP code in your profile to see personalized planting dates based on your local climate.
               </p>
               <Link 
-                href="/profile"
+                href="/settings/profile"
                 className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium"
               >
                 Go to Profile

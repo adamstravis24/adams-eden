@@ -42,7 +42,7 @@ export default function SignupPage() {
       await signUp(email, password, displayName)
       // Give a moment for auth state to update
       setTimeout(() => {
-        router.push('/planner')
+        router.push('/home')
       }, 500)
     } catch (error: unknown) {
       setError(getErrorMessage(error, 'Failed to create account'))
@@ -55,8 +55,8 @@ export default function SignupPage() {
     setLoading(true)
 
     try {
-      await signInWithGoogle()
-      router.push('/planner')
+  await signInWithGoogle()
+  router.push('/home')
     } catch (error: unknown) {
       setError(getErrorMessage(error, 'Failed to sign in with Google'))
     } finally {

@@ -8,7 +8,9 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult
 } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { auth, db } from '@/lib/firebase'
@@ -73,6 +75,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       setLoading(false)
     })
+
+    // Handle redirect result (e.g., when popup is blocked and we fell back to redirect)
+    // Ensure user profile gets created on redirect sign-in as well.
+    ;(async () => {
+      try {
+        const result = await getRedirectResult(auth)
+        if (result?.user) {
+          const u = result.user
+          try {
+            const userDoc = await getDoc(doc(db, 'users', u.uid))
+            if (!userDoc.exists()) {
+              await setDoc(doc(db, 'users', u.uid), {
+                displayName: u.displayName || 'User',
+                email: u.email,
+                createdAt: new Date().toISOString(),
+                preferences: {
+                  theme: 'light',
+                  units: 'imperial',
+                  notifications: true,
+                  zipCode: '',
+                  location: '',
+                }
+              })
+            }
+          } catch (e) {
+            console.error('Error ensuring user profile after redirect:', e)
+          }
+        }
+      } catch (e) {
+        // Swallow redirect result errors to avoid blocking app load
+        console.warn('getRedirectResult failed:', e)
+      }
+    })()
 
     return unsubscribe
   }, [])
@@ -160,9 +195,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         })
       }
-    } catch (error) {
-      setLoading(false)
-      throw error
+    } catch (error: any) {
+      // If popup is blocked or not supported (e.g., in some in-app browsers), fall back to redirect
+      const code = error?.code as string | undefined
+      if (code === 'auth/popup-blocked' || code === 'auth/operation-not-supported-in-this-environment') {
+        try {
+          await signInWithRedirect(auth, provider)
+          // After redirect, onAuthStateChanged will run; we also handle getRedirectResult above
+          return
+        } catch (redirectErr) {
+          setLoading(false)
+          throw redirectErr
+        }
+      } else {
+        setLoading(false)
+        throw error
+      }
     }
   }
 

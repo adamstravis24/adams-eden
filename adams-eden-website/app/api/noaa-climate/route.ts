@@ -4,9 +4,19 @@ export const dynamic = 'force-dynamic'
 
 const NOAA_API_URL = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data';
 const NOAA_DATASET_ID = 'NORMAL_ANN';
+// We prefer a safer (warmer) frost threshold of 36°F at 30% probability.
+// To maximize coverage across stations, we request multiple thresholds and
+// pick the best available in order: 36°F -> 32°F -> 28°F.
 const NOAA_DATATYPES = [
-  'ANN-TMIN-PRBLST-T28FP30',  // Spring: Last frost date (28°F, 30% probability)
-  'ANN-TMIN-PRBFST-T28FP30',  // Fall: First frost date (28°F, 30% probability)
+  // Preferred threshold (light frost): 36°F @ 30% probability
+  'ANN-TMIN-PRBLST-T36FP30',  // Spring: Last frost date (36°F, 30%)
+  'ANN-TMIN-PRBFST-T36FP30',  // Fall: First frost date (36°F, 30%)
+  // Fallback thresholds
+  'ANN-TMIN-PRBLST-T32FP30',  // Spring: Last frost date (32°F, 30%)
+  'ANN-TMIN-PRBFST-T32FP30',  // Fall: First frost date (32°F, 30%)
+  'ANN-TMIN-PRBLST-T28FP30',  // Spring: Last frost date (28°F, 30%)
+  'ANN-TMIN-PRBFST-T28FP30',  // Fall: First frost date (28°F, 30%)
+  // Winter normal minimum temperature (for informational context)
   'DJF-TMIN-NORMAL',          // Winter: Dec-Jan-Feb minimum temp normal
 ];
 
@@ -28,19 +38,46 @@ function getApiToken(): string {
 }
 
 function parseResults(results: NoaaApiResult[]) {
-  let springFrostDay: number | null = null;
-  let winterFrostDay: number | null = null;
+  // Collect candidates by threshold (°F) so we can prefer 36°F over 32°F over 28°F
+  const springCandidates: Record<number, number | undefined> = {};
+  const fallCandidates: Record<number, number | undefined> = {};
   let avgWinterTempF: number | null = null;
 
   for (const result of results) {
     const { datatype, value } = result;
 
-    if (datatype === 'ANN-TMIN-PRBLST-T28FP30') {
-      springFrostDay = Math.round(value);
-    } else if (datatype === 'ANN-TMIN-PRBFST-T28FP30') {
-      winterFrostDay = Math.round(value);
+    if (datatype.startsWith('ANN-TMIN-PRBLST-') || datatype.startsWith('ANN-TMIN-PRBFST-')) {
+      const m = datatype.match(/T(\d+)F/);
+      const thresholdF = m ? parseInt(m[1], 10) : undefined;
+      if (thresholdF && Number.isFinite(thresholdF)) {
+        const dayOfYear = Math.round(value);
+        if (datatype.startsWith('ANN-TMIN-PRBLST-')) {
+          springCandidates[thresholdF] = dayOfYear;
+        } else if (datatype.startsWith('ANN-TMIN-PRBFST-')) {
+          fallCandidates[thresholdF] = dayOfYear;
+        }
+      }
     } else if (datatype === 'DJF-TMIN-NORMAL') {
+      // NOAA normals temps are in tenths of a degree C or F depending on dataset; for NORMALS they are tenths of °F
       avgWinterTempF = value / 10;
+    }
+  }
+
+  // Prefer 36°F, then 32°F, then 28°F
+  const preference = [36, 32, 28];
+  let springFrostDay: number | null = null;
+  let winterFrostDay: number | null = null;
+
+  for (const t of preference) {
+    if (springCandidates[t] !== undefined) {
+      springFrostDay = springCandidates[t]!;
+      break;
+    }
+  }
+  for (const t of preference) {
+    if (fallCandidates[t] !== undefined) {
+      winterFrostDay = fallCandidates[t]!;
+      break;
     }
   }
 

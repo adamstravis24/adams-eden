@@ -13,10 +13,16 @@
    cp .env.local.example .env.local
    ```
 
-2. Edit `.env.local` and replace `your_token_here` with your actual NOAA token:
-   ```
-   NEXT_PUBLIC_NOAA_TOKEN=YourActualTokenHere
-   ```
+2. Add your token as a server-only environment variable in `.env.local` (for local dev) and in Vercel (for Preview/Production):
+    - Local (do NOT prefix with NEXT_PUBLIC):
+       ```
+       NOAA_TOKEN=YourActualTokenHere
+       ```
+    - Vercel Dashboard → Project Settings → Environment Variables:
+       - Key: `NOAA_TOKEN`
+       - Value: Your token
+       - Environments: Preview and Production
+       - Type: Plaintext
 
 3. Restart the development server:
    ```bash
@@ -33,8 +39,9 @@ The calendar uses NOAA's 30-year climate normals to calculate:
 ### Data Used
 
 - **Dataset**: NORMAL_ANN (Annual Normals)
-- **Spring Frost**: ANN-TMIN-PRBLST-T28FP30 (28°F, 30% probability)
-- **Fall Frost**: ANN-TMIN-PRBFST-T28FP30 (28°F, 30% probability)
+- **Spring Frost (preferred)**: ANN-TMIN-PRBLST-T36FP30 (36°F, 30% probability)
+- **Fall Frost (preferred)**: ANN-TMIN-PRBFST-T36FP30 (36°F, 30% probability)
+- **Fallbacks (if 36°F unavailable at a station)**: T32FP30 then T28FP30
 - **Winter Temp**: DJF-TMIN-NORMAL (Dec-Jan-Feb minimum)
 
 ### ZIP Code Lookup
@@ -48,6 +55,11 @@ The calendar will work for displaying plants you add, but you won't be able to:
 - Calculate accurate planting dates based on your frost dates
 
 For development, you can use sample data by manually adding plants with preset months.
+
+## Security Notes
+
+- Keep your NOAA token server-side: use `NOAA_TOKEN` only. Do not use `NEXT_PUBLIC_NOAA_TOKEN`.
+- Our API route reads `NOAA_TOKEN` on the server and proxies data to the client, so the token is never exposed in browser code.
 
 ## Features
 

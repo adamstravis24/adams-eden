@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/cart/CartContext'
 import { useEffect, useRef, useState } from 'react'
@@ -15,6 +15,7 @@ export default function Navigation() {
   const [showUserMenu, setShowUserMenu] = useState(false)
   const userMenuRef = useRef<HTMLDivElement | null>(null)
   const pathname = usePathname()
+  const router = useRouter()
 
   const totalQuantity = cart?.totalQuantity ?? 0
 
@@ -31,6 +32,13 @@ export default function Navigation() {
     try {
       await signOut()
       setShowUserMenu(false)
+      // After sign out, return to public landing page. If a canonical site URL is defined, hard redirect there.
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+      if (typeof window !== 'undefined' && siteUrl) {
+        window.location.href = siteUrl
+      } else {
+        router.push('/')
+      }
     } catch (error) {
       console.error('Error signing out:', error)
     }
@@ -171,11 +179,11 @@ export default function Navigation() {
 
                       <div className="py-2 text-sm text-slate-600">
                         <Link
-                          href="/profile"
+                          href="/home"
                           className="block px-4 py-2 hover:bg-primary-50/60 smooth-transition"
                           onClick={() => setShowUserMenu(false)}
                         >
-                          Profile
+                          Home
                         </Link>
                         <Link
                           href="/socials"
