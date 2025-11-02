@@ -2,10 +2,11 @@
   "expo": {
     "name": "adams-eden-app",
     "slug": "adams-eden-app",
+    "owner": "adamst2020",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-  "userInterfaceStyle": "light",
+    "userInterfaceStyle": "light",
     "scheme": "adamseden",
     "updates": {
       "enabled": false,
@@ -35,7 +36,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "REPLACE_WITH_EAS_PROJECT_ID"
+        "projectId": "453fdd2d-4bc9-4477-add5-1168831a37d1"
       }
     }
   }
