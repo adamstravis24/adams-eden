@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
   "userInterfaceStyle": "light",
+    "scheme": "adamseden",
     "updates": {
       "enabled": false,
       "fallbackToCacheTimeout": 0
@@ -31,6 +32,11 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "REPLACE_WITH_EAS_PROJECT_ID"
+      }
+    }
   }
 }
