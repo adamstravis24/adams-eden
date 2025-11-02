@@ -1,0 +1,159 @@
+h1{
+    text-align: center;
+    font-size: 200px;
+    font-weight: 900px;
+}
+nav.nav {
+    display: inline-block;
+    align-items: center;
+    padding: 12px 24px;
+    background: #1f6e4a;
+    color: white;
+}
+.nav .links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+    text-align: center;
+}
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    margin: 0;
+    padding: 0;
+    background: #f7f7fb;
+}
+
+
+
+main {
+    padding: 24px;
+}
+
+.gallery {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    width: 32%;
+    border-radius: 6px;
+}
+
+footer {
+    padding: 12px 24px;
+    background: #f1f4f2;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Home / Hero styles */
+.hero {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+    min-height: 320px;
+}
+
+.hero-content {
+    flex: 1;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero h1 {
+    margin: 0 0 12px;
+    font-size: 2.2rem;
+    color: #133f2f;
+}
+
+.lead {
+    margin: 0 0 18px;
+    color: #3b5a4a;
+}
+
+.hero-image {
+    width: 360px;
+    background-image: url('https://placehold.co/720x480?text=Garden');
+    background-size: cover;
+    background-position: center;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 12px;
+}
+
+.hero-cta a[href="/gallery"] {
+    display: none;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #1f6e4a;
+    background: transparent;
+    border: 1px solid #d6e6dd;
+}
+
+.btn.primary {
+    background: #1f6e4a;
+    color: white;
+    border-color: transparent;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding: 32px;
+}
+
+.features .feature:nth-child(3) {
+    display: none;
+}
+
+.feature {
+    background: #f7fbf9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.feature h3 {
+    margin-top: 0;
+}
+
+@media (max-width: 880px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 200px;
+        border-radius: 8px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .features .feature:nth-child(3) {
+        display: none;
+    }
+}
+
+nav.nav .links a[href="/gallery"] {
+    display: none;
+}
+
+section > h1 + .gallery {
+    display: none;
+}

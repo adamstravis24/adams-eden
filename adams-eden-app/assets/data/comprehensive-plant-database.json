@@ -1,0 +1,4152 @@
+{
+  "version": "2.2.0",
+  "generatedAt": "2025-10-16T10:50:49.261Z",
+  "plantCount": 50,
+  "sources": [
+    "curated",
+    "perenual"
+  ],
+  "license": "Educational Use",
+  "attribution": "Adams Eden Team + Perenual",
+  "categories": {
+    "vegetables": 20,
+    "herbs": 15,
+    "flowers": 15
+  },
+  "plants": [
+    {
+      "id": "plant_0021",
+      "commonName": "Basil",
+      "commonNames": [
+        "Basil"
+      ],
+      "scientificName": "Ocimum basilicum",
+      "family": "Lamiaceae",
+      "genus": "Ocimum",
+      "category": "Herbs",
+      "thumbnail": "basil.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 10,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 60,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes",
+        "Peppers"
+      ],
+      "avoidPlants": [
+        "Rue"
+      ],
+      "pests": [
+        "Aphids",
+        "Japanese beetles"
+      ],
+      "diseases": [
+        "Downy mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "21",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0019",
+      "commonName": "Beet",
+      "commonNames": [
+        "Beet"
+      ],
+      "scientificName": "Beta vulgaris",
+      "family": "Amaranthaceae",
+      "genus": "Beta",
+      "category": "Vegetables",
+      "thumbnail": "beet.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "root",
+        "greens"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 55,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Onions",
+        "Lettuce"
+      ],
+      "avoidPlants": [
+        "Pole beans"
+      ],
+      "pests": [
+        "Leaf miners"
+      ],
+      "diseases": [
+        "Cercospora leaf spot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "19",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌱"
+    },
+    {
+      "id": "plant_0047",
+      "commonName": "Begonia",
+      "commonNames": [
+        "Begonia"
+      ],
+      "scientificName": "Begonia",
+      "family": "Begoniaceae",
+      "genus": "Begonia",
+      "category": "Flowers",
+      "thumbnail": "begonia.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "partial_shade",
+        "hardiness": {
+          "min": 9,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 85,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids",
+        "Mealybugs"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "47",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌺"
+    },
+    {
+      "id": "plant_0004",
+      "commonName": "Bell Pepper",
+      "commonNames": [
+        "Bell Pepper"
+      ],
+      "scientificName": "Capsicum annuum",
+      "family": "Solanaceae",
+      "genus": "Capsicum",
+      "category": "Vegetables",
+      "thumbnail": "bell-pepper.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 9,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "fruit"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Basil",
+        "Carrots"
+      ],
+      "avoidPlants": [
+        "Fennel"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Blossom end rot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "4",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🫑"
+    },
+    {
+      "id": "plant_0049",
+      "commonName": "Black-eyed Susan",
+      "commonNames": [
+        "Black-eyed Susan"
+      ],
+      "scientificName": "Rudbeckia hirta",
+      "family": "Asteraceae",
+      "genus": "Rudbeckia",
+      "category": "Flowers",
+      "thumbnail": "black-eyed-susan.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 7
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Coneflowers"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "49",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌼"
+    },
+    {
+      "id": "plant_0009",
+      "commonName": "Broccoli",
+      "commonNames": [
+        "Broccoli"
+      ],
+      "scientificName": "Brassica oleracea italica",
+      "family": "Brassicaceae",
+      "genus": "Brassica",
+      "category": "Vegetables",
+      "thumbnail": "broccoli.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "florets",
+        "stems"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Onions",
+        "Beets"
+      ],
+      "avoidPlants": [
+        "Tomatoes"
+      ],
+      "pests": [
+        "Aphids",
+        "Cabbage worms"
+      ],
+      "diseases": [
+        "Clubroot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "9",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🥦"
+    },
+    {
+      "id": "plant_0005",
+      "commonName": "Carrot",
+      "commonNames": [
+        "Carrot"
+      ],
+      "scientificName": "Daucus carota",
+      "family": "Apiaceae",
+      "genus": "Daucus",
+      "category": "Vegetables",
+      "thumbnail": "carrot.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "root"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Onions",
+        "Rosemary",
+        "Tomatoes"
+      ],
+      "avoidPlants": [
+        "Dill"
+      ],
+      "pests": [
+        "Carrot fly"
+      ],
+      "diseases": [
+        "Rust fly"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "5",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🥕"
+    },
+    {
+      "id": "plant_0010",
+      "commonName": "Cauliflower",
+      "commonNames": [
+        "Cauliflower"
+      ],
+      "scientificName": "Brassica oleracea botrytis",
+      "family": "Brassicaceae",
+      "genus": "Brassica",
+      "category": "Vegetables",
+      "thumbnail": "cauliflower.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "head"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 75,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Beans",
+        "Celery"
+      ],
+      "avoidPlants": [
+        "Strawberries"
+      ],
+      "pests": [
+        "Cabbage loopers"
+      ],
+      "diseases": [
+        "Clubroot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "10",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🥦"
+    },
+    {
+      "id": "plant_0032",
+      "commonName": "Chamomile",
+      "commonNames": [
+        "Chamomile"
+      ],
+      "scientificName": "Matricaria chamomilla",
+      "family": "Asteraceae",
+      "genus": "Matricaria",
+      "category": "Herbs",
+      "thumbnail": "chamomile.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 8
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "flowers"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 60,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Cabbage",
+        "Onions"
+      ],
+      "avoidPlants": [
+        "Mint"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "32",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌼"
+    },
+    {
+      "id": "plant_0029",
+      "commonName": "Chives",
+      "commonNames": [
+        "Chives"
+      ],
+      "scientificName": "Allium schoenoprasum",
+      "family": "Amaryllidaceae",
+      "genus": "Allium",
+      "category": "Herbs",
+      "thumbnail": "chives.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves",
+        "flowers"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Carrots",
+        "Tomatoes"
+      ],
+      "avoidPlants": [
+        "Beans",
+        "Peas"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Downy mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "29",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0027",
+      "commonName": "Cilantro",
+      "commonNames": [
+        "Cilantro"
+      ],
+      "scientificName": "Coriandrum sativum",
+      "family": "Apiaceae",
+      "genus": "Coriandrum",
+      "category": "Herbs",
+      "thumbnail": "cilantro.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "partial_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves",
+        "seeds"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 50,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes",
+        "Spinach"
+      ],
+      "avoidPlants": [
+        "Fennel"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "27",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0020",
+      "commonName": "Corn",
+      "commonNames": [
+        "Corn"
+      ],
+      "scientificName": "Zea mays",
+      "family": "Poaceae",
+      "genus": "Zea",
+      "category": "Vegetables",
+      "thumbnail": "corn.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "kernels"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 75,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Beans",
+        "Squash",
+        "Peas"
+      ],
+      "avoidPlants": [
+        "Tomatoes"
+      ],
+      "pests": [
+        "Corn earworm"
+      ],
+      "diseases": [
+        "Corn smut"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "20",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌽"
+    },
+    {
+      "id": "plant_0040",
+      "commonName": "Cosmos",
+      "commonNames": [
+        "Cosmos"
+      ],
+      "scientificName": "Cosmos bipinnatus",
+      "family": "Asteraceae",
+      "genus": "Cosmos",
+      "category": "Flowers",
+      "thumbnail": "cosmos.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "40",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "�️"
+    },
+    {
+      "id": "plant_0003",
+      "commonName": "Cucumber",
+      "commonNames": [
+        "Cucumber"
+      ],
+      "scientificName": "Cucumis sativus",
+      "family": "Cucurbitaceae",
+      "genus": "Cucumis",
+      "category": "Vegetables",
+      "thumbnail": "cucumber.jpg",
+      "images": [],
+      "care": {
+        "watering": "frequent",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 4,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "fruit"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 55,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Beans",
+        "Corn",
+        "Radishes"
+      ],
+      "avoidPlants": [
+        "Potatoes"
+      ],
+      "pests": [
+        "Cucumber beetles"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "3",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🥒"
+    },
+    {
+      "id": "plant_0041",
+      "commonName": "Dahlia",
+      "commonNames": [
+        "Dahlia"
+      ],
+      "scientificName": "Dahlia",
+      "family": "Asteraceae",
+      "genus": "Dahlia",
+      "category": "Flowers",
+      "thumbnail": "dahlia.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 8,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Roses"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Earwigs",
+        "Slugs"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "41",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌺"
+    },
+    {
+      "id": "plant_0028",
+      "commonName": "Dill",
+      "commonNames": [
+        "Dill"
+      ],
+      "scientificName": "Anethum graveolens",
+      "family": "Apiaceae",
+      "genus": "Anethum",
+      "category": "Herbs",
+      "thumbnail": "dill.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves",
+        "seeds"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Cabbage",
+        "Lettuce"
+      ],
+      "avoidPlants": [
+        "Carrots"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Downy mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "28",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0011",
+      "commonName": "Eggplant",
+      "commonNames": [
+        "Eggplant"
+      ],
+      "scientificName": "Solanum melongena",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "category": "Vegetables",
+      "thumbnail": "eggplant.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 5,
+          "max": 12
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "fruit"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 80,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Beans",
+        "Peppers"
+      ],
+      "avoidPlants": [
+        "Fennel"
+      ],
+      "pests": [
+        "Flea beetles"
+      ],
+      "diseases": [
+        "Verticillium wilt"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "11",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🍆"
+    },
+    {
+      "id": "plant_0035",
+      "commonName": "Fennel",
+      "commonNames": [
+        "Fennel"
+      ],
+      "scientificName": "Foeniculum vulgare",
+      "family": "Apiaceae",
+      "genus": "Foeniculum",
+      "category": "Herbs",
+      "thumbnail": "fennel.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 4,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves",
+        "seeds",
+        "bulb"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Dill"
+      ],
+      "avoidPlants": [
+        "Tomatoes",
+        "Beans"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "35",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0016",
+      "commonName": "Garlic",
+      "commonNames": [
+        "Garlic"
+      ],
+      "scientificName": "Allium sativum",
+      "family": "Amaryllidaceae",
+      "genus": "Allium",
+      "category": "Vegetables",
+      "thumbnail": "garlic.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "bulb"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 240,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes",
+        "Roses"
+      ],
+      "avoidPlants": [
+        "Beans",
+        "Peas"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "White rot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "16",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🧄"
+    },
+    {
+      "id": "plant_0045",
+      "commonName": "Geranium",
+      "commonNames": [
+        "Geranium"
+      ],
+      "scientificName": "Pelargonium",
+      "family": "Geraniaceae",
+      "genus": "Pelargonium",
+      "category": "Flowers",
+      "thumbnail": "geranium.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 9,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Roses",
+        "Corn"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Whiteflies"
+      ],
+      "diseases": [
+        "Botrytis"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "45",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌺"
+    },
+    {
+      "id": "plant_0013",
+      "commonName": "Green Beans",
+      "commonNames": [
+        "Green Beans"
+      ],
+      "scientificName": "Phaseolus vulgaris",
+      "family": "Fabaceae",
+      "genus": "Phaseolus",
+      "category": "Vegetables",
+      "thumbnail": "green-beans.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "pods"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 55,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Corn",
+        "Squash"
+      ],
+      "avoidPlants": [
+        "Onions",
+        "Garlic"
+      ],
+      "pests": [
+        "Bean beetles"
+      ],
+      "diseases": [
+        "Rust"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "13",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🫘"
+    },
+    {
+      "id": "plant_0046",
+      "commonName": "Impatiens",
+      "commonNames": [
+        "Impatiens"
+      ],
+      "scientificName": "Impatiens walleriana",
+      "family": "Balsaminaceae",
+      "genus": "Impatiens",
+      "category": "Flowers",
+      "thumbnail": "impatiens.jpg",
+      "images": [],
+      "care": {
+        "watering": "frequent",
+        "sunlight": "partial_shade",
+        "hardiness": {
+          "min": 10,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Hostas"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids",
+        "Spider mites"
+      ],
+      "diseases": [
+        "Downy mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "46",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌸"
+    },
+    {
+      "id": "plant_0008",
+      "commonName": "Kale",
+      "commonNames": [
+        "Kale"
+      ],
+      "scientificName": "Brassica oleracea",
+      "family": "Brassicaceae",
+      "genus": "Brassica",
+      "category": "Vegetables",
+      "thumbnail": "kale.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 6,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 55,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Beets",
+        "Celery"
+      ],
+      "avoidPlants": [
+        "Strawberries"
+      ],
+      "pests": [
+        "Cabbage worms"
+      ],
+      "diseases": [
+        "Black rot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "8",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🥬"
+    },
+    {
+      "id": "plant_0031",
+      "commonName": "Lavender",
+      "commonNames": [
+        "Lavender"
+      ],
+      "scientificName": "Lavandula",
+      "family": "Lamiaceae",
+      "genus": "Lavandula",
+      "category": "Herbs",
+      "thumbnail": "lavender.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 5,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "flowers"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 100,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Roses",
+        "Fruit trees"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Whiteflies"
+      ],
+      "diseases": [
+        "Root rot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "31",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "💜"
+    },
+    {
+      "id": "plant_0033",
+      "commonName": "Lemon Balm",
+      "commonNames": [
+        "Lemon Balm"
+      ],
+      "scientificName": "Melissa officinalis",
+      "family": "Lamiaceae",
+      "genus": "Melissa",
+      "category": "Herbs",
+      "thumbnail": "lemon-balm.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "partial_sun",
+        "hardiness": {
+          "min": 4,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes",
+        "Squash"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "33",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0002",
+      "commonName": "Lettuce",
+      "commonNames": [
+        "Lettuce"
+      ],
+      "scientificName": "Lactuca sativa",
+      "family": "Asteraceae",
+      "genus": "Lactuca",
+      "category": "Vegetables",
+      "thumbnail": "lettuce.jpg",
+      "images": [],
+      "care": {
+        "watering": "frequent",
+        "sunlight": "partial_shade",
+        "hardiness": {
+          "min": 4,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 45,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Carrots",
+        "Radishes"
+      ],
+      "avoidPlants": [
+        "Parsley"
+      ],
+      "pests": [
+        "Aphids",
+        "Slugs"
+      ],
+      "diseases": [
+        "Downy mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "2",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🥬"
+    },
+    {
+      "id": "plant_0036",
+      "commonName": "Marigold",
+      "commonNames": [
+        "Marigold"
+      ],
+      "scientificName": "Tagetes",
+      "family": "Asteraceae",
+      "genus": "Tagetes",
+      "category": "Flowers",
+      "thumbnail": "marigold.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "petals"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 60,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes",
+        "Peppers"
+      ],
+      "avoidPlants": [
+        "Beans"
+      ],
+      "pests": [],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "36",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌼"
+    },
+    {
+      "id": "plant_0023",
+      "commonName": "Mint",
+      "commonNames": [
+        "Mint"
+      ],
+      "scientificName": "Mentha",
+      "family": "Lamiaceae",
+      "genus": "Mentha",
+      "category": "Herbs",
+      "thumbnail": "mint.jpg",
+      "images": [],
+      "care": {
+        "watering": "frequent",
+        "sunlight": "partial_shade",
+        "hardiness": {
+          "min": 3,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Cabbage",
+        "Tomatoes"
+      ],
+      "avoidPlants": [
+        "Parsley"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Rust"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "23",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0050",
+      "commonName": "Morning Glory",
+      "commonNames": [
+        "Morning Glory"
+      ],
+      "scientificName": "Ipomoea purpurea",
+      "family": "Convolvulaceae",
+      "genus": "Ipomoea",
+      "category": "Flowers",
+      "thumbnail": "morning-glory.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 60,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Corn"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Leaf spot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "50",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🪻"
+    },
+    {
+      "id": "plant_0048",
+      "commonName": "Nasturtium",
+      "commonNames": [
+        "Nasturtium"
+      ],
+      "scientificName": "Tropaeolum majus",
+      "family": "Tropaeolaceae",
+      "genus": "Tropaeolum",
+      "category": "Flowers",
+      "thumbnail": "nasturtium.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 9,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "flowers",
+        "leaves",
+        "seeds"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 45,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Cucumbers",
+        "Radishes"
+      ],
+      "avoidPlants": [],
+      "pests": [],
+      "diseases": [
+        "Aphids"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "48",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🧡"
+    },
+    {
+      "id": "plant_0015",
+      "commonName": "Onion",
+      "commonNames": [
+        "Onion"
+      ],
+      "scientificName": "Allium cepa",
+      "family": "Amaryllidaceae",
+      "genus": "Allium",
+      "category": "Vegetables",
+      "thumbnail": "onion.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 5,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "bulb"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 100,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Carrots",
+        "Tomatoes"
+      ],
+      "avoidPlants": [
+        "Beans",
+        "Peas"
+      ],
+      "pests": [
+        "Onion maggots"
+      ],
+      "diseases": [
+        "Downy mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "15",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🧅"
+    },
+    {
+      "id": "plant_0025",
+      "commonName": "Oregano",
+      "commonNames": [
+        "Oregano"
+      ],
+      "scientificName": "Origanum vulgare",
+      "family": "Lamiaceae",
+      "genus": "Origanum",
+      "category": "Herbs",
+      "thumbnail": "oregano.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 4,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes",
+        "Peppers"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Root rot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "25",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0043",
+      "commonName": "Pansy",
+      "commonNames": [
+        "Pansy"
+      ],
+      "scientificName": "Viola tricolor",
+      "family": "Violaceae",
+      "genus": "Viola",
+      "category": "Flowers",
+      "thumbnail": "pansy.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "partial_sun",
+        "hardiness": {
+          "min": 4,
+          "max": 8
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "flowers"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 60,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Strawberries"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Slugs"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "43",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🪷"
+    },
+    {
+      "id": "plant_0026",
+      "commonName": "Parsley",
+      "commonNames": [
+        "Parsley"
+      ],
+      "scientificName": "Petroselinum crispum",
+      "family": "Apiaceae",
+      "genus": "Petroselinum",
+      "category": "Herbs",
+      "thumbnail": "parsley.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "partial_sun",
+        "hardiness": {
+          "min": 5,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes",
+        "Asparagus"
+      ],
+      "avoidPlants": [
+        "Lettuce",
+        "Mint"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Leaf spot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "26",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0014",
+      "commonName": "Peas",
+      "commonNames": [
+        "Peas"
+      ],
+      "scientificName": "Pisum sativum",
+      "family": "Fabaceae",
+      "genus": "Pisum",
+      "category": "Vegetables",
+      "thumbnail": "peas.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "pods",
+        "peas"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 60,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Carrots",
+        "Radishes"
+      ],
+      "avoidPlants": [
+        "Onions"
+      ],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "14",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🫛"
+    },
+    {
+      "id": "plant_0039",
+      "commonName": "Petunia",
+      "commonNames": [
+        "Petunia"
+      ],
+      "scientificName": "Petunia",
+      "family": "Solanaceae",
+      "genus": "Petunia",
+      "category": "Flowers",
+      "thumbnail": "petunia.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 9,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 70,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Beans",
+        "Squash"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Botrytis"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "39",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌸"
+    },
+    {
+      "id": "plant_0017",
+      "commonName": "Potato",
+      "commonNames": [
+        "Potato"
+      ],
+      "scientificName": "Solanum tuberosum",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "category": "Vegetables",
+      "thumbnail": "potato.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "tuber"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Beans",
+        "Corn"
+      ],
+      "avoidPlants": [
+        "Tomatoes",
+        "Sunflowers"
+      ],
+      "pests": [
+        "Colorado potato beetle"
+      ],
+      "diseases": [
+        "Late blight"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "17",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🥔"
+    },
+    {
+      "id": "plant_0012",
+      "commonName": "Radish",
+      "commonNames": [
+        "Radish"
+      ],
+      "scientificName": "Raphanus sativus",
+      "family": "Brassicaceae",
+      "genus": "Raphanus",
+      "category": "Vegetables",
+      "thumbnail": "radish.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "root",
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 25,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Lettuce",
+        "Carrots"
+      ],
+      "avoidPlants": [
+        "Hyssop"
+      ],
+      "pests": [
+        "Flea beetles"
+      ],
+      "diseases": [
+        "Clubroot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "12",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🌱"
+    },
+    {
+      "id": "plant_0042",
+      "commonName": "Rose",
+      "commonNames": [
+        "Rose"
+      ],
+      "scientificName": "Rosa",
+      "family": "Rosaceae",
+      "genus": "Rosa",
+      "category": "Flowers",
+      "thumbnail": "rose.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "petals",
+        "hips"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 365,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Garlic",
+        "Lavender"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids",
+        "Japanese beetles"
+      ],
+      "diseases": [
+        "Black spot",
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "42",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌹"
+    },
+    {
+      "id": "plant_0022",
+      "commonName": "Rosemary",
+      "commonNames": [
+        "Rosemary"
+      ],
+      "scientificName": "Rosmarinus officinalis",
+      "family": "Lamiaceae",
+      "genus": "Rosmarinus",
+      "category": "Herbs",
+      "thumbnail": "rosemary.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 7,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Cabbage",
+        "Beans"
+      ],
+      "avoidPlants": [
+        "Potatoes"
+      ],
+      "pests": [
+        "Spider mites"
+      ],
+      "diseases": [
+        "Root rot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "22",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0030",
+      "commonName": "Sage",
+      "commonNames": [
+        "Sage"
+      ],
+      "scientificName": "Salvia officinalis",
+      "family": "Lamiaceae",
+      "genus": "Salvia",
+      "category": "Herbs",
+      "thumbnail": "sage.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 4,
+          "max": 8
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 75,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Rosemary",
+        "Carrots"
+      ],
+      "avoidPlants": [
+        "Cucumbers"
+      ],
+      "pests": [
+        "Spider mites"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "30",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0044",
+      "commonName": "Snapdragon",
+      "commonNames": [
+        "Snapdragon"
+      ],
+      "scientificName": "Antirrhinum majus",
+      "family": "Plantaginaceae",
+      "genus": "Antirrhinum",
+      "category": "Flowers",
+      "thumbnail": "snapdragon.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 7,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 75,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Vegetables"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Aphids"
+      ],
+      "diseases": [
+        "Rust"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "44",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "💐"
+    },
+    {
+      "id": "plant_0007",
+      "commonName": "Spinach",
+      "commonNames": [
+        "Spinach"
+      ],
+      "scientificName": "Spinacia oleracea",
+      "family": "Amaranthaceae",
+      "genus": "Spinacia",
+      "category": "Vegetables",
+      "thumbnail": "spinach.jpg",
+      "images": [],
+      "care": {
+        "watering": "frequent",
+        "sunlight": "partial_sun",
+        "hardiness": {
+          "min": 2,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 40,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Strawberries",
+        "Peas"
+      ],
+      "avoidPlants": [
+        "Potatoes"
+      ],
+      "pests": [
+        "Leaf miners"
+      ],
+      "diseases": [
+        "Downy mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "7",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🥬"
+    },
+    {
+      "id": "plant_0037",
+      "commonName": "Sunflower",
+      "commonNames": [
+        "Sunflower"
+      ],
+      "scientificName": "Helianthus annuus",
+      "family": "Asteraceae",
+      "genus": "Helianthus",
+      "category": "Flowers",
+      "thumbnail": "sunflower.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 4,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "seeds"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 85,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Cucumbers",
+        "Squash"
+      ],
+      "avoidPlants": [
+        "Potatoes"
+      ],
+      "pests": [
+        "Birds"
+      ],
+      "diseases": [
+        "Rust"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "37",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌻"
+    },
+    {
+      "id": "plant_0018",
+      "commonName": "Sweet Potato",
+      "commonNames": [
+        "Sweet Potato"
+      ],
+      "scientificName": "Ipomoea batatas",
+      "family": "Convolvulaceae",
+      "genus": "Ipomoea",
+      "category": "Vegetables",
+      "thumbnail": "sweet-potato.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 9,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "tuber",
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 100,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Beets",
+        "Parsnips"
+      ],
+      "avoidPlants": [
+        "Squash"
+      ],
+      "pests": [
+        "Sweet potato weevils"
+      ],
+      "diseases": [
+        "Fusarium wilt"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "18",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🍠"
+    },
+    {
+      "id": "plant_0034",
+      "commonName": "Tarragon",
+      "commonNames": [
+        "Tarragon"
+      ],
+      "scientificName": "Artemisia dracunculus",
+      "family": "Asteraceae",
+      "genus": "Artemisia",
+      "category": "Herbs",
+      "thumbnail": "tarragon.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 4,
+          "max": 8
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 90,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Eggplant"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Spider mites"
+      ],
+      "diseases": [
+        "Root rot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "34",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0024",
+      "commonName": "Thyme",
+      "commonNames": [
+        "Thyme"
+      ],
+      "scientificName": "Thymus vulgaris",
+      "family": "Lamiaceae",
+      "genus": "Thymus",
+      "category": "Herbs",
+      "thumbnail": "thyme.jpg",
+      "images": [],
+      "care": {
+        "watering": "minimal",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 5,
+          "max": 9
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "leaves"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 95,
+      "native": [],
+      "invasive": false,
+      "drought": true,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Cabbage",
+        "Eggplant"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Spider mites"
+      ],
+      "diseases": [
+        "Root rot"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "24",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌿"
+    },
+    {
+      "id": "plant_0001",
+      "commonName": "Tomato",
+      "commonNames": [
+        "Tomato"
+      ],
+      "scientificName": "Solanum lycopersicum",
+      "family": "Solanaceae",
+      "genus": "Solanum",
+      "category": "Vegetables",
+      "thumbnail": "tomato.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 9,
+          "max": 11
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "fruit"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 75,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Basil",
+        "Marigold",
+        "Carrots"
+      ],
+      "avoidPlants": [
+        "Cabbage",
+        "Fennel"
+      ],
+      "pests": [
+        "Hornworm",
+        "Aphids"
+      ],
+      "diseases": [
+        "Blight",
+        "Wilt"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "1",
+      "lastUpdated": "2025-10-16T10:50:49.259Z",
+      "emoji": "🍅"
+    },
+    {
+      "id": "plant_0038",
+      "commonName": "Zinnia",
+      "commonNames": [
+        "Zinnia"
+      ],
+      "scientificName": "Zinnia elegans",
+      "family": "Asteraceae",
+      "genus": "Zinnia",
+      "category": "Flowers",
+      "thumbnail": "zinnia.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": false,
+      "edibleParts": [],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [],
+      "daysToMaturity": 60,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Tomatoes",
+        "Vegetables"
+      ],
+      "avoidPlants": [],
+      "pests": [
+        "Japanese beetles"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "38",
+      "lastUpdated": "2025-10-16T10:50:49.261Z",
+      "emoji": "🌺"
+    },
+    {
+      "id": "plant_0006",
+      "commonName": "Zucchini",
+      "commonNames": [
+        "Zucchini"
+      ],
+      "scientificName": "Cucurbita pepo",
+      "family": "Cucurbitaceae",
+      "genus": "Cucurbita",
+      "category": "Vegetables",
+      "thumbnail": "zucchini.jpg",
+      "images": [],
+      "care": {
+        "watering": "moderate",
+        "sunlight": "full_sun",
+        "hardiness": {
+          "min": 3,
+          "max": 10
+        },
+        "soilType": [
+          "loam",
+          "well-draining"
+        ],
+        "soilPH": {
+          "min": 6,
+          "max": 7
+        },
+        "fertilizer": "Balanced fertilizer as needed",
+        "spacing": "Follow seed packet instructions",
+        "depth": "0.25-0.5 inches"
+      },
+      "type": "",
+      "edible": true,
+      "edibleParts": [
+        "fruit",
+        "flowers"
+      ],
+      "toxic": false,
+      "toxicTo": [],
+      "height": {
+        "min": 30,
+        "max": 180,
+        "unit": "cm"
+      },
+      "spread": {
+        "min": null,
+        "max": null,
+        "unit": "cm"
+      },
+      "growthRate": "moderate",
+      "bloomTime": [
+        "summer"
+      ],
+      "harvestTime": [
+        "summer",
+        "fall"
+      ],
+      "daysToMaturity": 50,
+      "native": [],
+      "invasive": false,
+      "drought": false,
+      "deer": false,
+      "attracts": [
+        "Bees",
+        "Butterflies"
+      ],
+      "companionPlants": [
+        "Corn",
+        "Beans"
+      ],
+      "avoidPlants": [
+        "Potatoes"
+      ],
+      "pests": [
+        "Squash vine borer"
+      ],
+      "diseases": [
+        "Powdery mildew"
+      ],
+      "pestRepellent": [],
+      "source": "curated",
+      "sourceId": "6",
+      "lastUpdated": "2025-10-16T10:50:49.260Z",
+      "emoji": "🥒"
+    }
+  ]
+}

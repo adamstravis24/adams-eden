@@ -1,0 +1,960 @@
+{
+  "source": "https://raw.githubusercontent.com/gg314/plant-calendar/main/src/PlantCalendar.elm",
+  "license": "GPL-3.0-or-later",
+  "generatedAt": "2025-10-07T19:05:05.941Z",
+  "plantCount": 54,
+  "plants": [
+    {
+      "name": "Basil",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 57",
+            "startOffsetFromSpringFrost": -57,
+            "startDayDefault": 63,
+            "duration": 15
+          },
+          "transplant": {
+            "rawStart": "t0",
+            "startOffsetFromSpringFrost": 0,
+            "startDayDefault": 120,
+            "duration": 22
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Beets",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 14",
+            "startOffsetFromSpringFrost": -14,
+            "startDayDefault": 106,
+            "duration": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bell Peppers",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 71",
+            "startOffsetFromSpringFrost": -71,
+            "startDayDefault": 49,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Broccoli",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 42",
+            "startOffsetFromSpringFrost": -42,
+            "startDayDefault": 78,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 - 21",
+            "startOffsetFromSpringFrost": -21,
+            "startDayDefault": 99,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Brussels Sprouts",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 42",
+            "startOffsetFromSpringFrost": -42,
+            "startDayDefault": 78,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Cabbage",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 57",
+            "startOffsetFromSpringFrost": -57,
+            "startDayDefault": 63,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 - 37",
+            "startOffsetFromSpringFrost": -37,
+            "startDayDefault": 83,
+            "duration": 14
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Cantaloupes",
+      "category": "Fruits",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 7
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Carrots",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 35",
+            "startOffsetFromSpringFrost": -35,
+            "startDayDefault": 85,
+            "duration": 14
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cauliflower",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 42",
+            "startOffsetFromSpringFrost": -42,
+            "startDayDefault": 78,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 14
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Celery",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 71",
+            "startOffsetFromSpringFrost": -71,
+            "startDayDefault": 49,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 + 7",
+            "startOffsetFromSpringFrost": 7,
+            "startDayDefault": 127,
+            "duration": 14
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Chives",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 7
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cilantro",
+      "category": "Herbs",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0",
+            "startOffsetFromSpringFrost": 0,
+            "startDayDefault": 120,
+            "duration": 14
+          }
+        }
+      ]
+    },
+    {
+      "name": "Corn",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0",
+            "startOffsetFromSpringFrost": 0,
+            "startDayDefault": 120,
+            "duration": 14
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cucumber",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 7
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Dill",
+      "category": "Herbs",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 35",
+            "startOffsetFromSpringFrost": -35,
+            "startDayDefault": 85,
+            "duration": 14
+          }
+        }
+      ]
+    },
+    {
+      "name": "Eggplants",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 70",
+            "startOffsetFromSpringFrost": -70,
+            "startDayDefault": 50,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Green Beans",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 + 7",
+            "startOffsetFromSpringFrost": 7,
+            "startDayDefault": 127,
+            "duration": 21
+          }
+        }
+      ]
+    },
+    {
+      "name": "Kale",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 42",
+            "startOffsetFromSpringFrost": -42,
+            "startDayDefault": 78,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 14
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Lettuce",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 42",
+            "startOffsetFromSpringFrost": -42,
+            "startDayDefault": 78,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 - 14",
+            "startOffsetFromSpringFrost": -14,
+            "startDayDefault": 106,
+            "duration": 28
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Okra",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 14
+          }
+        }
+      ]
+    },
+    {
+      "name": "Onions",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 21
+          }
+        }
+      ]
+    },
+    {
+      "name": "Oregano",
+      "category": "Herbs",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 70",
+            "startOffsetFromSpringFrost": -70,
+            "startDayDefault": 50,
+            "duration": 28
+          },
+          "transplant": {
+            "rawStart": "t0",
+            "startOffsetFromSpringFrost": 0,
+            "startDayDefault": 120,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Parsley",
+      "category": "Herbs",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 14
+          }
+        }
+      ]
+    },
+    {
+      "name": "Parsnips",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 21",
+            "startOffsetFromSpringFrost": -21,
+            "startDayDefault": 99,
+            "duration": 21
+          }
+        }
+      ]
+    },
+    {
+      "name": "Peas",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 42",
+            "startOffsetFromSpringFrost": -42,
+            "startDayDefault": 78,
+            "duration": 21
+          }
+        }
+      ]
+    },
+    {
+      "name": "Potatoes",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 7",
+            "startOffsetFromSpringFrost": -7,
+            "startDayDefault": 113,
+            "duration": 21
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pumpkins",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Radishes",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 56",
+            "startOffsetFromSpringFrost": -56,
+            "startDayDefault": 64,
+            "duration": 22
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rosemary",
+      "category": "Herbs",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 70",
+            "startOffsetFromSpringFrost": -70,
+            "startDayDefault": 50,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 + 7",
+            "startOffsetFromSpringFrost": 7,
+            "startDayDefault": 127,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Sage",
+      "category": "Herbs",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 56",
+            "startOffsetFromSpringFrost": -56,
+            "startDayDefault": 64,
+            "duration": 15
+          },
+          "transplant": {
+            "rawStart": "t0",
+            "startOffsetFromSpringFrost": 0,
+            "startDayDefault": 120,
+            "duration": 14
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Spinach",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 42",
+            "startOffsetFromSpringFrost": -42,
+            "startDayDefault": 78,
+            "duration": 21
+          }
+        }
+      ]
+    },
+    {
+      "name": "Squash",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Sweet Potatoes",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 7
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Swiss Chard",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 42",
+            "startOffsetFromSpringFrost": -42,
+            "startDayDefault": 78,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 - 21",
+            "startOffsetFromSpringFrost": -21,
+            "startDayDefault": 99,
+            "duration": 14
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Thyme",
+      "category": "Herbs",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 70",
+            "startOffsetFromSpringFrost": -70,
+            "startDayDefault": 50,
+            "duration": 28
+          },
+          "transplant": {
+            "rawStart": "t0",
+            "startOffsetFromSpringFrost": 0,
+            "startDayDefault": 120,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Tomatoes",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 57",
+            "startOffsetFromSpringFrost": -57,
+            "startDayDefault": 63,
+            "duration": 15
+          },
+          "transplant": {
+            "rawStart": "t0 + 7",
+            "startOffsetFromSpringFrost": 7,
+            "startDayDefault": 127,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Turnips",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": null,
+          "transplant": null,
+          "outdoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 21
+          }
+        }
+      ]
+    },
+    {
+      "name": "Watermelon",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 7
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Zucchini",
+      "category": "Vegetables",
+      "minZone": 1,
+      "maxZone": 11.5,
+      "defaultPeriods": [
+        {
+          "indoor": {
+            "rawStart": "t0 - 28",
+            "startOffsetFromSpringFrost": -28,
+            "startDayDefault": 92,
+            "duration": 14
+          },
+          "transplant": {
+            "rawStart": "t0 + 14",
+            "startOffsetFromSpringFrost": 14,
+            "startDayDefault": 134,
+            "duration": 21
+          },
+          "outdoor": null
+        }
+      ]
+    },
+    {
+      "name": "Marigold",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 2,
+      "maxZone": 11,
+      "bloomSeason": "Summer to Fall",
+      "description": "Bright, cheerful flowers that deter pests"
+    },
+    {
+      "name": "Sunflower",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 2,
+      "maxZone": 11,
+      "bloomSeason": "Summer",
+      "description": "Tall, bright flowers that attract pollinators"
+    },
+    {
+      "name": "Zinnia",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 3,
+      "maxZone": 10,
+      "bloomSeason": "Summer to Fall",
+      "description": "Colorful, easy-to-grow annual flowers"
+    },
+    {
+      "name": "Petunia",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 9,
+      "maxZone": 11,
+      "bloomSeason": "Spring to Fall",
+      "description": "Popular bedding plant with trumpet-shaped blooms"
+    },
+    {
+      "name": "Lavender",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 5,
+      "maxZone": 9,
+      "bloomSeason": "Summer",
+      "description": "Fragrant purple flowers, attracts bees and butterflies"
+    },
+    {
+      "name": "Rose",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 3,
+      "maxZone": 11,
+      "bloomSeason": "Spring to Fall",
+      "description": "Classic garden flower, many varieties available"
+    },
+    {
+      "name": "Dahlia",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 8,
+      "maxZone": 11,
+      "bloomSeason": "Summer to Fall",
+      "description": "Large, showy blooms in many colors"
+    },
+    {
+      "name": "Cosmos",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 2,
+      "maxZone": 11,
+      "bloomSeason": "Summer to Fall",
+      "description": "Delicate, daisy-like flowers that self-seed"
+    },
+    {
+      "name": "Black-Eyed Susan",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 3,
+      "maxZone": 9,
+      "bloomSeason": "Summer to Fall",
+      "description": "Native wildflower with golden petals"
+    },
+    {
+      "name": "Tulip",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 3,
+      "maxZone": 8,
+      "bloomSeason": "Spring",
+      "description": "Spring bulb with elegant cup-shaped flowers"
+    },
+    {
+      "name": "Daffodil",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 3,
+      "maxZone": 9,
+      "bloomSeason": "Early Spring",
+      "description": "Cheerful yellow spring bulbs"
+    },
+    {
+      "name": "Pansy",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 4,
+      "maxZone": 10,
+      "bloomSeason": "Spring and Fall",
+      "description": "Cool-season flowers with face-like blooms"
+    },
+    {
+      "name": "Geranium",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 9,
+      "maxZone": 11,
+      "bloomSeason": "Spring to Fall",
+      "description": "Popular container and bedding plant"
+    },
+    {
+      "name": "Hydrangea",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 3,
+      "maxZone": 9,
+      "bloomSeason": "Summer",
+      "description": "Large shrub with showy flower clusters"
+    },
+    {
+      "name": "Impatiens",
+      "category": "Flowers",
+      "plantType": "flower",
+      "minZone": 10,
+      "maxZone": 11,
+      "bloomSeason": "Spring to Fall",
+      "description": "Shade-loving annual with continuous blooms"
+    }
+  ]
+}

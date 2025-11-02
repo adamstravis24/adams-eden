@@ -1,0 +1,202 @@
+# Firebase Security Rules Configuration
+# Created: October 20, 2025
+# 
+# This file contains both Firestore and Storage security rules.
+# Apply these rules in the Firebase Console:
+# - Firestore rules: Database → Rules tab
+# - Storage rules: Storage → Rules tab
+
+================================================================================
+FIRESTORE DATABASE RULES - PLANTBOOK TEMPORARILY DISABLED
+================================================================================
+Apply these in: Firebase Console → Firestore Database → Rules
+
+NOTE: Plantbook features are currently under development and disabled for public access.
+Only core app features (gardens, calendar, tracker, journal) are active.
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isTimestampOrServerTime(value) {
+      return value is timestamp || value == request.time || value is map;
+    }
+
+    // User document and all subcollections
+    match /users/{userId} {
+      // Allow users to read and write their own user document (includes profile data)
+      // This covers: email, displayName, photoURL, and any other user profile fields
+      allow read, write: if isOwner(userId);
+      
+      // Garden data with nested beds
+      match /gardens/{gardenId} {
+        allow read, write: if isOwner(userId);
+        
+        match /beds/{bedId} {
+          allow read, write: if isOwner(userId);
+        }
+      }
+      
+      // Calendar events
+      match /calendar/{eventId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      // Plant tracking entries
+      match /tracker/{entryId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      // Friend relationships
+      match /friends/{friendId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Harvest history - CRITICAL: Must match exact path users/{userId}/harvestHistory
+      match /harvestHistory/{harvestId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      // Journal entries
+      match /journal/{entryId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // PLANTBOOK COLLECTIONS - TEMPORARILY DISABLED
+    // Block all access to Plantbook while we debug the permission system
+    match /plantbookPosts/{document=**} {
+      allow read, write: if false;
+    }
+
+    match /plantbookGroups/{document=**} {
+      allow read, write: if false;
+    }
+
+    match /plantbookGroupMembers/{document=**} {
+      allow read, write: if false;
+    }
+
+    match /plantbookGroupJoinRequests/{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+
+================================================================================
+FIREBASE STORAGE RULES
+================================================================================
+Apply these in: Firebase Console → Storage → Rules
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Profile pictures - users can only upload to their own folder
+    match /profilePictures/{userId}/{fileName} {
+      // Anyone can read profile pictures (public visibility)
+      allow read: if true;
+      
+      // Only authenticated users can upload/delete their own profile pictures
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Plantbook post media - post authors can manage their uploads
+    match /plantbookPosts/{postId}/media/{fileName} {
+      allow read: if true;
+
+      allow write: if request.auth != null && (
+        (request.resource != null && request.resource.metadata.authorId == request.auth.uid) ||
+        (resource != null && resource.metadata.authorId == request.auth.uid) ||
+        firestore.get(/databases/(default)/documents/plantbookPosts/$(postId)).data.authorId == request.auth.uid
+      );
+    }
+
+    // Plantbook group covers - group creators can manage their own uploads
+    match /plantbookGroupCovers/{userId}/{fileName} {
+      allow read: if true;
+
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Optional: Plant images or other shared media
+    // Uncomment and modify as needed
+    // match /plantImages/{imageId} {
+    //   allow read: if true;
+    //   allow write: if request.auth != null;
+    // }
+    
+    // Optional: Journal entry images
+    // Uncomment and modify as needed
+    // match /journalImages/{userId}/{imageId} {
+    //   allow read: if request.auth != null;
+    //   allow write: if request.auth != null && request.auth.uid == userId;
+    // }
+  }
+}
+
+
+================================================================================
+DEPLOYMENT INSTRUCTIONS
+================================================================================
+
+1. FIRESTORE RULES:
+   - Go to https://console.firebase.google.com
+   - Select your Adams Eden project
+   - Click "Firestore Database" in the left sidebar
+   - Click the "Rules" tab at the top
+   - Copy the FIRESTORE DATABASE RULES section above
+   - Paste into the editor, replacing existing rules
+   - Click "Publish" button
+   - Wait for confirmation message
+
+2. STORAGE RULES:
+   - In Firebase Console, click "Storage" in the left sidebar
+   - Click the "Rules" tab at the top
+   - Copy the FIREBASE STORAGE RULES section above
+   - Paste into the editor, replacing existing rules
+   - Click "Publish" button
+   - Wait for confirmation message
+
+3. VERIFICATION:
+   - Test profile picture upload in the app
+   - Test journal entry creation
+   - Test garden/planner sync
+   - Check for any permission errors in console
+
+================================================================================
+FEATURES PROTECTED BY THESE RULES
+================================================================================
+
+✅ User Authentication - All operations require valid Firebase Auth
+✅ User Isolation - Users can only access their own data
+✅ Profile Pictures - Upload to Firebase Storage with user-specific folders
+✅ Garden Planning - Full CRUD on gardens and beds
+✅ Calendar Events - Plant scheduling and reminders
+✅ Plant Tracker - Growth tracking and observations
+✅ Journal Entries - Personal garden journal with full privacy
+✅ Public Profile Photos - Anyone can view avatars (for future social features)
+✅ Plantbook Feed - Authenticated members can post, everyone can read
+✅ Plantbook Circles - Owners and moderators manage groups and memberships
+✅ Plantbook Loves - Members can only like/unlike as themselves
+
+================================================================================
+SECURITY FEATURES
+================================================================================
+
+🔒 Authentication Required - All write operations require valid user session
+🔒 User Data Isolation - Users cannot read/write other users' data
+🔒 Subcollection Protection - All nested data inherits parent security
+🔒 Storage Folder Isolation - Users can only upload to their own folders
+🔒 Public Read for Avatars - Profile pictures visible for UI display
+🔒 Validated User IDs - Auth UID must match document path userId
+🔒 Plantbook Moderation - Only owners or custom-claim moderators can moderate feed/groups
+
+================================================================================

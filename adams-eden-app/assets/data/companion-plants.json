@@ -1,0 +1,372 @@
+{
+  "companionPlantingData": {
+    "Tomatoes": {
+      "goodCompanions": ["Basil", "Carrots", "Marigold", "Nasturtium", "Onions", "Parsley"],
+      "badCompanions": ["Cabbage", "Broccoli", "Cauliflower", "Potatoes", "Corn"],
+      "family": "Nightshade",
+      "benefits": "Basil repels aphids and flies, carrots help loosen soil, marigolds deter nematodes"
+    },
+    "Basil": {
+      "goodCompanions": ["Tomatoes", "Bell Peppers", "Oregano", "Parsley"],
+      "badCompanions": ["Sage", "Rue"],
+      "family": "Mint",
+      "benefits": "Repels flies, mosquitoes, and aphids; improves tomato flavor"
+    },
+    "Carrots": {
+      "goodCompanions": ["Tomatoes", "Lettuce", "Onions", "Peas", "Radish", "Rosemary", "Sage"],
+      "badCompanions": ["Dill", "Parsnips"],
+      "family": "Apiaceae",
+      "benefits": "Onions repel carrot flies, tomatoes provide shade"
+    },
+    "Lettuce": {
+      "goodCompanions": ["Carrots", "Radish", "Strawberries", "Beets", "Onions"],
+      "badCompanions": ["Parsley"],
+      "family": "Asteraceae",
+      "benefits": "Quick-growing, provides ground cover to retain moisture"
+    },
+    "Cucumbers": {
+      "goodCompanions": ["Beans", "Peas", "Radish", "Sunflower", "Nasturtium", "Marigold"],
+      "badCompanions": ["Potatoes", "Sage", "Aromatic Herbs"],
+      "family": "Cucurbitaceae",
+      "benefits": "Nasturtiums deter cucumber beetles, sunflowers provide shade"
+    },
+    "Bell Peppers": {
+      "goodCompanions": ["Basil", "Onions", "Spinach", "Tomatoes"],
+      "badCompanions": ["Beans", "Broccoli", "Cabbage"],
+      "family": "Nightshade",
+      "benefits": "Basil improves flavor and repels aphids"
+    },
+    "Onions": {
+      "goodCompanions": ["Beets", "Cabbage", "Carrots", "Lettuce", "Tomatoes"],
+      "badCompanions": ["Beans", "Peas", "Sage"],
+      "family": "Allium",
+      "benefits": "Repel aphids, carrot flies, and other pests"
+    },
+    "Beans": {
+      "goodCompanions": ["Carrots", "Cucumbers", "Peas", "Potatoes", "Radish", "Corn", "Marigold"],
+      "badCompanions": ["Onions", "Garlic", "Peppers"],
+      "family": "Legume",
+      "benefits": "Fix nitrogen in soil, benefiting heavy feeders nearby"
+    },
+    "Peas": {
+      "goodCompanions": ["Beans", "Carrots", "Cucumbers", "Radish", "Turnips", "Corn"],
+      "badCompanions": ["Onions", "Garlic"],
+      "family": "Legume",
+      "benefits": "Fix nitrogen, support climbing plants"
+    },
+    "Spinach": {
+      "goodCompanions": ["Beets", "Cabbage", "Cauliflower", "Radish", "Strawberries"],
+      "badCompanions": ["Potatoes"],
+      "family": "Amaranthaceae",
+      "benefits": "Provides ground cover, grows well in shade of taller plants"
+    },
+    "Broccoli": {
+      "goodCompanions": ["Beets", "Onions", "Spinach", "Lettuce", "Nasturtium"],
+      "badCompanions": ["Tomatoes", "Peppers", "Strawberries", "Beans"],
+      "family": "Brassica",
+      "benefits": "Nasturtiums repel aphids and whiteflies"
+    },
+    "Cabbage": {
+      "goodCompanions": ["Beets", "Onions", "Spinach", "Lettuce", "Thyme"],
+      "badCompanions": ["Tomatoes", "Peppers", "Strawberries"],
+      "family": "Brassica",
+      "benefits": "Onions deter cabbage moths"
+    },
+    "Cauliflower": {
+      "goodCompanions": ["Beets", "Onions", "Spinach", "Thyme"],
+      "badCompanions": ["Tomatoes", "Peppers", "Strawberries"],
+      "family": "Brassica",
+      "benefits": "Benefits from aromatic herbs that deter pests"
+    },
+    "Corn": {
+      "goodCompanions": ["Beans", "Peas", "Cucumbers", "Squash", "Pumpkin"],
+      "badCompanions": ["Tomatoes"],
+      "family": "Grass",
+      "benefits": "Provides structure for climbing beans (Three Sisters method)"
+    },
+    "Potatoes": {
+      "goodCompanions": ["Beans", "Cabbage", "Corn", "Peas", "Nasturtium"],
+      "badCompanions": ["Tomatoes", "Cucumbers", "Squash", "Pumpkin"],
+      "family": "Nightshade",
+      "benefits": "Plant with beans to deter Colorado potato beetles"
+    },
+    "Radish": {
+      "goodCompanions": ["Beans", "Carrots", "Cucumbers", "Lettuce", "Peas", "Spinach"],
+      "badCompanions": ["Hyssop"],
+      "family": "Brassica",
+      "benefits": "Quick-growing, helps break up soil for root vegetables"
+    },
+    "Squash": {
+      "goodCompanions": ["Beans", "Corn", "Peas", "Radish", "Nasturtium", "Marigold"],
+      "badCompanions": ["Potatoes"],
+      "family": "Cucurbitaceae",
+      "benefits": "Large leaves provide ground cover and moisture retention"
+    },
+    "Pumpkin": {
+      "goodCompanions": ["Beans", "Corn", "Peas", "Radish", "Marigold"],
+      "badCompanions": ["Potatoes"],
+      "family": "Cucurbitaceae",
+      "benefits": "Part of Three Sisters planting method with corn and beans"
+    },
+    "Strawberries": {
+      "goodCompanions": ["Beans", "Lettuce", "Onions", "Spinach", "Thyme"],
+      "badCompanions": ["Broccoli", "Cabbage", "Cauliflower"],
+      "family": "Rosaceae",
+      "benefits": "Thyme deters worms, onions deter pests"
+    },
+    "Marigold": {
+      "goodCompanions": ["Tomatoes", "Cucumbers", "Beans", "Squash", "Pumpkin", "most vegetables"],
+      "badCompanions": [],
+      "family": "Asteraceae",
+      "benefits": "Deters aphids, whiteflies, nematodes, and other pests. Universal companion!"
+    },
+    "Sunflower": {
+      "goodCompanions": ["Cucumbers", "Corn", "Squash"],
+      "badCompanions": ["Potatoes"],
+      "family": "Asteraceae",
+      "benefits": "Provides shade and support for climbing plants"
+    },
+    "Nasturtium": {
+      "goodCompanions": ["Tomatoes", "Cucumbers", "Radish", "Cabbage", "Broccoli", "most vegetables"],
+      "badCompanions": [],
+      "family": "Tropaeolaceae",
+      "benefits": "Trap crop for aphids, deters whiteflies and squash bugs"
+    },
+    "Lavender": {
+      "goodCompanions": ["most vegetables and flowers"],
+      "badCompanions": [],
+      "family": "Mint",
+      "benefits": "Attracts pollinators, repels moths and fleas"
+    },
+    "Rosemary": {
+      "goodCompanions": ["Beans", "Cabbage", "Carrots", "Sage"],
+      "badCompanions": [],
+      "family": "Mint",
+      "benefits": "Repels carrot flies, cabbage moths, and bean beetles"
+    },
+    "Sage": {
+      "goodCompanions": ["Carrots", "Cabbage", "Rosemary", "Tomatoes"],
+      "badCompanions": ["Cucumbers", "Onions"],
+      "family": "Mint",
+      "benefits": "Deters cabbage moths and carrot flies"
+    },
+    "Thyme": {
+      "goodCompanions": ["Cabbage", "Strawberries", "Tomatoes"],
+      "badCompanions": [],
+      "family": "Mint",
+      "benefits": "Deters cabbage worms and whiteflies"
+    },
+    "Oregano": {
+      "goodCompanions": ["Basil", "Peppers", "Tomatoes"],
+      "badCompanions": [],
+      "family": "Mint",
+      "benefits": "Provides ground cover, deters pests"
+    },
+    "Parsley": {
+      "goodCompanions": ["Tomatoes", "Asparagus", "Corn"],
+      "badCompanions": ["Lettuce", "Carrots"],
+      "family": "Apiaceae",
+      "benefits": "Attracts beneficial insects like hoverflies"
+    },
+    "Cilantro": {
+      "goodCompanions": ["Spinach", "Lettuce", "Tomatoes", "Beans"],
+      "badCompanions": ["Fennel"],
+      "family": "Apiaceae",
+      "benefits": "Attracts beneficial insects, provides shade"
+    },
+    "Dill": {
+      "goodCompanions": ["Cabbage", "Lettuce", "Onions", "Cucumbers"],
+      "badCompanions": ["Carrots", "Tomatoes"],
+      "family": "Apiaceae",
+      "benefits": "Attracts beneficial insects and pollinators"
+    }
+  },
+  "plantRequirements": {
+    "Tomatoes": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 24,
+      "height": "tall"
+    },
+    "Basil": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 12,
+      "height": "medium"
+    },
+    "Carrots": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 3,
+      "height": "low"
+    },
+    "Lettuce": {
+      "sunlight": "partial",
+      "water": "high",
+      "spacing": 8,
+      "height": "low"
+    },
+    "Cucumbers": {
+      "sunlight": "full",
+      "water": "high",
+      "spacing": 18,
+      "height": "tall"
+    },
+    "Bell Peppers": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 18,
+      "height": "medium"
+    },
+    "Onions": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 4,
+      "height": "low"
+    },
+    "Beans": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 6,
+      "height": "tall"
+    },
+    "Peas": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 2,
+      "height": "tall"
+    },
+    "Spinach": {
+      "sunlight": "partial",
+      "water": "medium",
+      "spacing": 6,
+      "height": "low"
+    },
+    "Broccoli": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 18,
+      "height": "medium"
+    },
+    "Cabbage": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 18,
+      "height": "medium"
+    },
+    "Cauliflower": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 18,
+      "height": "medium"
+    },
+    "Corn": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 12,
+      "height": "tall"
+    },
+    "Potatoes": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 12,
+      "height": "medium"
+    },
+    "Radish": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 2,
+      "height": "low"
+    },
+    "Squash": {
+      "sunlight": "full",
+      "water": "high",
+      "spacing": 36,
+      "height": "low"
+    },
+    "Pumpkin": {
+      "sunlight": "full",
+      "water": "high",
+      "spacing": 48,
+      "height": "low"
+    },
+    "Strawberries": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 12,
+      "height": "low"
+    },
+    "Marigold": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 10,
+      "height": "low"
+    },
+    "Sunflower": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 24,
+      "height": "tall"
+    },
+    "Nasturtium": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 12,
+      "height": "low"
+    },
+    "Lavender": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 18,
+      "height": "medium"
+    },
+    "Rose": {
+      "sunlight": "full",
+      "water": "medium",
+      "spacing": 24,
+      "height": "tall"
+    },
+    "Rosemary": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 24,
+      "height": "medium"
+    },
+    "Sage": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 18,
+      "height": "medium"
+    },
+    "Thyme": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 12,
+      "height": "low"
+    },
+    "Oregano": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 12,
+      "height": "low"
+    },
+    "Parsley": {
+      "sunlight": "partial",
+      "water": "medium",
+      "spacing": 8,
+      "height": "low"
+    },
+    "Cilantro": {
+      "sunlight": "partial",
+      "water": "medium",
+      "spacing": 6,
+      "height": "low"
+    },
+    "Dill": {
+      "sunlight": "full",
+      "water": "low",
+      "spacing": 12,
+      "height": "medium"
+    }
+  }
+}

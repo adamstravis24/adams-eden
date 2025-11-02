@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: Perenual API v2
+  version: 2.0.0
+  description: Plant species API (v2) for public and premium access.
+servers:
+  - url: https://perenual.com/api
+# Truncated snapshot of the spec for local reference. For the full, latest spec, fetch from perenual.com.
