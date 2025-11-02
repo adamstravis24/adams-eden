@@ -19,7 +19,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.adamseden.gardenapp",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.adamseden.gardenapp",
