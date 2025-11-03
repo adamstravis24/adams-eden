@@ -22,3 +22,17 @@ allprojects {
 
 apply plugin: "expo-root-project"
 apply plugin: "com.facebook.react.rootproject"
+
+// Ensure all Android library modules have a compileSdk set to satisfy AGP requirements
+subprojects { subproject ->
+  afterEvaluate {
+    if (subproject.plugins.hasPlugin('com.android.library')) {
+      subproject.android {
+        // Use the compileSdk from the root project (set by Expo plugins/version catalog)
+        if (!hasProperty('compileSdk') && rootProject.ext.has('compileSdkVersion')) {
+          compileSdk rootProject.ext.compileSdkVersion
+        }
+      }
+    }
+  }
+}
