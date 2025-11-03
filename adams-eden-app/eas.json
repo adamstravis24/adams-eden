@@ -8,11 +8,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "android": {
-        "buildType": "apk",
-        "image": "default"
-      },
-      "env": {
-        "EXPO_USE_COMMUNITY_AUTOLINKING": "1"
+        "buildType": "apk"
       },
       "ios": {
         "simulator": true
