@@ -12,6 +12,13 @@ import {
   getStoredCredentials,
   getBiometricTypes,
 } from '../services/biometricAuth';
+import * as WebBrowser from 'expo-web-browser';
+import * as GoogleAuth from 'expo-auth-session/providers/google';
+import { auth } from '../services/firebase';
+import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+
+// Complete the auth session when the app is opened via redirect
+WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen({ onClose }: { onClose?: () => void }) {
   const [email, setEmail] = useState('');
@@ -23,10 +30,43 @@ export default function LoginScreen({ onClose }: { onClose?: () => void }) {
   const { login, signup } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  // Configure Google ID token auth request
+  const [request, response, promptAsync] = GoogleAuth.useIdTokenAuthRequest({
+    iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
+    androidClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+    webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+  });
 
   useEffect(() => {
     checkBiometricAvailability();
   }, []);
+
+  // Handle Google auth response -> Firebase sign-in
+  useEffect(() => {
+    (async () => {
+      if (response?.type === 'success') {
+        try {
+          setGoogleLoading(true);
+          const idToken = (response.params as any)?.id_token;
+          if (!idToken) {
+            setError('Google sign-in failed to return an ID token.');
+            return;
+          }
+          const credential = GoogleAuthProvider.credential(idToken);
+          await signInWithCredential(auth, credential);
+          onClose && onClose();
+        } catch (e: any) {
+          console.error('Google sign-in error:', e?.message || e);
+          setError('Google authentication failed. Please try again.');
+        } finally {
+          setGoogleLoading(false);
+        }
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response]);
 
   const checkBiometricAvailability = async () => {
     const supported = await isBiometricSupported();
@@ -171,16 +211,18 @@ export default function LoginScreen({ onClose }: { onClose?: () => void }) {
               autoCapitalize="none"
               autoCorrect={false}
               editable={!loading}
+              placeholderTextColor="#9CA3AF"
             />
             
             <TextInput 
               placeholder="Password" 
               value={password} 
               onChangeText={setPassword} 
-              style={styles.input} 
+              style={styles.input}
               secureTextEntry 
               autoCapitalize="none"
               editable={!loading}
+              placeholderTextColor="#9CA3AF"
             />
             
             {error ? (
@@ -218,6 +260,23 @@ export default function LoginScreen({ onClose }: { onClose?: () => void }) {
                 <MaterialCommunityIcons name="fingerprint" size={24} color="#fff" />
                 <Text style={styles.btnText}>
                   Sign in with {biometricType}
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {/* Google Sign In Button */}
+            {!isSignUp && (
+              <TouchableOpacity
+                style={[styles.googleBtn, (googleLoading || loading) && styles.btnDisabled]}
+                onPress={() => {
+                  setError('');
+                  promptAsync({ useProxy: true, showInRecents: true });
+                }}
+                disabled={googleLoading || loading || !request}
+              >
+                <MaterialCommunityIcons name="google" size={24} color="#fff" />
+                <Text style={styles.btnText}>
+                  {googleLoading ? 'Connecting to Google...' : 'Continue with Google'}
                 </Text>
               </TouchableOpacity>
             )}
@@ -309,6 +368,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: '#fff',
     fontSize: 16,
+    color: '#111827',
   },
   biometricToggle: {
     flexDirection: 'row',
@@ -350,6 +410,21 @@ const styles = StyleSheet.create({
   btnDisabled: {
     backgroundColor: '#9ca3af',
     opacity: 0.6,
+  },
+  googleBtn: {
+    backgroundColor: '#ea4335',
+    padding: 16,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 8,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    shadowColor: '#ea4335',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+    gap: 8,
   },
   btnText: {
     color: '#fff',

@@ -30,6 +30,8 @@
     "@react-navigation/native": "^7.1.18",
     "cors": "^2.8.5",
   "expo": "~54.0.21",
+  "expo-auth-session": "~5.4.0",
+    "expo-web-browser": "~13.0.3",
     "expo-blur": "^15.0.7",
   "expo-dev-client": "~6.0.16",
     "expo-font": "~14.0.9",
