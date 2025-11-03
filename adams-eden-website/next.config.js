@@ -17,14 +17,9 @@ const nextConfig = {
       },
     ],
   },
-  env: {
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-    NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-  },
+  // Avoid inlining environment variables here when not needed. NEXT_PUBLIC_* will be exposed
+  // automatically on the client when accessed via process.env at build time, and server-only
+  // secrets (like STRIPE_SECRET_KEY, NOAA_TOKEN) should be read at runtime in server code only.
 }
 
 module.exports = nextConfig

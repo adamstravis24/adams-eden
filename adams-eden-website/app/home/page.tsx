@@ -1,10 +1,9 @@
 "use client"
 
 import Link from 'next/link'
-import Image from 'next/image'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Calendar, Leaf, NotebookPen, Pickaxe, Settings, Sprout, Thermometer, ShoppingBag, Droplets, Wind } from 'lucide-react'
+import { Calendar, Leaf, NotebookPen, Pickaxe, Settings, Sprout, Thermometer, ShoppingBag, Wind } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { db } from '@/lib/firebase'
 import { collection, doc, getDoc, getDocs, limit, orderBy, query } from 'firebase/firestore'
@@ -16,13 +15,49 @@ export default function HomeDashboardPage() {
   const router = useRouter()
   const [zip, setZip] = useState<string>('')
   const [location, setLocation] = useState<string>('')
-  const [forecast, setForecast] = useState<any[] | null>(null)
+  // Types
+  type ForecastPeriod = {
+    name: string
+    startTime: string
+    endTime: string
+    isDaytime: boolean
+    temperature: number
+    temperatureUnit: string
+    windSpeed: string
+    windDirection: string
+    shortForecast: string
+    detailedForecast?: string
+  }
+  type TrackedPlant = {
+    id: string
+    emoji?: string
+    plantName?: string
+    currentStage?: string
+    status?: string
+    plantedDate?: string | number | Date
+    plannedDate?: string | number | Date
+  }
+  type GardenBed = { id: string; name?: string; rows?: number; cols?: number }
+  type OrderSummary = {
+    id: string
+    name?: string
+    orderNumber?: string
+    createdAt?: string | number | Date | { toDate: () => Date }
+    total?: string | number
+  }
+
+  type UserDoc = { preferences?: { zipCode?: string; location?: string } }
+
+  const hasToDate = (v: unknown): v is { toDate: () => Date } => {
+    return typeof (v as { toDate?: unknown })?.toDate === 'function'
+  }
+
+  const [forecast, setForecast] = useState<ForecastPeriod[] | null>(null)
   const [forecastError, setForecastError] = useState<string | null>(null)
   const [climate, setClimate] = useState<NoaaClimateSummary | null>(null)
-  const [tracked, setTracked] = useState<any[]>([])
-  const [orders, setOrders] = useState<any[]>([])
-  const [garden, setGarden] = useState<{ beds: any[] } | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [tracked, setTracked] = useState<TrackedPlant[]>([])
+  const [orders, setOrders] = useState<OrderSummary[]>([])
+  const [garden, setGarden] = useState<{ beds: GardenBed[] } | null>(null)
 
   useEffect(() => {
     if (!loading && !user) {
@@ -30,21 +65,15 @@ export default function HomeDashboardPage() {
     }
   }, [loading, user, router])
 
-  if (!user) {
-    // Avoid layout shift while we decide
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    )
-  }
+  const displayName = useMemo(() => (
+    userProfile?.displayName || user?.displayName || user?.email?.split('@')[0] || 'Gardener'
+  ), [user, userProfile])
 
-  const displayName = userProfile?.displayName || user.displayName || user.email?.split('@')[0] || 'Gardener'
   const freezeWarning = useMemo(() => {
     if (!forecast) return null
     // Look at the next 5 nights
-    const nights = forecast.filter(p => !p.isDaytime).slice(0, 5)
-    const risky = nights.find((n: any) => typeof n.temperature === 'number' && n.temperature <= 36)
+    const nights = forecast.filter((p) => !p.isDaytime).slice(0, 5)
+    const risky = nights.find((n) => typeof n.temperature === 'number' && n.temperature <= 36)
     return risky ? `Freeze risk soon: ${risky.name} ${risky.temperature}°${risky.temperatureUnit}` : null
   }, [forecast])
 
@@ -57,7 +86,7 @@ export default function HomeDashboardPage() {
       try {
         // Profile for ZIP
         const profileSnap = await getDoc(doc(db, 'users', user.uid))
-        const prof = profileSnap.exists() ? (profileSnap.data() as any) : null
+        const prof = profileSnap.exists() ? (profileSnap.data() as UserDoc) : null
         const userZip = prof?.preferences?.zipCode || ''
         const userLoc = prof?.preferences?.location || ''
         if (!cancelled) {
@@ -68,23 +97,23 @@ export default function HomeDashboardPage() {
         // Tracked plants (latest 6)
         const trackedQ = query(collection(db, 'users', user.uid, 'tracker'), orderBy('createdAt', 'desc'), limit(6))
         const trackedSnap = await getDocs(trackedQ)
-        const trackedRows = trackedSnap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))
+  const trackedRows: TrackedPlant[] = trackedSnap.docs.map((d) => ({ id: d.id, ...(d.data() as Record<string, unknown>) })) as TrackedPlant[]
         if (!cancelled) setTracked(trackedRows)
 
         // Recent orders (latest 3) — optional
         try {
           const ordersQ = query(collection(db, 'users', user.uid, 'orders'), orderBy('createdAt', 'desc'), limit(3))
           const ordersSnap = await getDocs(ordersQ)
-          const orderRows = ordersSnap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))
+          const orderRows: OrderSummary[] = ordersSnap.docs.map((d) => ({ id: d.id, ...(d.data() as Record<string, unknown>) })) as OrderSummary[]
           if (!cancelled) setOrders(orderRows)
-        } catch (_) {
+        } catch {
           // orders may not exist; ignore
         }
 
         // Garden snapshot
         const gardenSnap = await getDoc(doc(db, 'users', user.uid, 'gardens', 'default'))
         if (gardenSnap.exists()) {
-          const g = gardenSnap.data() as any
+          const g = gardenSnap.data() as { beds?: GardenBed[] }
           if (!cancelled) setGarden({ beds: Array.isArray(g.beds) ? g.beds : [] })
         }
 
@@ -104,20 +133,29 @@ export default function HomeDashboardPage() {
                 } else {
                   throw new Error(`Forecast ${res.status}`)
                 }
-              } catch (err: any) {
+              } catch {
                 if (!cancelled) setForecastError('Forecast unavailable')
               }
             }
-          } catch (_) { /* ignore */ }
+          } catch { /* ignore */ }
         }
       } finally {
-        if (!cancelled) setIsLoading(false)
+        // no-op
       }
     }
 
     void load()
     return () => { cancelled = true }
   }, [user])
+
+  if (!user) {
+    // Avoid layout shift while we decide
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-gray-600">Loading...</div>
+      </div>
+    )
+  }
 
   const Card = ({ href, title, desc, icon }: { href: string; title: string; desc: string; icon: JSX.Element }) => (
     <Link
@@ -289,7 +327,7 @@ export default function HomeDashboardPage() {
               <div className="text-sm text-gray-700">
                 <div className="mb-2">Beds: {garden.beds.length}</div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {garden.beds.slice(0, 3).map((bed: any) => (
+                  {garden.beds.slice(0, 3).map((bed: GardenBed) => (
                     <div key={bed.id} className="rounded-lg border border-gray-200 p-3">
                       <div className="font-medium text-gray-900 truncate">{bed.name || 'Bed'}</div>
                       <div className="text-xs text-gray-600">{bed.rows}×{bed.cols}</div>
@@ -317,7 +355,7 @@ export default function HomeDashboardPage() {
                     <div className="flex items-center justify-between">
                       <div className="min-w-0">
                         <div className="font-medium text-gray-900 truncate">{o.name || o.orderNumber || 'Order'}</div>
-                        <div className="text-xs text-gray-600">{o.createdAt?.toDate ? o.createdAt.toDate().toLocaleDateString() : (o.createdAt ? new Date(o.createdAt).toLocaleDateString() : '')}</div>
+                        <div className="text-xs text-gray-600">{o.createdAt ? (hasToDate(o.createdAt) ? o.createdAt.toDate().toLocaleDateString() : new Date(o.createdAt as string | number | Date).toLocaleDateString()) : ''}</div>
                       </div>
                       <div className="text-sm font-semibold text-gray-900">{o.total || ''}</div>
                     </div>
