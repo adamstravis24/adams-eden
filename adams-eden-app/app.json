@@ -43,7 +43,8 @@
           "android": {
             "compileSdkVersion": 35,
             "targetSdkVersion": 35,
-            "kotlinVersion": "2.0.21"
+            "kotlinVersion": "2.0.21",
+            "androidGradlePluginVersion": "8.6.1"
           }
         }
       ]
