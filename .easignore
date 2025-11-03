@@ -1,25 +1,26 @@
 # Root-level EAS ignore for monorepo: only include the mobile app folder in builds
 # Ignore everything by default
-*
+/*
 
-# Allow the mobile app project
-!adams-eden-app/**
+# Allow the mobile app project directory and its contents
+!/adams-eden-app
+!/adams-eden-app/**
 
 # Keep common metadata files if present at root of subproject
-!adams-eden-app/app.json
-!adams-eden-app/eas.json
-!adams-eden-app/package.json
-!adams-eden-app/yarn.lock
-!adams-eden-app/tsconfig.json
-!adams-eden-app/babel.config.js
-!adams-eden-app/metro.config.js
-!adams-eden-app/App.tsx
-!adams-eden-app/index.ts
-!adams-eden-app/app.js
-!adams-eden-app/AdamsEdenApp.native.tsx
-!adams-eden-app/index.html
+!/adams-eden-app/app.json
+!/adams-eden-app/eas.json
+!/adams-eden-app/package.json
+!/adams-eden-app/yarn.lock
+!/adams-eden-app/tsconfig.json
+!/adams-eden-app/babel.config.js
+!/adams-eden-app/metro.config.js
+!/adams-eden-app/App.tsx
+!/adams-eden-app/index.ts
+!/adams-eden-app/app.js
+!/adams-eden-app/AdamsEdenApp.native.tsx
+!/adams-eden-app/index.html
 
 # Keep source and assets
-!adams-eden-app/src/**
-!adams-eden-app/assets/**
-!adams-eden-app/scripts/**
+!/adams-eden-app/src/**
+!/adams-eden-app/assets/**
+!/adams-eden-app/scripts/**
