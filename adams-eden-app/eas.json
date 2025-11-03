@@ -11,6 +11,9 @@
         "buildType": "apk",
         "image": "default"
       },
+      "env": {
+        "EXPO_USE_COMMUNITY_AUTOLINKING": "1"
+      },
       "ios": {
         "simulator": true
       }
