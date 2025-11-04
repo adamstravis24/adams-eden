@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Save, Download, ShoppingCart, Grid3x3, Trash2, Plus, Sparkles, Search } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useRouter } from 'next/navigation'
 import { doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { getErrorMessage } from '@/lib/errors'
@@ -114,7 +115,8 @@ const toPlant = (record: PlantRecord): Plant => ({
 })
 
 export default function GardenPlannerPage() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
+  const router = useRouter()
   const [beds, setBeds] = useState<GardenBed[]>([
     {
       id: 'bed-1',
@@ -137,6 +139,13 @@ export default function GardenPlannerPage() {
   const [saveMessage, setSaveMessage] = useState('')
 
   const activeBed = beds.find(bed => bed.id === activeBedId) || beds[0]
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login?redirect=/planner')
+    }
+  }, [user, loading, router])
 
   // Load plant database
   useEffect(() => {
@@ -224,6 +233,22 @@ export default function GardenPlannerPage() {
 
     void fetchGarden()
   }, [user])
+
+  // Don't render anything while checking authentication or if not authenticated
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading garden planner...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return null
+  }
 
   const saveGarden = async () => {
     if (!user) {

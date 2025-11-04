@@ -5,54 +5,6 @@ import { Apple } from 'lucide-react'
 export default function DownloadAppPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-3">
-              <Image 
-                src="/logo.jpg" 
-                alt="Adams Eden Logo" 
-                width={40} 
-                height={40}
-                className="rounded-lg"
-              />
-              <span className="text-2xl font-bold text-gray-900">Adams Eden</span>
-            </Link>
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-gray-600 hover:text-primary-600 transition font-medium">
-                Home
-              </Link>
-              <Link href="/planner" className="text-gray-600 hover:text-primary-600 transition font-medium">
-                Garden Planner
-              </Link>
-              <Link href="/shop" className="text-gray-600 hover:text-primary-600 transition font-medium">
-                Shop
-              </Link>
-              <Link href="/features" className="text-gray-600 hover:text-primary-600 transition font-medium">
-                Features
-              </Link>
-              <Link href="/app" className="text-primary-600 font-semibold">
-                Download App
-              </Link>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link
-                href="/login"
-                className="text-gray-700 hover:text-primary-600 transition font-medium"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/planner"
-                className="bg-primary-600 text-white px-6 py-2.5 rounded-lg hover:bg-primary-700 transition font-semibold shadow-sm"
-              >
-                Start Planning
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-50 to-green-50">
