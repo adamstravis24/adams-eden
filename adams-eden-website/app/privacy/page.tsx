@@ -28,7 +28,7 @@ export default function PrivacyPolicy() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-slate-800 mb-4">1. Introduction</h2>
               <p className="text-slate-600 mb-4">
-                Welcome to Adams Eden ("we," "our," or "us"). We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website (adamseden.com) and mobile application (Adams Eden App).
+                Welcome to Adams Eden (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website (adamseden.com) and mobile application (Adams Eden App).
               </p>
               <p className="text-slate-600 mb-4">
                 By using our services, you agree to the collection and use of information in accordance with this policy.
@@ -192,7 +192,7 @@ export default function PrivacyPolicy() {
 
               <h3 className="text-xl font-medium text-slate-700 mb-3">8.2 Offline Functionality</h3>
               <p className="text-slate-600 mb-4">
-                The app stores data locally on your device for offline use. This data is synchronized when you're online and remains secure on your device.
+                The app stores data locally on your device for offline use. This data is synchronized when you&apos;re online and remains secure on your device.
               </p>
 
               <h3 className="text-xl font-medium text-slate-700 mb-3">8.3 Background Processing</h3>
@@ -215,7 +215,7 @@ export default function PrivacyPolicy() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-slate-800 mb-4">10. Children's Privacy</h2>
+              <h2 className="text-2xl font-semibold text-slate-800 mb-4">10. Children&apos;s Privacy</h2>
               <p className="text-slate-600 mb-4">
                 Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If we become aware that we have collected personal information from a child under 13, we will take steps to delete such information.
               </p>
@@ -231,7 +231,7 @@ export default function PrivacyPolicy() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-slate-800 mb-4">12. Changes to This Privacy Policy</h2>
               <p className="text-slate-600 mb-4">
-                We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. We will also send you an email notification for significant changes.
+                We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the &quot;Last updated&quot; date. We will also send you an email notification for significant changes.
               </p>
             </section>
 

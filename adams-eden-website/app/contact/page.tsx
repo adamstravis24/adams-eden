@@ -20,7 +20,7 @@ export default function ContactPage() {
             </Link>
             <h1 className="text-4xl font-bold text-slate-800 mb-4">Contact Us</h1>
             <p className="text-slate-600 text-lg">
-              We'd love to hear from you! Get in touch with questions about gardening, our services, or just to say hello.
+              We&apos;d love to hear from you! Get in touch with questions about gardening, our services, or just to say hello.
             </p>
           </div>
 

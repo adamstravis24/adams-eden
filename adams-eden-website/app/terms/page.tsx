@@ -28,7 +28,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-slate-800 mb-4">1. Acceptance of Terms</h2>
               <p className="text-slate-600 mb-4">
-                Welcome to Adams Eden ("we," "our," or "us"). These Terms of Service ("Terms") govern your use of our website (adamseden.com) and mobile application (Adams Eden App). By accessing or using our services, you agree to be bound by these Terms.
+                Welcome to Adams Eden (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). These Terms of Service (&quot;Terms&quot;) govern your use of our website (adamseden.com) and mobile application (Adams Eden App). By accessing or using our services, you agree to be bound by these Terms.
               </p>
               <p className="text-slate-600 mb-4">
                 If you do not agree to these Terms, please do not use our services.
