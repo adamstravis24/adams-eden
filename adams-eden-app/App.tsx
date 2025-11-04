@@ -22,6 +22,10 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { StatusBar } from 'expo-status-bar';
+import ErrorBoundary from './src/components/ErrorBoundary';
+import ReactNative, { useEffect } from 'react';
+import { initializeNotifications } from './src/services/notifications';
+import { registerWeatherBackgroundTask } from './src/services/notifications';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -276,13 +280,24 @@ function ThemedNavigation() {
 }
 
 export default function App() {
+  useEffect(() => {
+    (async () => {
+      try {
+        await initializeNotifications();
+        await registerWeatherBackgroundTask();
+      } catch {}
+    })();
+  }, []);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ThemeProvider>
           <AuthProvider>
             <GardenProvider>
-              <ThemedNavigation />
+              <ErrorBoundary>
+                <ThemedNavigation />
+              </ErrorBoundary>
             </GardenProvider>
           </AuthProvider>
         </ThemeProvider>

@@ -15,6 +15,7 @@ import {
   disableBiometric,
   getBiometricTypes,
 } from '../services/biometricAuth';
+import { testFrostWarningNotification, testFrostRiskNotification, testWateringReminder, testUrgentWateringReminder, testOverdueWateringReminder } from '../services/notifications';
 
 const styles = appStyles;
 
@@ -206,6 +207,63 @@ export default function SettingsScreen() {
               />
             </View>
           )}
+          
+          {/* Test Notification Buttons - Remove in production */}
+          <Text style={[t.h3, { marginBottom: 8, marginTop: 16 }]}>Test Notifications</Text>
+          <TouchableOpacity
+            onPress={async () => {
+              await testFrostWarningNotification();
+              Alert.alert('Test Sent', 'Freeze warning notification sent!');
+            }}
+            style={[t.btn, { marginBottom: 8, backgroundColor: '#f59e0b' }]}
+          >
+            <MaterialCommunityIcons name="snowflake" size={20} color="#fff" style={{ marginRight: 8 }} />
+            <Text style={[t.btnText, { color: '#fff' }]}>Test Freeze Warning</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            onPress={async () => {
+              await testFrostRiskNotification();
+              Alert.alert('Test Sent', 'Frost risk notification sent!');
+            }}
+            style={[t.btn, { marginBottom: 16, backgroundColor: '#f59e0b' }]}
+          >
+            <MaterialCommunityIcons name="weather-cloudy" size={20} color="#fff" style={{ marginRight: 8 }} />
+            <Text style={[t.btnText, { color: '#fff' }]}>Test Frost Risk</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            onPress={async () => {
+              await testWateringReminder();
+              Alert.alert('Test Sent', 'Normal watering reminder notification sent!');
+            }}
+            style={[t.btn, { marginBottom: 8, backgroundColor: '#10b981' }]}
+          >
+            <MaterialCommunityIcons name="watering-can" size={20} color="#fff" style={{ marginRight: 8 }} />
+            <Text style={[t.btnText, { color: '#fff' }]}>Test Normal Watering</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            onPress={async () => {
+              await testUrgentWateringReminder();
+              Alert.alert('Test Sent', 'Urgent watering reminder notification sent!');
+            }}
+            style={[t.btn, { marginBottom: 8, backgroundColor: '#f59e0b' }]}
+          >
+            <MaterialCommunityIcons name="watering-can-outline" size={20} color="#fff" style={{ marginRight: 8 }} />
+            <Text style={[t.btnText, { color: '#fff' }]}>Test Urgent Watering</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            onPress={async () => {
+              await testOverdueWateringReminder();
+              Alert.alert('Test Sent', 'Overdue watering reminder notification sent!');
+            }}
+            style={[t.btn, { marginBottom: 16, backgroundColor: '#ef4444' }]}
+          >
+            <MaterialCommunityIcons name="alert-circle" size={20} color="#fff" style={{ marginRight: 8 }} />
+            <Text style={[t.btnText, { color: '#fff' }]}>Test Overdue Watering</Text>
+          </TouchableOpacity>
           
           <TouchableOpacity
             onPress={() => {

@@ -67,11 +67,7 @@ interface Plant {
   id: string;
   commonName: string;
   emoji?: string;
-  growthInfo?: {
-    daysToGermination?: number;
-    daysToMaturity?: number;
-    daysToHarvest?: number;
-  };
+  daysToMaturity?: number;
 }
 
 export default function TrackerScreen() {
@@ -116,7 +112,8 @@ export default function TrackerScreen() {
   useEffect(() => {
     const loadPlantDatabase = async () => {
       try {
-        setPlantDatabase(plantDB as Plant[]);
+        const data = (plantDB as any)?.plants ?? [];
+        setPlantDatabase(data as Plant[]);
       } catch (error) {
         console.error('Error loading plant database:', error);
       }
@@ -129,7 +126,7 @@ export default function TrackerScreen() {
     if (!user) return;
 
     const q = query(
-      collection(db, 'users', user.uid, 'tracker'),
+      collection(db, 'users', user.id, 'tracker'),
       orderBy('createdAt', 'desc')
     );
 
@@ -208,9 +205,9 @@ export default function TrackerScreen() {
 
   // Helper: Create default milestones
   const createDefaultMilestones = (plantId: string): Milestone[] => {
-    const plant = plantDatabase.find((p) => p.id === plantId);
-    const daysToMaturity = plant?.growthInfo?.daysToMaturity || 60;
-    const daysToGermination = plant?.growthInfo?.daysToGermination || Math.round(daysToMaturity * 0.1);
+  const plant = plantDatabase.find((p) => p.id === plantId);
+  const daysToMaturity = plant?.daysToMaturity || 60;
+  const daysToGermination = Math.round(daysToMaturity * 0.1);
 
     return [
       {
@@ -246,7 +243,7 @@ export default function TrackerScreen() {
     try {
       // Check for duplicates
       const q = query(
-        collection(db, 'users', user.uid, 'tracker'),
+        collection(db, 'users', user.id, 'tracker'),
         where('plantId', '==', formData.plantId)
       );
       const existingPlants = await getDocs(q);
@@ -270,11 +267,11 @@ export default function TrackerScreen() {
         currentStage: 'Planted',
         status: 'planted' as 'planted',
         notes: formData.notes,
-        userId: user.uid,
+        userId: user.id,
         createdAt: serverTimestamp(),
       };
 
-      await addDoc(collection(db, 'users', user.uid, 'tracker'), newPlant);
+  await addDoc(collection(db, 'users', user.id, 'tracker'), newPlant);
 
       // Create calendar events for milestones
       const plantedDate = new Date(formData.plantedDate);
@@ -282,14 +279,14 @@ export default function TrackerScreen() {
         const eventDate = new Date(plantedDate);
         eventDate.setDate(eventDate.getDate() + (milestone.estimatedDays || 0));
 
-        await addDoc(collection(db, 'users', user.uid, 'calendar'), {
+  await addDoc(collection(db, 'users', user.id, 'calendar'), {
           title: `${formData.emoji} ${formData.plantName} - ${milestone.name}`,
           date: eventDate.toISOString().split('T')[0],
           type: 'milestone',
           plantId: formData.plantId,
           plantName: formData.plantName,
           milestone: milestone.name,
-          userId: user.uid,
+          userId: user.id,
           createdAt: serverTimestamp(),
         });
       }
@@ -309,7 +306,7 @@ export default function TrackerScreen() {
 
     try {
       const today = new Date().toISOString().split('T')[0];
-      const plantRef = doc(db, 'users', user.uid, 'tracker', plant.id);
+  const plantRef = doc(db, 'users', user.id, 'tracker', plant.id);
 
       await updateDoc(plantRef, {
         status: 'planted',
@@ -323,14 +320,14 @@ export default function TrackerScreen() {
         const eventDate = new Date(plantedDate);
         eventDate.setDate(eventDate.getDate() + (milestone.estimatedDays || 0));
 
-        await addDoc(collection(db, 'users', user.uid, 'calendar'), {
+  await addDoc(collection(db, 'users', user.id, 'calendar'), {
           title: `${plant.emoji} ${plant.plantName} - ${milestone.name}`,
           date: eventDate.toISOString().split('T')[0],
           type: 'milestone',
           plantId: plant.plantId,
           plantName: plant.plantName,
           milestone: milestone.name,
-          userId: user.uid,
+          userId: user.id,
           createdAt: serverTimestamp(),
         });
       }
@@ -347,7 +344,7 @@ export default function TrackerScreen() {
     if (!user || !selectedPlant) return;
 
     try {
-      const plantRef = doc(db, 'users', user.uid, 'tracker', selectedPlant.id);
+  const plantRef = doc(db, 'users', user.id, 'tracker', selectedPlant.id);
       await updateDoc(plantRef, {
         variety: formData.variety,
         quantity: formData.quantity,
@@ -379,7 +376,7 @@ export default function TrackerScreen() {
         ? new Date().toISOString().split('T')[0]
         : undefined;
 
-      const plantRef = doc(db, 'users', user.uid, 'tracker', plant.id);
+  const plantRef = doc(db, 'users', user.id, 'tracker', plant.id);
       await updateDoc(plantRef, {
         milestones: updatedMilestones,
         currentStage: milestone.reached ? milestone.name : plant.currentStage,
@@ -409,7 +406,7 @@ export default function TrackerScreen() {
       const daysToHarvest = getDaysPlanted(selectedPlant.plantedDate);
 
       // Create harvest history entry
-      await addDoc(collection(db, 'users', user.uid, 'harvestHistory'), {
+  await addDoc(collection(db, 'users', user.id, 'harvestHistory'), {
         plantId: selectedPlant.plantId,
         plantName: selectedPlant.plantName,
         variety: selectedPlant.variety,
@@ -420,12 +417,12 @@ export default function TrackerScreen() {
         quantity: harvestData.quantity,
         weight: harvestData.weight,
         notes: harvestData.notes,
-        userId: user.uid,
+        userId: user.id,
         createdAt: serverTimestamp(),
       });
 
       // Delete from tracker
-      const plantRef = doc(db, 'users', user.uid, 'tracker', selectedPlant.id);
+  const plantRef = doc(db, 'users', user.id, 'tracker', selectedPlant.id);
       await deleteDoc(plantRef);
 
       Alert.alert('Success', 'Plant harvested successfully! 🎉');
@@ -452,7 +449,7 @@ export default function TrackerScreen() {
           style: 'destructive',
           onPress: async () => {
             try {
-              const plantRef = doc(db, 'users', user.uid, 'tracker', plantId);
+              const plantRef = doc(db, 'users', user.id, 'tracker', plantId);
               await deleteDoc(plantRef);
               Alert.alert('Success', 'Plant removed from tracker');
             } catch (error) {
@@ -506,7 +503,7 @@ export default function TrackerScreen() {
   if (loading) {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: palette.background }]} edges={['top']}>
-        <HeaderBar title="Plant Tracker" />
+  <HeaderBar />
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <ActivityIndicator size="large" color={palette.primary} />
         </View>
@@ -516,7 +513,7 @@ export default function TrackerScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: palette.background }]} edges={['top']}>
-      <HeaderBar title="Plant Tracker" />
+  <HeaderBar />
       
       <ScrollView
         style={{ flex: 1 }}

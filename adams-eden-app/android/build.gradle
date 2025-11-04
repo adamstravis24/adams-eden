@@ -24,14 +24,18 @@ apply plugin: "expo-root-project"
 apply plugin: "com.facebook.react.rootproject"
 
 // Ensure all Android library modules have a compileSdk set to satisfy AGP requirements
+// Avoid afterEvaluate (breaks on Gradle 8+ when project is already evaluated)
 subprojects { subproject ->
-  afterEvaluate {
-    if (subproject.plugins.hasPlugin('com.android.library')) {
-      subproject.android {
-        // Use the compileSdk from the root project (set by Expo plugins/version catalog)
-        if (!hasProperty('compileSdk') && rootProject.ext.has('compileSdkVersion')) {
-          compileSdk rootProject.ext.compileSdkVersion
-        }
+  subproject.plugins.withId('com.android.library') {
+    def androidExt = subproject.extensions.findByName('android')
+    if (androidExt != null) {
+      def ver = rootProject.ext.has('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 35
+      try {
+        androidExt.compileSdk ver
+      } catch (Exception ignored) {
+        try {
+          androidExt.compileSdkVersion ver
+        } catch (Exception ignored2) {}
       }
     }
   }

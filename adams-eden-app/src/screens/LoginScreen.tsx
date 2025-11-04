@@ -21,6 +21,9 @@ import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen({ onClose }: { onClose?: () => void }) {
+  // Permanently hide Google sign-in button in UI while keeping infrastructure intact.
+  // Flip to true in code if you ever want to surface it again.
+  const googleEnabled = false;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
@@ -32,19 +35,28 @@ export default function LoginScreen({ onClose }: { onClose?: () => void }) {
   const [error, setError] = useState('');
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  // Configure Google ID token auth request
-  const [request, response, promptAsync] = GoogleAuth.useIdTokenAuthRequest({
+  // Configure Google ID token auth request (only when enabled)
+  // Use Expo proxy-based redirect in development to satisfy Google's redirect URI policies
+  const expoOrWebClientId = process.env.EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID || process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
+
+  const [request, response, promptAsync] = googleEnabled ? GoogleAuth.useIdTokenAuthRequest({
     iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
     androidClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
-  });
+    // Use Expo proxy by providing the Web/Expo client ID
+    expoClientId: expoOrWebClientId,
+    // Let the library compute the correct proxy redirect URI
+    // (do not override redirectUri to custom scheme to avoid Google policy errors)
+  }) : [null, null, null];
 
   useEffect(() => {
     checkBiometricAvailability();
   }, []);
 
-  // Handle Google auth response -> Firebase sign-in
+  // Handle Google auth response -> Firebase sign-in (only when enabled)
   useEffect(() => {
+    if (!googleEnabled || !response) return;
+
     (async () => {
       if (response?.type === 'success') {
         try {
@@ -66,7 +78,7 @@ export default function LoginScreen({ onClose }: { onClose?: () => void }) {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response]);
+  }, [response, googleEnabled]);
 
   const checkBiometricAvailability = async () => {
     const supported = await isBiometricSupported();
@@ -234,43 +246,40 @@ export default function LoginScreen({ onClose }: { onClose?: () => void }) {
             
             {/* Biometric Toggle */}
             {biometricAvailable && !isSignUp && (
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.biometricToggle}
                 onPress={() => setEnableBiometricAuth(!enableBiometricAuth)}
                 disabled={loading}
               >
-                <MaterialCommunityIcons 
-                  name={enableBiometricAuth ? 'checkbox-marked' : 'checkbox-blank-outline'} 
-                  size={24} 
-                  color="#16a34a" 
+                <MaterialCommunityIcons
+                  name={enableBiometricAuth ? 'checkbox-marked' : 'checkbox-blank-outline'}
+                  size={24}
+                  color="#16a34a"
                 />
-                <Text style={styles.biometricText}>
-                  Enable {biometricType} sign in
-                </Text>
-              </TouchableOpacity>
-            )}
-            
-            {/* Biometric Sign In Button */}
-            {biometricAvailable && !isSignUp && (
-              <TouchableOpacity 
-                style={[styles.biometricBtn, loading && styles.btnDisabled]} 
-                onPress={handleBiometricLogin} 
-                disabled={loading}
-              >
-                <MaterialCommunityIcons name="fingerprint" size={24} color="#fff" />
-                <Text style={styles.btnText}>
-                  Sign in with {biometricType}
-                </Text>
+                <Text style={styles.biometricText}>Enable {biometricType} sign in</Text>
               </TouchableOpacity>
             )}
 
-            {/* Google Sign In Button */}
-            {!isSignUp && (
+            {/* Biometric Sign In Button */}
+            {biometricAvailable && !isSignUp && (
+              <TouchableOpacity
+                style={[styles.biometricBtn, loading && styles.btnDisabled]}
+                onPress={handleBiometricLogin}
+                disabled={loading}
+              >
+                <MaterialCommunityIcons name="fingerprint" size={24} color="#fff" />
+                <Text style={styles.btnText}>Sign in with {biometricType}</Text>
+              </TouchableOpacity>
+            )}
+
+            {/* Google Sign In Button (hidden unless EXPO_PUBLIC_GOOGLE_SIGNIN_ENABLED=true) */}
+            {!isSignUp && googleEnabled && (
               <TouchableOpacity
                 style={[styles.googleBtn, (googleLoading || loading) && styles.btnDisabled]}
                 onPress={() => {
                   setError('');
-                  promptAsync({ useProxy: true, showInRecents: true });
+                  // Force Expo proxy to avoid custom-scheme redirect that Google rejects
+                  (promptAsync as any)({ useProxy: true, showInRecents: true });
                 }}
                 disabled={googleLoading || loading || !request}
               >

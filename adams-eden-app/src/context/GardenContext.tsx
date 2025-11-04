@@ -10,6 +10,7 @@ import { LocationInfo } from '../types/location';
 import { fetchWeather, WeatherBundle, mapWeatherCodeToText } from '../services/weatherService';
 import { db } from '../services/firebase';
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { rescheduleWateringReminderIfChanged, cancelWateringReminder, onPlantWatered, checkOverdueWateringReminders } from '../services/notifications';
 import { useAuth } from './AuthContext';
 
 const plantDataset = rawPlantDataset as RawPlantDataset;
@@ -865,6 +866,26 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     })();
   }, [gardens, addedPlants, trackedPlants, location]);
 
+  // Schedule watering reminders when tracked plants change
+  useEffect(() => {
+    (async () => {
+      try {
+        for (const tp of trackedPlants) {
+          if (tp.wateringReminderEnabled) {
+            await rescheduleWateringReminderIfChanged(tp.trackingId, tp.lastWatered, tp.wateringIntervalDays || 4);
+          } else {
+            await cancelWateringReminder(tp.trackingId);
+          }
+        }
+        
+        // Check for overdue plants and send immediate reminders
+        await checkOverdueWateringReminders(trackedPlants);
+      } catch (e) {
+        // Non-fatal
+      }
+    })();
+  }, [trackedPlants]);
+
   // Firebase real-time sync for tracked plants
   const { user } = useAuth();
   useEffect(() => {
@@ -1084,6 +1105,10 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       await updateDoc(doc(db, 'users', user.id, 'tracker', trackingId), {
         lastWatered: new Date().toISOString(),
       });
+      
+      // Cancel pending watering reminders since plant was just watered
+      await onPlantWatered(trackingId);
+      
       // Real-time listener will update local state automatically
     } catch (error) {
       console.error('Error logging watering:', error);
