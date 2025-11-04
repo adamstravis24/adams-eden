@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { CheckCircle, Sprout, Package, Smartphone, Calendar, Cloud, BookOpen, Users, Target, Zap } from 'lucide-react'
+import { CheckCircle, Sprout, Smartphone, Calendar, Cloud, BookOpen, Users, Target, Zap, ShoppingCart } from 'lucide-react'
 
 export default function FeaturesPage() {
   return (
@@ -24,7 +24,7 @@ export default function FeaturesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-16">Signature experiences for every gardener</h2>
           
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
             {/* Feature 1 */}
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-100 rounded-full mb-6">
@@ -54,36 +54,7 @@ export default function FeaturesPage() {
               </ul>
             </div>
 
-            {/* Feature 2 */}
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-100 rounded-full mb-6">
-                <Package className="w-10 h-10 text-primary-600" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Planting & Delivery Services</h3>
-              <p className="text-gray-600 mb-6">
-                Let our crew deliver, install, and refresh your gardens so you can enjoy the beauty without the heavy lifting.
-              </p>
-              <ul className="text-left space-y-2 text-gray-700">
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-primary-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>Flexible delivery scheduling to fit your calendar</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-primary-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>White-glove planting and container refreshes</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-primary-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>Seasonal swap services to keep beds photo-ready</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-primary-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>Schedule visits and track services inside the app</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Feature 3 */}
+            {/* Adams Eden Companion App */}
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-100 rounded-full mb-6">
                 <Smartphone className="w-10 h-10 text-primary-600" />
@@ -204,11 +175,11 @@ export default function FeaturesPage() {
                 2
               </div>
               <div className="mb-4">
-                <Package className="w-10 h-10 text-primary-600 mx-auto" />
+                <ShoppingCart className="w-10 h-10 text-primary-600 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-3">Take home with ease</h3>
+              <h3 className="text-xl font-bold mb-3">Take home your favorites</h3>
               <p className="text-gray-600">
-                Choose delivery or white-glove planting so your new favorites settle in beautifully.
+                Bring home locally acclimated plants chosen by our growers for Pacific Northwest success.
               </p>
             </div>
 
