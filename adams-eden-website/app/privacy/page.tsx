@@ -241,7 +241,7 @@ export default function PrivacyPolicy() {
                 If you have any questions about this Privacy Policy or our data practices, please contact us:
               </p>
               <div className="bg-slate-50 p-4 rounded-lg">
-                <p className="text-slate-600 mb-2"><strong>Email:</strong> privacy@adamseden.com</p>
+                <p className="text-slate-600 mb-2"><strong>Email:</strong> travis.adams@adamsedenbranson.com</p>
                 <p className="text-slate-600 mb-2"><strong>Address:</strong> Adams Eden Garden Center & Nursery</p>
                 <p className="text-slate-600"><strong>Phone:</strong> (555) 123-GROW</p>
               </div>
