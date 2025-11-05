@@ -104,6 +104,9 @@ export default function Navigation() {
             </Link>
 
             <div className="hidden md:flex items-center gap-8">
+              <Link href="/about" className={navLinkClass}>
+                About
+              </Link>
               <Link href="/shop" className={navLinkClass}>
                 Shop Plants
               </Link>

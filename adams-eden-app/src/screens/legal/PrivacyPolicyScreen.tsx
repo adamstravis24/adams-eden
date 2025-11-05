@@ -160,7 +160,7 @@ export default function PrivacyPolicyScreen() {
             If you have questions about this Privacy Policy or our data practices:
           </Text>
           <Text style={[t.p, { marginBottom: 4 }]}>
-            📧 Email: privacy@adamseden.com
+            📧 Email: travis.adams@adamsedenbranson.com
           </Text>
           <Text style={[t.p, { marginBottom: 4 }]}>
             📍 Address: Adams Eden Garden Center & Nursery
