@@ -10,6 +10,7 @@ type CategoryInfo = {
   name: string;
   description: string;
   keywords: string[];
+  excludeKeywords?: string[];
   icon: string;
 };
 
@@ -17,13 +18,15 @@ const CATEGORIES: Record<string, CategoryInfo> = {
   "houseplants": {
     name: "Houseplants",
     description: "Beautiful indoor plants to brighten any space",
-    keywords: ["houseplant", "indoor", "interior", "home", "foliage"],
+    keywords: ["houseplant", "indoor plant", "interior plant", "foliage"],
+    excludeKeywords: ["light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro"],
     icon: "🪴",
   },
   "outdoor-plants": {
     name: "Outdoor Plants",
     description: "Hardy perennials, vibrant annuals, and garden favorites",
-    keywords: ["outdoor", "garden", "exterior", "perennial", "annual", "landscape"],
+    keywords: ["outdoor", "garden", "perennial", "annual", "landscape"],
+    excludeKeywords: ["light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro"],
     icon: "🌿",
   },
   "succulents-cacti": {
@@ -36,6 +39,7 @@ const CATEGORIES: Record<string, CategoryInfo> = {
     name: "Herbs & Edibles",
     description: "Fresh culinary herbs and kitchen garden staples",
     keywords: ["herb", "culinary", "aromatic", "spice", "edible", "vegetable", "kitchen", "cooking"],
+    excludeKeywords: ["diatomaceous earth", "diatomaceous"],
     icon: "🌱",
   },
   "lighting": {
@@ -83,7 +87,11 @@ export async function generateMetadata({
   };
 }
 
-function filterProductsByCategory(products: ShopifyProduct[], keywords: string[]): ShopifyProduct[] {
+function filterProductsByCategory(
+  products: ShopifyProduct[], 
+  keywords: string[], 
+  excludeKeywords?: string[]
+): ShopifyProduct[] {
   return products.filter((product) => {
     const haystack = [
       product.title,
@@ -95,7 +103,18 @@ function filterProductsByCategory(products: ShopifyProduct[], keywords: string[]
       .join(" ")
       .toLowerCase();
 
-    return keywords.some((keyword) => haystack.includes(keyword.toLowerCase()));
+    // Check if product matches include keywords
+    const matchesInclude = keywords.some((keyword) => 
+      haystack.includes(keyword.toLowerCase())
+    );
+
+    // Check if product matches any exclude keywords
+    const matchesExclude = excludeKeywords?.some((keyword) => 
+      haystack.includes(keyword.toLowerCase())
+    ) ?? false;
+
+    // Include only if matches include keywords AND doesn't match exclude keywords
+    return matchesInclude && !matchesExclude;
   });
 }
 
@@ -111,7 +130,11 @@ export default async function CategoryPage({
   }
 
   const allProducts = await getAllProducts();
-  const categoryProducts = filterProductsByCategory(allProducts, category.keywords);
+  const categoryProducts = filterProductsByCategory(
+    allProducts, 
+    category.keywords, 
+    category.excludeKeywords
+  );
 
   return (
     <div className="min-h-screen bg-white">

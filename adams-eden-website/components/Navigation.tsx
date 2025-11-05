@@ -13,7 +13,9 @@ export default function Navigation() {
   const { user, userProfile, signOut, loading: authLoading } = useAuth()
   const { cart, loading: cartLoading, openCart } = useCart()
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const [showShopMenu, setShowShopMenu] = useState(false)
   const userMenuRef = useRef<HTMLDivElement | null>(null)
+  const shopMenuRef = useRef<HTMLDivElement | null>(null)
   const pathname = usePathname()
   const router = useRouter()
 
@@ -49,15 +51,17 @@ export default function Navigation() {
   // Close the user menu when clicking outside or pressing Escape
   useEffect(() => {
     const handlePointerDown = (e: MouseEvent | TouchEvent) => {
-      if (!showUserMenu) return
-      const el = userMenuRef.current
-      if (el && !el.contains(e.target as Node)) {
+      if (showUserMenu && userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
         setShowUserMenu(false)
+      }
+      if (showShopMenu && shopMenuRef.current && !shopMenuRef.current.contains(e.target as Node)) {
+        setShowShopMenu(false)
       }
     }
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setShowUserMenu(false)
+        setShowShopMenu(false)
       }
     }
     document.addEventListener('mousedown', handlePointerDown)
@@ -68,11 +72,12 @@ export default function Navigation() {
       document.removeEventListener('touchstart', handlePointerDown)
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [showUserMenu])
+  }, [showUserMenu, showShopMenu])
 
   // Close on route changes
   useEffect(() => {
     if (showUserMenu) setShowUserMenu(false)
+    if (showShopMenu) setShowShopMenu(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
@@ -107,9 +112,102 @@ export default function Navigation() {
               <Link href="/about" className={navLinkClass}>
                 About
               </Link>
-              <Link href="/shop" className={navLinkClass}>
-                Shop Plants
-              </Link>
+              
+              {/* Shop Dropdown */}
+              <div className="relative" ref={shopMenuRef}>
+                <button
+                  onClick={() => setShowShopMenu(!showShopMenu)}
+                  className={navLinkClass}
+                  aria-haspopup="menu"
+                  aria-expanded={showShopMenu}
+                >
+                  Shop Plants
+                </button>
+
+                {showShopMenu && (
+                  <div className="absolute left-0 mt-3 w-64 rounded-2xl bg-white shadow-xl ring-1 ring-black/10 overflow-hidden" role="menu">
+                    <div className="py-2 text-sm">
+                      <Link
+                        href="/shop"
+                        className="block px-4 py-2.5 text-slate-700 font-semibold hover:bg-primary-50/60 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🏠 Shop Home
+                      </Link>
+                      <Link
+                        href="/shop/products"
+                        className="block px-4 py-2.5 text-slate-700 font-semibold hover:bg-primary-50/60 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🛒 All Products
+                      </Link>
+                      
+                      <div className="my-2 border-t border-slate-200" />
+                      <div className="px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-slate-500">
+                        Categories
+                      </div>
+                      
+                      <Link
+                        href="/shop/category/houseplants"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🪴 Houseplants
+                      </Link>
+                      <Link
+                        href="/shop/category/outdoor-plants"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🌿 Outdoor Plants
+                      </Link>
+                      <Link
+                        href="/shop/category/succulents-cacti"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🌵 Succulents & Cacti
+                      </Link>
+                      <Link
+                        href="/shop/category/herbs-edibles"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🌱 Herbs & Edibles
+                      </Link>
+                      <Link
+                        href="/shop/category/lighting"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        💡 Lighting
+                      </Link>
+                      <Link
+                        href="/shop/category/hydroponics"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        💧 Hydroponics
+                      </Link>
+                      <Link
+                        href="/shop/category/soil-amendments"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🪨 Soil & Amendments
+                      </Link>
+                      <Link
+                        href="/shop/category/tools-supplies"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🛠️ Tools & Supplies
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <Link href="/socials" className={navLinkClass}>
                 Plantbook
               </Link>

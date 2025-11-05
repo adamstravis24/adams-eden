@@ -220,7 +220,7 @@ export default function CartDrawer() {
               Taxes and delivery calculated at checkout.
             </p>
             <Link
-              href={cart?.checkoutUrl ?? "/shop"}
+              href={cart?.totalQuantity ? "/checkout" : "/shop"}
               onClick={closeCart}
               className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
@@ -229,7 +229,7 @@ export default function CartDrawer() {
               ) : (
                 <ShoppingBag className="h-5 w-5" />
               )}
-              {cart?.totalQuantity ? "Checkout" : "Browse plants"}
+              {cart?.totalQuantity ? "Proceed to Checkout" : "Browse plants"}
             </Link>
           </footer>
         </div>

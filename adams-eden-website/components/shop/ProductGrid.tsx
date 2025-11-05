@@ -14,7 +14,6 @@ const CATEGORY_FILTERS = [
   { label: "Outdoor Plants", value: "outdoor" },
   { label: "Succulents & Cacti", value: "succulent" },
   { label: "Herbs & Edibles", value: "herb" },
-  { label: "Flowering Plants", value: "flowering" },
   { label: "Gardening Supplies", value: "supplies" },
 ] as const;
 
@@ -42,7 +41,6 @@ const CATEGORY_KEYWORDS: Record<CategoryValue, string[]> = {
   outdoor: ["outdoor", "garden", "exterior", "perennial", "annual"],
   succulent: ["succulent", "cactus", "cacti", "xerophyte", "desert"],
   herb: ["herb", "culinary", "aromatic", "spice", "edible", "vegetable"],
-  flowering: ["flower", "bloom", "blooming", "floral", "blossom"],
   supplies: ["pot", "soil", "fertilizer", "tool", "supply", "equipment", "planter"],
 };
 
