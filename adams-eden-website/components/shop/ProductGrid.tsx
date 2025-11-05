@@ -228,7 +228,7 @@ export function ProductGrid({ products }: ProductGridProps) {
   };
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products.filter((product) => {
+    const filtered = products.filter((product) => {
       return (
         matchesSearch(product, searchTerm) &&
         matchesCategory(product, activeCategory) &&
