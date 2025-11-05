@@ -284,7 +284,7 @@ export function formatMoney(
   }).format(Number(money.amount));
 }
 
-export async function getAllProducts(first = 60): Promise<ShopifyProduct[]> {
+export async function getAllProducts(first = 250): Promise<ShopifyProduct[]> {
   const query = `#graphql
     query AllProducts($first: Int!) {
       products(first: $first, sortKey: CREATED_AT, reverse: true) {
@@ -301,7 +301,7 @@ export async function getAllProducts(first = 60): Promise<ShopifyProduct[]> {
     products: {
       edges: Array<{ node: ShopifyProductRaw }>;
     };
-  }>(query, { first }, { tags: ["shopify-products"] });
+  }>(query, { first }, { cache: "no-store", tags: ["shopify-products"] });
 
   return data.products.edges.map((edge) => normalizeProduct(edge.node));
 }
