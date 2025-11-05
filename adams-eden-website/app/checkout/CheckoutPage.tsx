@@ -303,7 +303,7 @@ export function CheckoutPage() {
                   <Lock className="mx-auto mb-3 h-12 w-12 text-primary-600" />
                   <p className="mb-2 font-semibold text-slate-900">Secure Checkout via Shopify</p>
                   <p className="text-sm text-slate-600">
-                    You'll be redirected to Shopify's secure checkout to complete your payment.
+                    You&apos;ll be redirected to Shopify&apos;s secure checkout to complete your payment.
                   </p>
                 </div>
               </section>
