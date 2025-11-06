@@ -58,13 +58,31 @@ export function CheckoutPage() {
     setIsProcessing(true);
 
     try {
-      // For now, redirect to Shopify checkout
-      // In a production app, you would integrate with Stripe/PayPal here
-      if (cart?.checkoutUrl) {
-        window.location.href = cart.checkoutUrl;
+      // Create Stripe checkout session
+      const response = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cartId: cart?.id,
+          customerInfo: formData,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+      
+      if (url) {
+        // Redirect to Stripe checkout
+        window.location.href = url;
       }
     } catch (error) {
-      console.error("Checkout error:", error);
+      console.error('Checkout error:', error);
+      alert('Failed to proceed to checkout. Please try again.');
       setIsProcessing(false);
     }
   };
@@ -301,9 +319,9 @@ export function CheckoutPage() {
                 <h2 className="mb-4 text-xl font-bold text-slate-900">Payment</h2>
                 <div className="rounded-lg bg-primary-50 p-6 text-center">
                   <Lock className="mx-auto mb-3 h-12 w-12 text-primary-600" />
-                  <p className="mb-2 font-semibold text-slate-900">Secure Checkout via Shopify</p>
+                  <p className="mb-2 font-semibold text-slate-900">Secure Checkout via Stripe</p>
                   <p className="text-sm text-slate-600">
-                    You&apos;ll be redirected to Shopify&apos;s secure checkout to complete your payment.
+                    You&apos;ll be redirected to Stripe&apos;s secure checkout to complete your payment.
                   </p>
                 </div>
               </section>
