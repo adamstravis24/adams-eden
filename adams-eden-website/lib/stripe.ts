@@ -1,13 +1,15 @@
 import Stripe from 'stripe';
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing STRIPE_SECRET_KEY environment variable');
-}
+// Only initialize Stripe if the secret key is available
+// This allows the build to succeed even if env vars aren't set yet
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-04-10',
-  typescript: true,
-});
+export const stripe = stripeSecretKey 
+  ? new Stripe(stripeSecretKey, {
+      apiVersion: '2024-04-10',
+      typescript: true,
+    })
+  : null;
 
 export const formatAmountForStripe = (amount: number, currency: string): number => {
   // Stripe expects amounts in cents for USD, EUR, etc.

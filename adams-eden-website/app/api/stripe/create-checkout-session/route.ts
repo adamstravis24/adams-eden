@@ -4,6 +4,14 @@ import { getCart } from '@/lib/shopify';
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe is configured
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Stripe is not configured. Please add STRIPE_SECRET_KEY to environment variables.' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { cartId, customerInfo } = body;
 
