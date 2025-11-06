@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Package, ArrowRight } from "lucide-react";
 
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [sessionId, setSessionId] = useState<string | null>(null);
 
   useEffect(() => {
