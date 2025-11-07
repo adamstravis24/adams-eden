@@ -43,6 +43,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     setLoading(false);
     return;
 
+    /* TEMPORARILY DISABLED - Enable once webhooks are working
     // Listen to user's subscription status in Firebase
     const subscriptionRef = ref(database, `users/${user.uid}/subscription`);
     
@@ -67,6 +68,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     return () => {
       off(subscriptionRef);
     };
+    */
   }, [user]);
 
   const isPremium = subscription?.status === 'active' || subscription?.status === 'trialing';
