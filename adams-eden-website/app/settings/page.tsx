@@ -16,9 +16,24 @@ export default function SettingsPage() {
               <div className="font-semibold text-slate-800">Profile & Location</div>
               <div className="text-sm text-slate-600">Update your display name, photo, and ZIP code for local frost dates</div>
             </a>
+            <div className="rounded-xl border border-slate-200 bg-white px-6 py-4">
+              <div className="font-semibold text-slate-800 mb-1">Subscription</div>
+              <div className="text-sm text-slate-600 mb-3">Manage your Adams Eden Premium membership</div>
+              {/* Subscription manager mounts client-side */}
+              {typeof window !== 'undefined' && (
+                // eslint-disable-next-line @next/next/no-sync-scripts
+                <script />
+              )}
+              {/* Dynamic client component import to avoid SSR issues */}
+              <SubscriptionManagerWrapper />
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
 }
+
+// Server component wrapper to lazily import client component
+import dynamic from 'next/dynamic'
+const SubscriptionManagerWrapper = dynamic(() => import('@/components/SubscriptionManager'), { ssr: false })

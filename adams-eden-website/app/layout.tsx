@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: 'Adams Eden - Plan Your Dream Garden',
   description: 'Design your perfect garden, shop for plants and supplies, and track your garden\'s progress with our integrated app.',
   keywords: ['garden planning', 'garden design', 'plants', 'seeds', 'gardening supplies'],
+  icons: {
+    icon: '/logo.jpg',
+  },
 }
 
 export default function RootLayout({
