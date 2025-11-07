@@ -10,7 +10,7 @@ export default function SubscriptionManager() {
   const { subscription, loading } = useSubscription()
   const [busy, setBusy] = useState(false)
 
-  const handleCancel = async (immediate = false) => {
+  const handleCancel = async () => {
     if (!user) {
       toast.error('Please sign in')
       return
@@ -24,15 +24,11 @@ export default function SubscriptionManager() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${idToken}`,
         },
-        body: JSON.stringify({ immediate }),
+        body: JSON.stringify({}),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || 'Request failed')
-      if (immediate) {
-        toast.success('Subscription canceled immediately')
-      } else {
-        toast.success('Subscription will cancel at period end')
-      }
+      toast.success('Subscription will cancel at period end')
     } catch (e: any) {
       toast.error(e?.message || 'Failed to cancel subscription')
     } finally {
@@ -66,18 +62,11 @@ export default function SubscriptionManager() {
 
       <div className="mt-6 flex flex-wrap gap-3">
         <button
-          onClick={() => handleCancel(false)}
+          onClick={handleCancel}
           disabled={busy || !subscription?.subscriptionId || subscription?.cancelAtPeriodEnd}
           className="rounded-md border border-slate-300 px-4 py-2 text-slate-700 hover:bg-slate-50 disabled:opacity-50"
         >
           Cancel at period end
-        </button>
-        <button
-          onClick={() => handleCancel(true)}
-          disabled={busy || !subscription?.subscriptionId}
-          className="rounded-md bg-rose-600 px-4 py-2 text-white shadow hover:bg-rose-700 disabled:opacity-50"
-        >
-          Cancel immediately
         </button>
       </div>
     </div>

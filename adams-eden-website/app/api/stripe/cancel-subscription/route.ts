@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
     const decoded = await admin.auth().verifyIdToken(token)
     const uid = decoded.uid
 
-    const { immediate } = await req.json().catch(() => ({ immediate: false }))
+  // No immediate cancellation; always schedule at period end
+  await req.json().catch(() => ({}))
 
     // Load subscription ID from RTDB
     const db = (await import('@/lib/firebase-admin')).adminDb
@@ -34,16 +35,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No active subscription found' }, { status: 404 })
     }
 
-    let result
-    if (immediate) {
-      // Cancel immediately
-      result = await stripe.subscriptions.cancel(subscriptionId)
-    } else {
-      // Cancel at period end
-      result = await stripe.subscriptions.update(subscriptionId, {
-        cancel_at_period_end: true,
-      })
-    }
+    // Cancel at period end only
+    const result = await stripe.subscriptions.update(subscriptionId, {
+      cancel_at_period_end: true,
+    })
 
     // Optimistic write (webhook will make source-of-truth update)
     await db.ref(`users/${uid}/subscription`).update({
