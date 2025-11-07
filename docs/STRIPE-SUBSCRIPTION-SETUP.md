@@ -36,7 +36,7 @@ Update your `adams-eden-website/.env.local` file:
 
 ```env
 # Stripe Keys (already have these)
-STRIPE_SECRET_KEY=sk_test_51SQRvP1zHMVbryCrNkR2CprCPdj5KThaAzGEx48uz47c71GFNWuZPuWmEY5xz0V5cAm7QQ0KtuJolvsZ13MkTKoT00o0nPFfBF
+STRIPE_SECRET_KEY=sk_test_your_key_here
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_... # Your publishable key
 
 # Replace these with actual Price IDs from Step 1
@@ -181,13 +181,11 @@ Before going live:
 - [ ] Set up subscription lifecycle emails (welcome, renewal, cancellation)
 
 ## Current Implementation
+## Current Implementation
 
-Your test secret key:
-```
-sk_test_51SQRvP1zHMVbryCrNkR2CprCPdj5KThaAzGEx48uz47c71GFNWuZPuWmEY5xz0V5cAm7QQ0KtuJolvsZ13MkTKoT00o0nPFfBF
-```
+You have your Stripe test keys already configured in `.env.local`.
 
-This is already configured in the code. You just need to:
+You just need to:
 1. Create the two products (monthly + annual)
 2. Get the price IDs
 3. Update environment variables
