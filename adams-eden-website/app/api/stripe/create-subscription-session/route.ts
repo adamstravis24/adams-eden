@@ -30,6 +30,14 @@ export async function POST(request: NextRequest) {
     const plan = planType === 'annual' ? SUBSCRIPTION_PLANS.ANNUAL : SUBSCRIPTION_PLANS.MONTHLY;
 
     console.log('Plan details:', { priceId: plan.priceId, price: plan.price });
+    
+    if (!plan.priceId || plan.priceId.includes('replace_me')) {
+      console.error('Price ID not configured:', plan.priceId);
+      return NextResponse.json(
+        { error: 'Subscription plans not configured. Please check NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID and NEXT_PUBLIC_STRIPE_ANNUAL_PRICE_ID environment variables.' },
+        { status: 500 }
+      );
+    }
 
     // Create Stripe checkout session for subscription
     const session = await stripe.checkout.sessions.create({
