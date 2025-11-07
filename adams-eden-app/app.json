@@ -24,23 +24,21 @@
         "ITSAppUsesNonExemptEncryption": false
       }
     },
-  "android": {
-    "package": "com.adamseden.gardenapp",
-    "adaptiveIcon": {
-      "foregroundImage": "./assets/adaptive-icon.png",
-      "backgroundColor": "#ffffff"
+    "android": {
+      "package": "com.adamseden.gardenapp",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
     },
     "notification": {
       "icon": "./assets/notification-icon.png",
       "color": "#059669"
-    }
-  },
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-dev-client"
-    ],
+    "plugins": [],
     "extra": {
       "eas": {
         "projectId": "453fdd2d-4bc9-4477-add5-1168831a37d1"
