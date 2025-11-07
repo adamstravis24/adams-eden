@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { BookOpen, Plus, X, Calendar, Search, Filter, Edit, Trash2 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import PremiumFeatureWrapper from '@/components/PremiumFeatureWrapper'
 import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, Timestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { getErrorMessage } from '@/lib/errors'
@@ -238,7 +239,8 @@ export default function JournalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <PremiumFeatureWrapper featureName="Journal">
+      <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -554,5 +556,6 @@ export default function JournalPage() {
         </div>
       )}
     </div>
+    </PremiumFeatureWrapper>
   )
 }

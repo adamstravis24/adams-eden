@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Save, Download, ShoppingCart, Grid3x3, Trash2, Plus, Sparkles, Search } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
+import PremiumFeatureWrapper from '@/components/PremiumFeatureWrapper'
 import { doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { getErrorMessage } from '@/lib/errors'
@@ -611,7 +612,8 @@ export default function GardenPlannerPage() {
   const categories = ['all', 'Vegetables', 'Herbs', 'Flowers']
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <PremiumFeatureWrapper featureName="Planner">
+      <div className="min-h-screen bg-gray-50">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
@@ -1025,5 +1027,6 @@ export default function GardenPlannerPage() {
         </div>
       </div>
     </div>
+    </PremiumFeatureWrapper>
   )
 }

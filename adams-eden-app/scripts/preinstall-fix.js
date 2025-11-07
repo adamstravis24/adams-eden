@@ -54,6 +54,12 @@ function traverse(root, cb) {
 }
 
 (function main() {
+  // Skip on EAS Build - not needed there
+  if (process.env.EAS_BUILD) {
+    log('Running on EAS Build - skipping preinstall-fix');
+    return;
+  }
+
   const cwd = process.cwd();
   log(`CWD: ${cwd}`);
   // First, force perms on the whole project to be writable by current user

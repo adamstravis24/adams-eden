@@ -2,12 +2,14 @@
 
 import Link from 'next/link'
 import { useState, useEffect, useCallback } from 'react'
+import toast from 'react-hot-toast'
 import { Calendar as CalendarIcon, MapPin, Plus, X, Search, ChevronLeft, ChevronRight, Trash2, LayoutGrid, BarChart3 } from 'lucide-react'
 import { lookupZip } from '@/lib/zipStationLookup'
 import { getNoaaNormalsForZip, NoaaClimateSummary } from '@/lib/noaaClimateService'
 import { useAuth } from '@/contexts/AuthContext'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import PremiumFeatureWrapper from '@/components/PremiumFeatureWrapper'
 
 type PlantStage = {
   type: 'sow-indoors' | 'sow-outdoors' | 'transplant' | 'harvest'
@@ -63,6 +65,7 @@ const isPlantDatabaseEntry = (plant: unknown): plant is PlantDatabaseEntry => {
 
 export default function CalendarPage() {
   const { user } = useAuth()
+  const searchParams = useSearchParams()
   const [zipCode, setZipCode] = useState('')
   const [location, setLocation] = useState<string | null>(null)
   const [climateData, setClimateData] = useState<NoaaClimateSummary | null>(null)
@@ -75,7 +78,20 @@ export default function CalendarPage() {
   const [viewMode, setViewMode] = useState<'month' | 'year'>('year')
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
 
-  const handleZipLookup = useCallback(async (zip?: string) => {
+  // Handle subscription success/cancel
+  useEffect(() => {
+    const subscription = searchParams?.get('subscription')
+    if (subscription === 'success') {
+      toast.success('🎉 Welcome to Premium! You now have access to all features.')
+      // Remove query param
+      window.history.replaceState({}, '', '/calendar')
+    } else if (subscription === 'canceled') {
+      toast.error('Subscription canceled. You can try again anytime.')
+      window.history.replaceState({}, '', '/calendar')
+    }
+  }, [searchParams])
+
+  const handleZipLookup = useCallback(async (zip?: string) {
     const zipToLookup = (zip ?? zipCode).trim()
     if (!zipToLookup || zipToLookup.length < 5) {
       alert('Please enter a valid 5-digit ZIP code')
@@ -357,8 +373,9 @@ export default function CalendarPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <PremiumFeatureWrapper featureName="Calendar">
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-4xl font-bold text-gray-900 mb-2 flex items-center">
@@ -703,5 +720,6 @@ export default function CalendarPage() {
         </div>
       )}
     </div>
+    </PremiumFeatureWrapper>
   )
 }

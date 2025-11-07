@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
+import PremiumFeatureWrapper from '@/components/PremiumFeatureWrapper'
 import {
   collection,
   query,
@@ -726,7 +727,8 @@ export default function TrackerPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <PremiumFeatureWrapper featureName="Tracker">
+      <div className="relative min-h-screen overflow-hidden">
       <span className="floating-orb w-72 h-72 -left-24 top-32 bg-emerald-300/30" />
       <span className="floating-orb w-96 h-96 right-[-160px] top-24 bg-lime-300/25" />
       <span className="floating-orb w-64 h-64 bottom-10 left-1/2 -translate-x-1/2 bg-sky-200/20" />
@@ -1685,5 +1687,6 @@ export default function TrackerPage() {
         </div>
       )}
     </div>
+    </PremiumFeatureWrapper>
   )
 }

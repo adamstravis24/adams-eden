@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { CartProvider } from '@/contexts/cart/CartContext'
+import { SubscriptionProvider } from '@/contexts/SubscriptionContext'
 import SiteLayout from '@/components/SiteLayout'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -23,12 +24,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <CartProvider>
-            <SiteLayout>
-              <main>{children}</main>
-              <Toaster position="top-right" />
-            </SiteLayout>
-          </CartProvider>
+          <SubscriptionProvider>
+            <CartProvider>
+              <SiteLayout>
+                <main>{children}</main>
+                <Toaster position="top-right" />
+              </SiteLayout>
+            </CartProvider>
+          </SubscriptionProvider>
         </AuthProvider>
       </body>
     </html>
