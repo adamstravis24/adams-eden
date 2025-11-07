@@ -26,30 +26,12 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       setLoading(false);
       return;
     }
-
-    // Temporary: Set specific user as premium for testing
-    // TODO: Enable Firebase listener once database webhooks are working
-    if (user.uid === 'oe4p9vUZnjZwioRJwHkp5ORqmEK2') {
-      setSubscription({ 
-        status: 'active',
-        subscriptionId: 'sub_1SQoqQ1zHMVbryCrZ4PnVksi',
-        planType: 'annual',
-        currentPeriodEnd: Date.now() / 1000 + (365 * 24 * 60 * 60), // 1 year from now
-        cancelAtPeriodEnd: false
-      });
-    } else {
-      setSubscription({ status: 'none' });
-    }
-    setLoading(false);
-    return;
-
-    /* TEMPORARILY DISABLED - Enable once webhooks are working
-    // Listen to user's subscription status in Firebase
+    // Listen to user's subscription status in Firebase Realtime Database
     const subscriptionRef = ref(database, `users/${user.uid}/subscription`);
-    
+
     const unsubscribe = onValue(subscriptionRef, (snapshot) => {
       const data = snapshot.val();
-      
+
       if (data) {
         setSubscription({
           status: data.status || 'none',
@@ -61,14 +43,14 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       } else {
         setSubscription({ status: 'none' });
       }
-      
+
       setLoading(false);
     });
 
     return () => {
       off(subscriptionRef);
+      unsubscribe();
     };
-    */
   }, [user]);
 
   const isPremium = subscription?.status === 'active' || subscription?.status === 'trialing';
