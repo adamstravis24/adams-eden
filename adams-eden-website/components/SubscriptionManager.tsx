@@ -29,8 +29,9 @@ export default function SubscriptionManager() {
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || 'Request failed')
       toast.success('Subscription will cancel at period end')
-    } catch (e: any) {
-      toast.error(e?.message || 'Failed to cancel subscription')
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : 'Failed to cancel subscription'
+      toast.error(msg)
     } finally {
       setBusy(false)
     }

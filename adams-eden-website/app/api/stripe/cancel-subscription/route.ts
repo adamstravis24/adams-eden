@@ -54,9 +54,9 @@ export async function POST(req: NextRequest) {
       cancelAtPeriodEnd: result.cancel_at_period_end,
       currentPeriodEnd: result.current_period_end,
     })
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Cancel subscription error:', err)
-    const message = err?.message || 'Internal error'
+    const message = err instanceof Error ? err.message : 'Internal error'
     return NextResponse.json({ error: message }, { status: 500 })
   }
 }
