@@ -166,7 +166,7 @@ export default function DownloadAppPage() {
               href="/planner"
               className="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition shadow-lg"
             >
-              Start Planning Free
+              Start Planning
             </Link>
             <a
               href="#"

@@ -65,7 +65,6 @@ const isPlantDatabaseEntry = (plant: unknown): plant is PlantDatabaseEntry => {
 
 export default function CalendarPage() {
   const { user } = useAuth()
-  const searchParams = useSearchParams()
   const [zipCode, setZipCode] = useState('')
   const [location, setLocation] = useState<string | null>(null)
   const [climateData, setClimateData] = useState<NoaaClimateSummary | null>(null)
@@ -78,20 +77,7 @@ export default function CalendarPage() {
   const [viewMode, setViewMode] = useState<'month' | 'year'>('year')
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
 
-  // Handle subscription success/cancel
-  useEffect(() => {
-    const subscription = searchParams?.get('subscription')
-    if (subscription === 'success') {
-      toast.success('🎉 Welcome to Premium! You now have access to all features.')
-      // Remove query param
-      window.history.replaceState({}, '', '/calendar')
-    } else if (subscription === 'canceled') {
-      toast.error('Subscription canceled. You can try again anytime.')
-      window.history.replaceState({}, '', '/calendar')
-    }
-  }, [searchParams])
-
-  const handleZipLookup = useCallback(async (zip?: string) {
+  const handleZipLookup = useCallback(async (zip?: string) => {
     const zipToLookup = (zip ?? zipCode).trim()
     if (!zipToLookup || zipToLookup.length < 5) {
       alert('Please enter a valid 5-digit ZIP code')

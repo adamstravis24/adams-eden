@@ -67,7 +67,7 @@ export default function PremiumFeatureWrapper({
               </button>
 
               <p className="mt-4 text-sm text-slate-500">
-                Starting at $4.99/month • Cancel anytime
+                Starting at $5.99/month • Cancel anytime
               </p>
             </div>
           </div>

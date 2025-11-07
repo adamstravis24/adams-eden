@@ -36,7 +36,7 @@ Update your `adams-eden-website/.env.local` file:
 
 ```env
 # Stripe Keys (already have these)
-STRIPE_SECRET_KEY=sk_test_your_key_here
+STRIPE_SECRET_KEY=sk_test_... # Your secret key from Stripe dashboard
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_... # Your publishable key
 
 # Replace these with actual Price IDs from Step 1

@@ -89,8 +89,12 @@ export async function POST(request: NextRequest) {
 
 async function updateUserSubscription(userId: string, subscriptionId: string) {
   try {
-    if (!stripe) return;
+    if (!stripe) {
+      console.error('Stripe not initialized');
+      return;
+    }
 
+    console.log('Updating subscription for user:', userId);
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
     
     const subscriptionData = {
@@ -102,11 +106,20 @@ async function updateUserSubscription(userId: string, subscriptionId: string) {
       updatedAt: Date.now(),
     };
 
+    console.log('Subscription data:', subscriptionData);
+
     // Update in Firebase
     if (adminDb) {
+      console.log('Writing to Firebase at path:', `users/${userId}/subscription`);
       await adminDb.ref(`users/${userId}/subscription`).set(subscriptionData);
+      console.log('Successfully wrote to Firebase');
+    } else {
+      console.error('adminDb is not initialized');
     }
   } catch (error) {
     console.error('Failed to update user subscription:', error);
+    if (error instanceof Error) {
+      console.error('Error details:', error.message, error.stack);
+    }
   }
 }

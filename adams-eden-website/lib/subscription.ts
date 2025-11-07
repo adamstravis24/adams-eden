@@ -5,7 +5,7 @@ export const SUBSCRIPTION_PLANS = {
   MONTHLY: {
     name: 'Adams Eden Premium - Monthly',
     priceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || 'price_monthly_replace_me',
-    price: 4.99,
+    price: 5.99,
     interval: 'month',
   },
   ANNUAL: {
@@ -13,7 +13,7 @@ export const SUBSCRIPTION_PLANS = {
     priceId: process.env.NEXT_PUBLIC_STRIPE_ANNUAL_PRICE_ID || 'price_annual_replace_me',
     price: 49.99,
     interval: 'year',
-    savings: '17%', // Save $10/year
+    savings: '31%', // Save $22.89/year
   },
 } as const;
 
