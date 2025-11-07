@@ -16,7 +16,7 @@ export default function PremiumFeatureWrapper({
   featureName,
   showPreview = false 
 }: PremiumFeatureWrapperProps) {
-  const { isPremium, loading, checkFeatureAccess } = useSubscription();
+  const { loading, checkFeatureAccess } = useSubscription();
   const [showPaywall, setShowPaywall] = useState(false);
 
   const hasAccess = checkFeatureAccess(featureName);

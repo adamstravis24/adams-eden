@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useState, useEffect, useCallback } from 'react'
-import toast from 'react-hot-toast'
 import { Calendar as CalendarIcon, MapPin, Plus, X, Search, ChevronLeft, ChevronRight, Trash2, LayoutGrid, BarChart3 } from 'lucide-react'
 import { lookupZip } from '@/lib/zipStationLookup'
 import { getNoaaNormalsForZip, NoaaClimateSummary } from '@/lib/noaaClimateService'
