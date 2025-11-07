@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import Stripe from 'stripe';
 import { adminDb } from '@/lib/firebase-admin';
+import { SUBSCRIPTION_PLANS } from '@/lib/subscription';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -72,6 +73,25 @@ export async function POST(request: NextRequest) {
         break;
       }
 
+      case 'invoice.payment_succeeded': {
+        const invoice = event.data.object as Stripe.Invoice;
+        const subscriptionId = invoice.subscription as string | null;
+        const customerId = invoice.customer as string | null;
+        // We don't get userId directly here; rely on subscription metadata on fetch
+        if (subscriptionId) {
+          try {
+            const sub = await stripe.subscriptions.retrieve(subscriptionId);
+            const userId = sub.metadata.userId;
+            if (userId) {
+              await updateUserSubscription(userId, subscriptionId);
+            }
+          } catch (e) {
+            console.warn('Unable to refresh subscription on payment_succeeded:', { subscriptionId, customerId }, e);
+          }
+        }
+        break;
+      }
+
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice;
         const subscriptionId = invoice.subscription as string;
@@ -94,6 +114,15 @@ export async function POST(request: NextRequest) {
   }
 }
 
+function derivePlanType(s: Stripe.Subscription): 'monthly' | 'annual' {
+  const priceId = s.items.data[0]?.price?.id;
+  const monthlyId = SUBSCRIPTION_PLANS.MONTHLY.priceId;
+  const annualId = SUBSCRIPTION_PLANS.ANNUAL.priceId;
+  if (priceId && monthlyId && priceId === monthlyId) return 'monthly';
+  if (priceId && annualId && priceId === annualId) return 'annual';
+  return (s.metadata.planType as 'monthly' | 'annual') || 'monthly';
+}
+
 async function updateUserSubscription(userId: string, subscriptionId: string) {
   try {
     if (!stripe) {
@@ -104,14 +133,22 @@ async function updateUserSubscription(userId: string, subscriptionId: string) {
     console.log('Updating subscription for user:', userId);
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
     
+    const planType = derivePlanType(subscription);
+    const priceId = subscription.items.data[0]?.price?.id || null;
     const subscriptionData = {
       subscriptionId: subscription.id,
       status: subscription.status,
-      planType: subscription.metadata.planType || 'monthly',
+      planType,
+      priceId,
+      customerId: (subscription.customer as string) || null,
+      currentPeriodStart: subscription.current_period_start,
       currentPeriodEnd: subscription.current_period_end,
+      cancelAt: subscription.cancel_at || null,
       cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      canceledAt: subscription.canceled_at || null,
+      endedAt: subscription.ended_at || null,
       updatedAt: Date.now(),
-    };
+    } as const;
 
     console.log('Subscription data:', subscriptionData);
 
