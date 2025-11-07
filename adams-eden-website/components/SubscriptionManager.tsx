@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useSubscription } from '@/contexts/SubscriptionContext'
 import toast from 'react-hot-toast'
@@ -39,9 +39,16 @@ export default function SubscriptionManager() {
 
   if (loading) return null
 
-  const periodEnd = subscription?.currentPeriodEnd
-    ? new Date(subscription.currentPeriodEnd * 1000).toLocaleDateString()
-    : null
+  const periodStart = useMemo(() => subscription?.currentPeriodStart ? new Date(subscription.currentPeriodStart * 1000) : null, [subscription])
+  const periodEnd = useMemo(() => subscription?.currentPeriodEnd ? new Date(subscription.currentPeriodEnd * 1000) : null, [subscription])
+  const remainingDays = useMemo(() => {
+    if (!periodEnd) return null
+    const now = Date.now()
+    const diff = periodEnd.getTime() - now
+    return diff > 0 ? Math.ceil(diff / (1000 * 60 * 60 * 24)) : 0
+  }, [periodEnd])
+  const formattedStart = periodStart ? periodStart.toLocaleDateString() : null
+  const formattedEnd = periodEnd ? periodEnd.toLocaleDateString() : null
 
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-6">
@@ -53,8 +60,17 @@ export default function SubscriptionManager() {
         {subscription?.planType && (
           <div><span className="text-slate-500">Plan:</span> <span className="font-medium capitalize">{subscription.planType}</span></div>
         )}
-        {periodEnd && (
-          <div><span className="text-slate-500">Renews / Ends:</span> <span className="font-medium">{periodEnd}</span></div>
+        {formattedStart && (
+          <div><span className="text-slate-500">Period Start:</span> <span className="font-medium">{formattedStart}</span></div>
+        )}
+        {formattedEnd && (
+          <div><span className="text-slate-500">Period End:</span> <span className="font-medium">{formattedEnd}</span>{remainingDays !== null && <span className="ml-2 text-xs text-slate-500">({remainingDays} day{remainingDays === 1 ? '' : 's'} left)</span>}</div>
+        )}
+        {subscription?.priceId && (
+          <div><span className="text-slate-500">Price ID:</span> <span className="font-mono text-xs">{subscription.priceId}</span></div>
+        )}
+        {subscription?.cancelAtPeriodEnd && subscription?.currentPeriodEnd && (
+          <div className="text-amber-600 text-xs">Access retained until end of period.</div>
         )}
         {subscription?.cancelAtPeriodEnd && (
           <div className="text-amber-600">Cancellation scheduled at period end.</div>

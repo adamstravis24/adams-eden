@@ -33,13 +33,22 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       const data = snapshot.val();
 
       if (data) {
-        setSubscription({
+        const mapped: UserSubscription = {
           status: data.status || 'none',
           subscriptionId: data.subscriptionId,
           planType: data.planType,
           currentPeriodEnd: data.currentPeriodEnd,
+            // Extended lifecycle fields
+          currentPeriodStart: data.currentPeriodStart,
+          priceId: data.priceId,
+          customerId: data.customerId,
+          cancelAt: data.cancelAt ?? null,
           cancelAtPeriodEnd: data.cancelAtPeriodEnd,
-        });
+          canceledAt: data.canceledAt ?? null,
+          endedAt: data.endedAt ?? null,
+          updatedAt: data.updatedAt,
+        };
+        setSubscription(mapped);
       } else {
         setSubscription({ status: 'none' });
       }

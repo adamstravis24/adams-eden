@@ -35,4 +35,11 @@ export type UserSubscription = {
   planType?: 'monthly' | 'annual';
   currentPeriodEnd?: number; // Unix timestamp
   cancelAtPeriodEnd?: boolean;
+  currentPeriodStart?: number; // Unix timestamp
+  priceId?: string;
+  customerId?: string;
+  cancelAt?: number | null; // When Stripe will cancel (if set)
+  canceledAt?: number | null; // When it was actually canceled
+  endedAt?: number | null; // When it ended (Stripe end timestamp)
+  updatedAt?: number; // When we last synced from webhook
 };

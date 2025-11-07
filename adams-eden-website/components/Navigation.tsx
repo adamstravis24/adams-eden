@@ -8,6 +8,8 @@ import { useCart } from '@/contexts/cart/CartContext'
 import { useEffect, useRef, useState } from 'react'
 import { ShoppingCart } from 'lucide-react'
 import Avatar from './Avatar'
+import dynamic from 'next/dynamic'
+const SubscriptionBadge = dynamic(() => import('./SubscriptionBadge'), { ssr: false })
 
 export default function Navigation() {
   const { user, userProfile, signOut, loading: authLoading } = useAuth()
@@ -106,6 +108,7 @@ export default function Navigation() {
                 <span className="text-xs uppercase tracking-[0.35em] text-primary-500/70">Garden Center & Nursery</span>
                 <span className="text-2xl font-extrabold text-slate-800">Adams Eden</span>
               </div>
+              <SubscriptionBadge />
             </Link>
 
             <div className="hidden md:flex items-center gap-8">
