@@ -39,9 +39,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-slate-800 mb-1">Visit Our Nursery</h3>
                     <p className="text-slate-600">
-                      Adams Eden Garden Center & Nursery<br />
-                      123 Garden Street<br />
-                      Portland, OR 97201
+                      TBD
                     </p>
                   </div>
                 </div>
@@ -55,9 +53,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-slate-800 mb-1">Phone</h3>
                     <p className="text-slate-600">
-                      (555) 123-GROW<br />
-                      Mon-Sat: 9AM - 6PM PST<br />
-                      Sun: 10AM - 5PM PST
+                      816-786-8397
                     </p>
                   </div>
                 </div>
@@ -71,9 +67,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-slate-800 mb-1">Email</h3>
                     <p className="text-slate-600">
-                      <a href="mailto:info@adamseden.com" className="text-primary-600 hover:underline">info@adamseden.com</a><br />
-                      <a href="mailto:support@adamseden.com" className="text-primary-600 hover:underline">support@adamseden.com</a><br />
-                      <a href="mailto:growing@adamseden.com" className="text-primary-600 hover:underline">growing@adamseden.com</a>
+                      <a href="mailto:travis.adams@adamsedenbranson.com" className="text-primary-600 hover:underline">travis.adams@adamsedenbranson.com</a>
                     </p>
                   </div>
                 </div>
@@ -87,9 +81,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-slate-800 mb-1">Business Hours</h3>
                     <p className="text-slate-600">
-                      Monday - Saturday: 9:00 AM - 6:00 PM<br />
-                      Sunday: 10:00 AM - 5:00 PM<br />
-                      <em>Holiday hours may vary</em>
+                      TBD
                     </p>
                   </div>
                 </div>
