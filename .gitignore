@@ -43,4 +43,6 @@ service-account.json
 
 # generated native folders
 /ios
+# Ignore root android but allow app-specific android directory
 /android
+!adams-eden-app/android/**
