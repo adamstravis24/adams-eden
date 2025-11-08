@@ -13,20 +13,42 @@ const firebaseConfig = {
   appId: requireEnv('EXPO_PUBLIC_FIREBASE_APP_ID'),
 };
 
+function validateFirebaseConfig(cfg: typeof firebaseConfig) {
+  const missing: string[] = [];
+  Object.entries(cfg).forEach(([k, v]) => {
+    if (!v || v.trim() === '') missing.push(k);
+  });
+  if (missing.length) {
+    throw new Error(`[firebase] Missing required config keys: ${missing.join(', ')}. Ensure EXPO_PUBLIC_* values are set as EAS build secrets or env in eas.json.`);
+  }
+  if (__DEV__) {
+    // Help verify we didn't accidentally bundle empty values
+    console.log('[firebase] Config OK', { projectId: cfg.projectId, apiKeyPreview: cfg.apiKey.slice(0, 12) + '…' });
+  }
+}
+
+validateFirebaseConfig(firebaseConfig);
+
 // Initialize Firebase (singleton pattern)
 let app: FirebaseApp;
 let auth: Auth;
 let db: Firestore;
 
-if (getApps().length === 0) {
-  app = initializeApp(firebaseConfig);
-  // Ensure persisted auth state on React Native via AsyncStorage
-  auth = initializeAuth(app);
-  db = getFirestore(app);
-} else {
-  app = getApp();
-  auth = getAuth(app);
-  db = getFirestore(app);
+try {
+  if (getApps().length === 0) {
+    app = initializeApp(firebaseConfig);
+    // Ensure persisted auth state on React Native via AsyncStorage
+    auth = initializeAuth(app);
+    db = getFirestore(app);
+  } else {
+    app = getApp();
+    auth = getAuth(app);
+    db = getFirestore(app);
+  }
+} catch (e) {
+  // Fail fast with clearer context than a downstream JniException
+  console.error('[firebase] Initialization failed:', e);
+  throw e; // rethrow so error boundary / global handler sees it
 }
 
 export { app, auth, db };
