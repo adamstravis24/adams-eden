@@ -39,6 +39,4 @@ yarn-error.*
 
 # generated native folders
 /ios
-# Keep android in version control to customize Gradle/JDK for EAS Build
-#! Ignoring android can break production builds when AGP requires specific JDK
-#/android
+/android
