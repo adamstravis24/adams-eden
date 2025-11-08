@@ -37,10 +37,13 @@ export default function SubscriptionManager() {
     }
   }
 
-  if (loading) return null
-
-  const periodStart = useMemo(() => subscription?.currentPeriodStart ? new Date(subscription.currentPeriodStart * 1000) : null, [subscription])
-  const periodEnd = useMemo(() => subscription?.currentPeriodEnd ? new Date(subscription.currentPeriodEnd * 1000) : null, [subscription])
+  // Ensure hooks are not called conditionally. Compute memoized dates regardless of loading state.
+  const periodStart = useMemo(() => {
+    return subscription?.currentPeriodStart ? new Date(subscription.currentPeriodStart * 1000) : null
+  }, [subscription])
+  const periodEnd = useMemo(() => {
+    return subscription?.currentPeriodEnd ? new Date(subscription.currentPeriodEnd * 1000) : null
+  }, [subscription])
   const remainingDays = useMemo(() => {
     if (!periodEnd) return null
     const now = Date.now()
@@ -49,6 +52,8 @@ export default function SubscriptionManager() {
   }, [periodEnd])
   const formattedStart = periodStart ? periodStart.toLocaleDateString() : null
   const formattedEnd = periodEnd ? periodEnd.toLocaleDateString() : null
+
+  if (loading) return null
 
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-6">

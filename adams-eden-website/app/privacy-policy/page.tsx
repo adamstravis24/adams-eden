@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
     <main className="prose mx-auto px-4 py-8">
       <h1>Privacy Policy</h1>
       <p><em>Last updated: 2025-11-07</em></p>
-      <p>Adams Eden ("the App") respects your privacy. This page explains what data we collect, how we use it, and the choices you have. By using the App you consent to the practices described here.</p>
+  <p>Adams Eden (&quot;the App&quot;) respects your privacy. This page explains what data we collect, how we use it, and the choices you have. By using the App you consent to the practices described here.</p>
       <h2>1. Data We Collect</h2>
       <h3>Account & Authentication</h3>
       <ul>
