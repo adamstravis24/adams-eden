@@ -18,7 +18,11 @@
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64",
+        "JAVA_TOOL_OPTIONS": "-XX:+UseParallelGC"
+      }
     }
   },
   "submit": {
