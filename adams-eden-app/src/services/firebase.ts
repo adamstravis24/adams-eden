@@ -35,6 +35,8 @@ let app: FirebaseApp;
 let auth: Auth;
 let db: Firestore;
 
+let firebaseInitError: any = null;
+let firebaseInitialized = false;
 try {
   if (getApps().length === 0) {
     app = initializeApp(firebaseConfig);
@@ -45,8 +47,6 @@ try {
     db = getFirestore(app);
   } else {
     app = getApp();
-    // If Auth wasn't initialized yet (e.g., by a different module), getAuth() will initialize with default
-    // persistence which is not suitable for RN. Ensure we've initialized once with RN persistence.
     try {
       auth = getAuth(app);
     } catch {
@@ -56,10 +56,13 @@ try {
     }
     db = getFirestore(app);
   }
+  firebaseInitialized = true;
 } catch (e) {
-  // Fail fast with clearer context than a downstream JniException
+  // Log the error but don't rethrow — export the failure so the app can render an error screen
   console.error('[firebase] Initialization failed:', e);
-  throw e; // rethrow so error boundary / global handler sees it
+  firebaseInitError = e;
 }
+
+export { firebaseInitError, firebaseInitialized };
 
 export { app, auth, db };

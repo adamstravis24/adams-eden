@@ -23,6 +23,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { StatusBar } from 'expo-status-bar';
 import ErrorBoundary from './src/components/ErrorBoundary';
+import { firebaseInitError, firebaseInitialized } from './src/services/firebase';
 import ReactNative, { useEffect } from 'react';
 import { initializeNotifications } from './src/services/notifications';
 import { registerWeatherBackgroundTask } from './src/services/notifications';
@@ -296,7 +297,20 @@ export default function App() {
           <AuthProvider>
             <GardenProvider>
               <ErrorBoundary>
-                <ThemedNavigation />
+                {firebaseInitError ? (
+                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+                    <MaterialCommunityIcons name="alert-circle-outline" size={72} color="#dc2626" />
+                    <Text style={{ marginTop: 16, fontSize: 18, fontWeight: '600', textAlign: 'center' }}>App configuration error</Text>
+                    <Text style={{ marginTop: 12, fontSize: 14, textAlign: 'center', opacity: 0.8 }}>
+                      Firebase failed to initialize. Please update the app once a fix is deployed.
+                    </Text>
+                    <Text style={{ marginTop: 12, fontSize: 12, textAlign: 'center', opacity: 0.6 }}>
+                      {String(firebaseInitError)}
+                    </Text>
+                  </View>
+                ) : (
+                  <ThemedNavigation />
+                )}
               </ErrorBoundary>
             </GardenProvider>
           </AuthProvider>
