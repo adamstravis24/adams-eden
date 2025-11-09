@@ -29,6 +29,14 @@ function validateFirebaseConfig(cfg: typeof firebaseConfig) {
 }
 
 validateFirebaseConfig(firebaseConfig);
+if (!__DEV__) {
+  // Minimal production diagnostic (won't expose full key) helpful while tracking auth/invalid-api-key
+  console.log('[firebase] config summary', {
+    projectId: firebaseConfig.projectId,
+    storageBucket: firebaseConfig.storageBucket,
+    apiKeyPrefix: firebaseConfig.apiKey.slice(0, 8) + '…',
+  });
+}
 
 // Initialize Firebase (singleton pattern)
 let app: FirebaseApp;
