@@ -99,9 +99,10 @@ const CATEGORIES: Record<string, CategoryInfo> = {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }> | { slug: string };
 }): Promise<Metadata> {
-  const category = CATEGORIES[params.slug];
+  const resolvedParams = params instanceof Promise ? await params : params;
+  const category = CATEGORIES[resolvedParams.slug];
   
   if (!category) {
     return {
@@ -150,17 +151,18 @@ export default async function CategoryPage({
   params,
   searchParams,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }> | { slug: string };
   searchParams: Promise<{ type?: string }> | { type?: string };
 }) {
-  const category = CATEGORIES[params.slug];
+  // Handle params and searchParams as Promise (Next.js 15) or object (Next.js 14)
+  const resolvedParams = params instanceof Promise ? await params : params;
+  const resolvedSearchParams = searchParams instanceof Promise ? await searchParams : searchParams;
+  
+  const category = CATEGORIES[resolvedParams.slug];
 
   if (!category) {
     notFound();
   }
-
-  // Handle searchParams as Promise (Next.js 15) or object (Next.js 14)
-  const resolvedSearchParams = searchParams instanceof Promise ? await searchParams : searchParams;
 
   const allProducts = await getAllProducts();
   let categoryProducts = filterProductsByCategory(
@@ -174,7 +176,7 @@ export default async function CategoryPage({
   let flowerAnnuals: ShopifyProduct[] = [];
   let flowerPerennials: ShopifyProduct[] = [];
   
-  if (params.slug === "flowers") {
+  if (resolvedParams.slug === "flowers") {
     categoryProducts.forEach((product) => {
       const haystack = [
         product.title,
@@ -208,7 +210,7 @@ export default async function CategoryPage({
   // Special handling for vegetables - group by type for filtering
   let vegetableGroups: Record<string, ShopifyProduct[]> | null = null;
   let vegetableTypes: string[] = [];
-  if (params.slug === "vegetables") {
+  if (resolvedParams.slug === "vegetables") {
     // Group vegetables by type (tomatoes together, carrots together, etc.)
     vegetableGroups = {};
     const other: ShopifyProduct[] = [];
@@ -262,10 +264,10 @@ export default async function CategoryPage({
       // Sort all products A-Z for display
       categoryProducts = [...categoryProducts].sort((a, b) => a.title.localeCompare(b.title));
     }
-  } else if (params.slug !== "flowers") {
+  } else if (resolvedParams.slug !== "flowers") {
     // Sort A-Z for categories that need it (herbs, houseplants, succulents)
     const sortCategories = ["herbs", "houseplants", "succulents-cacti"];
-    if (sortCategories.includes(params.slug)) {
+    if (sortCategories.includes(resolvedParams.slug)) {
       categoryProducts = [...categoryProducts].sort((a, b) => a.title.localeCompare(b.title));
     }
   }
@@ -298,7 +300,7 @@ export default async function CategoryPage({
               </p>
               
               {/* Subcategory Navigation for Flowers */}
-              {params.slug === "flowers" && (
+              {resolvedParams.slug === "flowers" && (
                 <div className="mt-6 flex gap-4">
                   <a
                     href="#perennials"
@@ -324,7 +326,7 @@ export default async function CategoryPage({
               )}
               
               {/* Subcategory Navigation for Vegetables */}
-              {params.slug === "vegetables" && vegetableTypes.length > 0 && (
+              {resolvedParams.slug === "vegetables" && vegetableTypes.length > 0 && (
                 <div className="mt-6">
                   <p className="mb-3 text-sm font-semibold text-slate-700">Filter by type:</p>
                   <div className="flex flex-wrap gap-2">
@@ -356,7 +358,7 @@ export default async function CategoryPage({
               )}
               
               {/* Subcategory Navigation for Supplies */}
-              {params.slug === "gardening-supplies" && (
+              {resolvedParams.slug === "gardening-supplies" && (
                 <div className="mt-6 flex flex-wrap gap-4">
                   <Link
                     href="/shop/category/supplies-beds"
@@ -402,7 +404,7 @@ export default async function CategoryPage({
                 Back to Shop Home
               </Link>
             </div>
-          ) : params.slug === "flowers" ? (
+          ) : resolvedParams.slug === "flowers" ? (
             // Flowers page with sections for annuals and perennials
             <div className="space-y-12">
               {/* All Flowers Section */}
