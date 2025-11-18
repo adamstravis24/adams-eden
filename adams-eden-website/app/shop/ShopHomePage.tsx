@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ShoppingBag, Sparkles, Tag, TrendingUp, ArrowRight } from "lucide-react";
 import { formatMoney, ShopifyProduct } from "@/lib/shopify";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
+import { usePathname } from "next/navigation";
 
 type ShopHomePageProps = {
   products: ShopifyProduct[];
@@ -57,6 +58,9 @@ const SHOP_CATEGORIES = [
 ];
 
 export function ShopHomePage({ products }: ShopHomePageProps) {
+  const pathname = usePathname();
+  const isShopHome = pathname === "/shop";
+  
   // Get newest products (featured items)
   const featuredProducts = products.slice(0, 8);
   
@@ -68,6 +72,29 @@ export function ShopHomePage({ products }: ShopHomePageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-primary-50/30 to-white">
+      {/* Category Sidebar - Only on shop home */}
+      {isShopHome && (
+        <div className="fixed left-0 top-0 z-10 h-screen w-64 border-r border-slate-200 bg-white pt-24">
+          <div className="px-4 py-6">
+            <h2 className="mb-4 text-lg font-bold text-slate-900">Categories</h2>
+            <nav className="space-y-2">
+              {SHOP_CATEGORIES.map((category) => (
+                <Link
+                  key={category.slug}
+                  href={`/shop/category/${category.slug}`}
+                  className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-primary-50 hover:text-primary-700"
+                >
+                  <span className="text-2xl">{category.icon}</span>
+                  <span>{category.name}</span>
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </div>
+      )}
+      
+      {/* Main Content - Offset if sidebar is shown */}
+      <div className={isShopHome ? "ml-64" : ""}>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-primary-700 to-green-800 py-20 text-white">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
@@ -188,6 +215,7 @@ export function ShopHomePage({ products }: ShopHomePageProps) {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }

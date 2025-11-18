@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
 import { getAllProducts, ShopifyProduct } from "@/lib/shopify";
-import { ProductGrid } from "@/components/shop/ProductGrid";
+import { ProductList } from "@/components/shop/ProductList";
 
 type CategoryInfo = {
   name: string;
@@ -148,8 +148,10 @@ function filterProductsByCategory(
 
 export default async function CategoryPage({
   params,
+  searchParams,
 }: {
   params: { slug: string };
+  searchParams: { type?: string };
 }) {
   const category = CATEGORIES[params.slug];
 
@@ -164,8 +166,43 @@ export default async function CategoryPage({
     category.excludeKeywords
   );
 
-  // Special handling for vegetables - group by type (stored separately for display)
+  // Special handling for flowers - separate into annuals and perennials
+  let flowerAnnuals: ShopifyProduct[] = [];
+  let flowerPerennials: ShopifyProduct[] = [];
+  if (params.slug === "flowers") {
+    categoryProducts.forEach((product) => {
+      const haystack = [
+        product.title,
+        product.description,
+        product.productType,
+        ...(product.tags ?? []),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      
+      if (haystack.includes("annual") && !haystack.includes("perennial")) {
+        flowerAnnuals.push(product);
+      } else if (haystack.includes("perennial")) {
+        flowerPerennials.push(product);
+      } else {
+        // If unclear, add to both
+        flowerAnnuals.push(product);
+        flowerPerennials.push(product);
+      }
+    });
+    
+    // Sort both A-Z
+    flowerAnnuals = flowerAnnuals.sort((a, b) => a.title.localeCompare(b.title));
+    flowerPerennials = flowerPerennials.sort((a, b) => a.title.localeCompare(b.title));
+    
+    // All flowers sorted A-Z
+    categoryProducts = [...categoryProducts].sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  // Special handling for vegetables - group by type for filtering
   let vegetableGroups: Record<string, ShopifyProduct[]> | null = null;
+  let vegetableTypes: string[] = [];
   if (params.slug === "vegetables") {
     // Group vegetables by type (tomatoes together, carrots together, etc.)
     vegetableGroups = {};
@@ -210,11 +247,19 @@ export default async function CategoryPage({
       vegetableGroups["Other"] = other.sort((a, b) => a.title.localeCompare(b.title));
     }
 
-    // Flatten for count display
-    categoryProducts = Object.values(vegetableGroups).flat();
-  } else {
-    // Sort A-Z for categories that need it (flowers, herbs, houseplants, succulents)
-    const sortCategories = ["flowers", "flowers-perennials", "flowers-annuals", "herbs", "houseplants", "succulents-cacti"];
+    // Get sorted list of types for navigation
+    vegetableTypes = Object.keys(vegetableGroups).sort();
+
+    // Filter by type if searchParams.type is provided
+    if (searchParams.type && searchParams.type !== "all" && vegetableGroups[searchParams.type]) {
+      categoryProducts = vegetableGroups[searchParams.type];
+    } else {
+      // Sort all products A-Z for display
+      categoryProducts = [...categoryProducts].sort((a, b) => a.title.localeCompare(b.title));
+    }
+  } else if (params.slug !== "flowers") {
+    // Sort A-Z for categories that need it (herbs, houseplants, succulents)
+    const sortCategories = ["herbs", "houseplants", "succulents-cacti"];
     if (sortCategories.includes(params.slug)) {
       categoryProducts = [...categoryProducts].sort((a, b) => a.title.localeCompare(b.title));
     }
@@ -250,18 +295,58 @@ export default async function CategoryPage({
               {/* Subcategory Navigation for Flowers */}
               {params.slug === "flowers" && (
                 <div className="mt-6 flex gap-4">
-                  <Link
-                    href="/shop/category/flowers-perennials"
+                  <a
+                    href="#perennials"
                     className="rounded-lg border-2 border-primary-300 bg-white px-6 py-2.5 text-sm font-semibold text-primary-700 transition hover:bg-primary-50 hover:border-primary-400"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('flowers-perennials')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
                   >
                     🌺 Perennials
-                  </Link>
-                  <Link
-                    href="/shop/category/flowers-annuals"
+                  </a>
+                  <a
+                    href="#annuals"
                     className="rounded-lg border-2 border-primary-300 bg-white px-6 py-2.5 text-sm font-semibold text-primary-700 transition hover:bg-primary-50 hover:border-primary-400"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('flowers-annuals')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
                   >
                     🌻 Annuals
-                  </Link>
+                  </a>
+                </div>
+              )}
+              
+              {/* Subcategory Navigation for Vegetables */}
+              {params.slug === "vegetables" && vegetableTypes.length > 0 && (
+                <div className="mt-6">
+                  <p className="mb-3 text-sm font-semibold text-slate-700">Filter by type:</p>
+                  <div className="flex flex-wrap gap-2">
+                    <Link
+                      href="/shop/category/vegetables"
+                      className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold transition ${
+                        !searchParams.type || searchParams.type === "all"
+                          ? "border-primary-600 bg-primary-600 text-white"
+                          : "border-primary-300 bg-white text-primary-700 hover:bg-primary-50 hover:border-primary-400"
+                      }`}
+                    >
+                      All Vegetables
+                    </Link>
+                    {vegetableTypes.map((type) => (
+                      <Link
+                        key={type}
+                        href={`/shop/category/vegetables?type=${type}`}
+                        className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold transition capitalize ${
+                          searchParams.type === type
+                            ? "border-primary-600 bg-primary-600 text-white"
+                            : "border-primary-300 bg-white text-primary-700 hover:bg-primary-50 hover:border-primary-400"
+                        }`}
+                      >
+                        {type}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
               
@@ -312,22 +397,33 @@ export default async function CategoryPage({
                 Back to Shop Home
               </Link>
             </div>
-          ) : params.slug === "vegetables" && vegetableGroups ? (
-            // Special grouped display for vegetables
+          ) : params.slug === "flowers" ? (
+            // Flowers page with sections for annuals and perennials
             <div className="space-y-12">
-              {Object.keys(vegetableGroups)
-                .sort()
-                .map((type) => (
-                  <div key={type}>
-                    <h2 className="mb-6 text-2xl font-bold text-slate-900 capitalize">
-                      {type}
-                    </h2>
-                    <ProductGrid products={vegetableGroups![type]} />
-                  </div>
-                ))}
+              {/* All Flowers Section */}
+              <div>
+                <h2 className="mb-6 text-2xl font-bold text-slate-900">All Flowers</h2>
+                <ProductList products={categoryProducts} />
+              </div>
+              
+              {/* Perennials Section */}
+              {flowerPerennials.length > 0 && (
+                <div id="flowers-perennials" className="scroll-mt-8">
+                  <h2 className="mb-6 text-2xl font-bold text-slate-900">Perennials</h2>
+                  <ProductList products={flowerPerennials} />
+                </div>
+              )}
+              
+              {/* Annuals Section */}
+              {flowerAnnuals.length > 0 && (
+                <div id="flowers-annuals" className="scroll-mt-8">
+                  <h2 className="mb-6 text-2xl font-bold text-slate-900">Annuals</h2>
+                  <ProductList products={flowerAnnuals} />
+                </div>
+              )}
             </div>
           ) : (
-            <ProductGrid products={categoryProducts} />
+            <ProductList products={categoryProducts} />
           )}
         </div>
       </section>
