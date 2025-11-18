@@ -323,7 +323,7 @@ export async function getAllProducts(): Promise<ShopifyProduct[]> {
         }
       `;
 
-    const variables = cursor ? { first: pageSize, after: cursor } : { first: pageSize };
+    const variables: { first: number; after?: string } = cursor ? { first: pageSize, after: cursor } : { first: pageSize };
 
     const data = await shopifyFetch<{
       products: {
