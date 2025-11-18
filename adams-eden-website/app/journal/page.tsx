@@ -119,7 +119,17 @@ export default function JournalPage() {
 
     try {
       // Build entry data, only including optional fields if they have values
-      const entryData: any = {
+      const entryData: {
+        title: string
+        content: string
+        date: Timestamp
+        tags: string[]
+        images: string[]
+        updatedAt: Timestamp
+        plantName?: string
+        weather?: string
+        temperature?: string
+      } = {
         title: formTitle.trim(),
         content: formContent.trim(),
         date: Timestamp.fromDate(new Date(formDate)),
