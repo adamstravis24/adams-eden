@@ -42,14 +42,14 @@ const CATEGORIES: Record<string, CategoryInfo> = {
   "vegetables": {
     name: "Vegetables",
     description: "Fresh vegetables for your kitchen garden",
-    keywords: ["vegetable", "veggie", "seed", "seeds", "tomato", "carrot", "lettuce", "pepper", "cucumber", "squash", "bean", "pea", "corn", "broccoli", "cabbage", "onion", "garlic", "potato", "spinach", "kale", "radish", "beet", "turnip", "eggplant", "zucchini", "pepper", "bell pepper", "jalapeño", "habanero", "okra", "brussels sprout", "cauliflower", "asparagus", "artichoke", "leek", "shallot", "celery", "parsnip", "rutabaga", "kohlrabi", "swiss chard", "collard", "mustard green", "bok choy", "pak choi"],
-    excludeKeywords: ["herb", "flower", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed"],
+    keywords: ["vegetable", "veggie", "seed", "seeds", "tomato", "carrot", "lettuce", "pepper", "cucumber", "squash", "bean", "pea", "corn", "broccoli", "cabbage", "onion", "garlic", "potato", "spinach", "kale", "radish", "beet", "turnip", "eggplant", "zucchini", "pepper", "bell pepper", "jalapeño", "habanero", "okra", "brussels sprout", "cauliflower", "asparagus", "artichoke", "leek", "shallot", "celery", "parsnip", "rutabaga", "kohlrabi", "swiss chard", "collard", "mustard green", "bok choy", "pak choi", "banana pepper", "mung bean", "mustard", "pimento", "royal burgundy", "winter wheat", "purslane", "miner's lettuce"],
+    excludeKeywords: ["herb", "flower", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed", "gift", "gift card", "gift wrap"],
     icon: "🥕",
   },
   "herbs": {
     name: "Herbs",
     description: "Fresh culinary herbs and aromatic plants",
-    keywords: ["herb", "culinary", "aromatic", "spice", "seed", "seeds", "basil", "oregano", "thyme", "rosemary", "sage", "mint", "parsley", "cilantro", "coriander", "dill", "chive", "tarragon", "marjoram", "chervil", "fennel", "lavender", "lemongrass", "lemon balm", "stevia", "chamomile", "echinacea", "echinacea"],
+    keywords: ["herb", "culinary", "aromatic", "spice", "seed", "seeds", "basil", "oregano", "thyme", "rosemary", "sage", "mint", "parsley", "cilantro", "coriander", "dill", "chive", "tarragon", "marjoram", "chervil", "fennel", "lavender", "lemongrass", "lemon balm", "stevia", "chamomile", "echinacea", "medicinal herb", "shiso", "cardamom", "bee balm", "anise hyssop"],
     excludeKeywords: ["vegetable", "flower", "houseplant", "indoor", "succulent", "cactus", "diatomaceous earth", "diatomaceous", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed"],
     icon: "🌿",
   },
@@ -70,8 +70,8 @@ const CATEGORIES: Record<string, CategoryInfo> = {
   "gardening-supplies": {
     name: "Gardening Supplies",
     description: "Everything you need for successful gardening",
-    keywords: ["tool", "supply", "equipment", "pot", "planter", "tray", "container", "pruner", "scissors", "bed", "beds", "garden bed", "raised bed", "hydroponic", "hydro", "fertilizer", "nutrient", "soil", "potting mix"],
-    excludeKeywords: [],
+    keywords: ["tool", "supply", "equipment", "pot", "planter", "tray", "container", "pruner", "scissors", "bed", "beds", "garden bed", "raised bed", "hydroponic", "hydro", "fertilizer", "nutrient", "soil", "potting mix", "spray", "care", "treatment", "pest", "disease", "fungicide", "insecticide", "watering can", "saucer", "dome", "tie", "station", "humidistat", "remote", "fabric pot", "square pot", "liquid", "bloom", "diatomaceous", "leaf care", "plant leaf"],
+    excludeKeywords: ["seed", "seeds", "vegetable", "herb", "flower", "houseplant", "succulent", "cactus", "tomato", "carrot", "lettuce", "pepper", "cucumber", "squash", "bean", "pea", "corn", "broccoli", "cabbage", "onion", "garlic", "potato", "spinach", "kale", "radish", "beet", "turnip", "eggplant", "zucchini", "basil", "oregano", "thyme", "rosemary", "sage", "mint", "parsley", "cilantro", "coriander", "dill", "chive", "marigold", "zinnia", "sunflower", "daisy", "rose", "tulip", "daffodil", "lily", "iris", "peony", "hydrangea", "petunia", "pansy", "viola", "cosmos", "nasturtium", "calendula", "snapdragon"],
     icon: "🛠️",
   },
   "supplies-beds": {

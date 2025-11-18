@@ -74,7 +74,7 @@ export function ShopHomePage({ products }: ShopHomePageProps) {
     <div className="min-h-screen bg-gradient-to-b from-white via-primary-50/30 to-white">
       {/* Category Sidebar - Only on shop home */}
       {isShopHome && (
-        <div className="fixed left-0 top-0 z-10 h-screen w-64 border-r border-slate-200 bg-white pt-24">
+        <div className="sticky top-[100px] z-20 h-[calc(100vh-100px)] w-64 border-r border-slate-200 bg-white">
           <div className="px-4 py-6">
             <h2 className="mb-4 text-lg font-bold text-slate-900">Categories</h2>
             <nav className="space-y-2">
