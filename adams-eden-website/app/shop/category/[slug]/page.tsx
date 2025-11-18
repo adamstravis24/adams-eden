@@ -43,7 +43,7 @@ const CATEGORIES: Record<string, CategoryInfo> = {
     name: "Vegetables",
     description: "Fresh vegetables for your kitchen garden",
     keywords: ["vegetable", "veggie", "seed", "seeds", "tomato", "carrot", "lettuce", "pepper", "cucumber", "squash", "bean", "pea", "corn", "broccoli", "cabbage", "onion", "garlic", "potato", "spinach", "kale", "radish", "beet", "turnip", "eggplant", "zucchini", "pepper", "bell pepper", "jalapeño", "habanero", "okra", "brussels sprout", "cauliflower", "asparagus", "artichoke", "leek", "shallot", "celery", "parsnip", "rutabaga", "kohlrabi", "swiss chard", "collard", "mustard green", "bok choy", "pak choi", "banana pepper", "mung bean", "mustard", "pimento", "royal burgundy", "winter wheat", "purslane", "miner's lettuce"],
-    excludeKeywords: ["herb", "flower", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed", "gift", "gift card", "gift wrap"],
+    excludeKeywords: ["herb", "culinary", "aromatic", "spice", "flower", "bloom", "blossom", "perennial", "annual", "ornamental", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed", "gift", "gift card", "gift wrap", "tea", "medicinal", "elderberry", "dried", "lavender", "mint", "basil", "oregano", "thyme", "rosemary", "sage", "parsley", "cilantro", "coriander", "dill", "chive", "tarragon", "marjoram", "chervil", "fennel", "lemongrass", "lemon balm", "stevia", "chamomile", "echinacea", "shiso", "cardamom", "bee balm", "anise hyssop"],
     icon: "🥕",
   },
   "herbs": {
@@ -133,18 +133,43 @@ function filterProductsByCategory(
       .join(" ")
       .toLowerCase();
 
+    // Check if product matches any exclude keywords FIRST (more important)
+    const matchesExclude = excludeKeywords?.some((keyword) => 
+      haystack.includes(keyword.toLowerCase())
+    ) ?? false;
+    
+    // If it matches exclude keywords, don't include it
+    if (matchesExclude) {
+      return false;
+    }
+
     // Check if product matches include keywords
     const matchesInclude = keywords.some((keyword) => 
       haystack.includes(keyword.toLowerCase())
     );
 
-    // Check if product matches any exclude keywords
-    const matchesExclude = excludeKeywords?.some((keyword) => 
-      haystack.includes(keyword.toLowerCase())
-    ) ?? false;
+    // For vegetables category specifically, be more lenient with seed products
+    const isVegetableCategory = keywords.includes("vegetable") || keywords.includes("veggie");
+    if (isVegetableCategory && !matchesInclude) {
+      // Check if it has a vegetable name in title/description even if not tagged
+      const vegetableNames = ["tomato", "carrot", "lettuce", "pepper", "cucumber", "squash", "bean", "pea", "corn", 
+        "broccoli", "cabbage", "onion", "garlic", "potato", "spinach", "kale", "radish", 
+        "beet", "turnip", "eggplant", "zucchini", "okra", "brussels sprout", "cauliflower", 
+        "asparagus", "artichoke", "leek", "shallot", "celery", "parsnip", "rutabaga", 
+        "kohlrabi", "swiss chard", "collard", "mustard green", "bok choy", "pak choi",
+        "banana pepper", "mung bean", "mustard", "pimento", "royal burgundy", "winter wheat",
+        "purslane", "miner's lettuce", "delicata", "dragon", "nettle", "stinging nettle"];
+      
+      const hasVegetableName = vegetableNames.some(name => haystack.includes(name));
+      const hasSeedInTitle = haystack.includes("seed") || haystack.includes("seeds");
+      
+      // If it has a vegetable name and seed in title, it's likely a vegetable seed product
+      if (hasVegetableName && hasSeedInTitle) {
+        return true;
+      }
+    }
 
-    // Include only if matches include keywords AND doesn't match exclude keywords
-    return matchesInclude && !matchesExclude;
+    return matchesInclude;
   });
 }
 
