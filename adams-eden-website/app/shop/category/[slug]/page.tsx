@@ -14,6 +14,8 @@ type CategoryInfo = {
   icon: string;
 };
 
+export const dynamic = "force-dynamic";
+
 const CATEGORIES: Record<string, CategoryInfo> = {
   "houseplants": {
     name: "Houseplants",

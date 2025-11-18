@@ -126,7 +126,9 @@ export default function HomeDashboardPage() {
               if (!cancelled) setClimate(clim)
               // fetch forecast via our API
               try {
-                const res = await fetch(`/api/forecast?zip=${userZip}`)
+                const res = await fetch(`/api/forecast?zip=${userZip}&t=${Date.now()}`, {
+                  cache: 'no-store',
+                })
                 if (res.ok) {
                   const data = await res.json()
                   if (!cancelled) setForecast(data.periods?.slice(0, 7) || [])

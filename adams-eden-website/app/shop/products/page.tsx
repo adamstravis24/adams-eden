@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: "Browse our complete collection of plants, growing equipment, and garden supplies.",
 };
 
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function AllProductsPage() {
