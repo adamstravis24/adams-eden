@@ -164,7 +164,15 @@ export default async function CategoryPage({
     notFound();
   }
 
-  const allProducts = await getAllProducts();
+  let allProducts: ShopifyProduct[] = [];
+  try {
+    allProducts = await getAllProducts();
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    // Return empty array if fetch fails
+    allProducts = [];
+  }
+  
   let categoryProducts = filterProductsByCategory(
     allProducts, 
     category.keywords, 

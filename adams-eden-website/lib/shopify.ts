@@ -42,25 +42,38 @@ export async function shopifyFetch<TData, TVariables = Record<string, unknown>>(
     headers["Shopify-Storefront-Id"] = storefrontId;
   }
 
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ query, variables }),
-    cache: options.cache,
-    next: options.next || (options.tags ? { tags: options.tags } : undefined),
-  });
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ query, variables }),
+      cache: options.cache,
+      next: options.next || (options.tags ? { tags: options.tags } : undefined),
+    });
 
-  const body = await response.json();
+    if (!response.ok) {
+      throw new Error(`Shopify API request failed with status ${response.status}`);
+    }
 
-  if (!response.ok || body.errors) {
-    const error = body.errors?.[0];
-    throw new Error(
-      error?.message ||
-        `Shopify API request failed with status ${response.status}`
-    );
+    const body = await response.json();
+
+    if (!body || body.errors) {
+      const error = body?.errors?.[0];
+      throw new Error(
+        error?.message ||
+          `Shopify API request failed: ${JSON.stringify(body?.errors || 'Unknown error')}`
+      );
+    }
+
+    if (!body.data) {
+      throw new Error('Shopify API returned no data');
+    }
+
+    return body.data as TData;
+  } catch (error) {
+    console.error('Shopify fetch error:', error);
+    throw error;
   }
-
-  return body.data as TData;
 }
 
 export type ShopifyMoney = {
@@ -344,11 +357,16 @@ export async function getAllProducts(): Promise<ShopifyProduct[]> {
       } 
     });
 
-    const products = data.products.edges.map((edge) => normalizeProduct(edge.node));
+    if (!data || !data.products) {
+      console.error('Invalid data received from Shopify API');
+      break;
+    }
+
+    const products = data.products.edges?.map((edge) => normalizeProduct(edge.node)) || [];
     allProducts.push(...products);
 
-    hasNextPage = data.products.pageInfo.hasNextPage;
-    cursor = data.products.pageInfo.endCursor;
+    hasNextPage = data.products.pageInfo?.hasNextPage ?? false;
+    cursor = data.products.pageInfo?.endCursor ?? null;
   }
 
   return allProducts;
