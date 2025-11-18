@@ -21,27 +21,28 @@ const CATEGORIES: Record<string, CategoryInfo> = {
     name: "Houseplants",
     description: "Beautiful indoor plants to brighten any space",
     keywords: ["houseplant", "indoor plant", "interior plant", "foliage"],
-    excludeKeywords: ["light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro"],
+    excludeKeywords: ["light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed"],
     icon: "🪴",
   },
   "outdoor-plants": {
     name: "Outdoor Plants",
     description: "Hardy perennials, vibrant annuals, and garden favorites",
     keywords: ["outdoor", "garden", "perennial", "annual", "landscape"],
-    excludeKeywords: ["light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro"],
+    excludeKeywords: ["light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed"],
     icon: "🌿",
   },
   "succulents-cacti": {
     name: "Succulents & Cacti",
     description: "Low-maintenance desert beauties",
     keywords: ["succulent", "cactus", "cacti", "xerophyte", "desert", "arid"],
+    excludeKeywords: ["bed", "beds", "garden bed", "raised bed"],
     icon: "🌵",
   },
   "herbs-edibles": {
     name: "Herbs & Edibles",
     description: "Fresh culinary herbs and kitchen garden staples",
     keywords: ["herb", "culinary", "aromatic", "spice", "edible", "vegetable", "kitchen", "cooking"],
-    excludeKeywords: ["diatomaceous earth", "diatomaceous"],
+    excludeKeywords: ["diatomaceous earth", "diatomaceous", "bed", "beds", "garden bed", "raised bed"],
     icon: "🌱",
   },
   "lighting": {
@@ -65,7 +66,7 @@ const CATEGORIES: Record<string, CategoryInfo> = {
   "tools-supplies": {
     name: "Tools & Supplies",
     description: "Essential gardening tools and growing supplies",
-    keywords: ["tool", "supply", "equipment", "pot", "planter", "tray", "container", "pruner", "scissors"],
+    keywords: ["tool", "supply", "equipment", "pot", "planter", "tray", "container", "pruner", "scissors", "bed", "beds", "garden bed", "raised bed"],
     icon: "🛠️",
   },
 };

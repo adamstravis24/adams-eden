@@ -118,16 +118,30 @@ export default function JournalPage() {
     }
 
     try {
-      const entryData = {
+      // Build entry data, only including optional fields if they have values
+      const entryData: any = {
         title: formTitle.trim(),
         content: formContent.trim(),
         date: Timestamp.fromDate(new Date(formDate)),
         tags: formTags,
         images: [],
-        plantName: formPlantName.trim() || undefined,
-        weather: formWeather.trim() || undefined,
-        temperature: formTemperature.trim() || undefined,
         updatedAt: Timestamp.now(),
+      }
+
+      // Only include optional fields if they have values (omit undefined/empty)
+      const plantName = formPlantName.trim()
+      if (plantName) {
+        entryData.plantName = plantName
+      }
+
+      const weather = formWeather.trim()
+      if (weather) {
+        entryData.weather = weather
+      }
+
+      const temperature = formTemperature.trim()
+      if (temperature) {
+        entryData.temperature = temperature
       }
 
       if (editingEntry) {

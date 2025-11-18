@@ -34,20 +34,31 @@ async function getForecastForLatLon(lat: number, lon: number) {
   if (!fcRes.ok) {
     throw new Error(`NWS forecast error ${fcRes.status}`)
   }
-  const forecast = await fcRes.json()
-  const periods = (forecast?.properties?.periods || []) as NWSPeriod[]
-  return periods.map((p) => ({
-    name: p.name,
-    startTime: p.startTime,
-    endTime: p.endTime,
-    isDaytime: p.isDaytime,
-    temperature: p.temperature,
-    temperatureUnit: p.temperatureUnit,
-    windSpeed: p.windSpeed,
-    windDirection: p.windDirection,
-    shortForecast: p.shortForecast,
-    detailedForecast: p.detailedForecast
-  }))
+    const forecast = await fcRes.json()
+    const periods = (forecast?.properties?.periods || []) as NWSPeriod[]
+    const now = new Date()
+    // Filter out past periods - only return future forecast periods
+    return periods
+      .filter((p) => {
+        try {
+          const startTime = new Date(p.startTime)
+          return startTime > now
+        } catch {
+          return false
+        }
+      })
+      .map((p) => ({
+        name: p.name,
+        startTime: p.startTime,
+        endTime: p.endTime,
+        isDaytime: p.isDaytime,
+        temperature: p.temperature,
+        temperatureUnit: p.temperatureUnit,
+        windSpeed: p.windSpeed,
+        windDirection: p.windDirection,
+        shortForecast: p.shortForecast,
+        detailedForecast: p.detailedForecast
+      }))
 }
 
 export async function GET(request: NextRequest) {

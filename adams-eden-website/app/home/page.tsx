@@ -71,9 +71,19 @@ export default function HomeDashboardPage() {
 
   const freezeWarning = useMemo(() => {
     if (!forecast) return null
-    // Look at the next 5 nights
-    const nights = forecast.filter((p) => !p.isDaytime).slice(0, 5)
-    const risky = nights.find((n) => typeof n.temperature === 'number' && n.temperature <= 36)
+    const now = new Date()
+    // Filter to only future periods, then look at the next 5 nights
+    const futureNights = forecast
+      .filter((p) => {
+        try {
+          const startTime = new Date(p.startTime)
+          return !p.isDaytime && startTime > now
+        } catch {
+          return false
+        }
+      })
+      .slice(0, 5)
+    const risky = futureNights.find((n) => typeof n.temperature === 'number' && n.temperature <= 36)
     return risky ? `Freeze risk soon: ${risky.name} ${risky.temperature}°${risky.temperatureUnit}` : null
   }, [forecast])
 
@@ -131,7 +141,17 @@ export default function HomeDashboardPage() {
                 })
                 if (res.ok) {
                   const data = await res.json()
-                  if (!cancelled) setForecast(data.periods?.slice(0, 7) || [])
+                  const now = new Date()
+                  // Filter out past periods - only keep future ones
+                  const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
+                    try {
+                      const startTime = new Date(p.startTime)
+                      return startTime > now
+                    } catch {
+                      return false
+                    }
+                  })
+                  if (!cancelled) setForecast(futurePeriods.slice(0, 7))
                 } else {
                   throw new Error(`Forecast ${res.status}`)
                 }
@@ -147,8 +167,46 @@ export default function HomeDashboardPage() {
     }
 
     void load()
-    return () => { cancelled = true }
-  }, [user])
+    
+    // Refresh forecast when page becomes visible (user returns to tab)
+    const handleVisibilityChange = () => {
+      if (!document.hidden && user && zip) {
+        // Refetch forecast when page becomes visible
+        fetch(`/api/forecast?zip=${zip}&t=${Date.now()}`, {
+          cache: 'no-store',
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json()
+            }
+            throw new Error(`Forecast ${res.status}`)
+          })
+          .then((data) => {
+            const now = new Date()
+            const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
+              try {
+                const startTime = new Date(p.startTime)
+                return startTime > now
+              } catch {
+                return false
+              }
+            })
+            setForecast(futurePeriods.slice(0, 7))
+            setForecastError(null)
+          })
+          .catch(() => {
+            // Silently fail on refresh - don't overwrite existing forecast with error
+          })
+      }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    
+    return () => {
+      cancelled = true
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [user, zip])
 
   if (!user) {
     // Avoid layout shift while we decide

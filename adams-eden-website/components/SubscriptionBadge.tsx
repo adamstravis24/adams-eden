@@ -1,28 +1,109 @@
 "use client"
 
-import { useSubscription } from '@/contexts/SubscriptionContext'
 import { useAuth } from '@/contexts/AuthContext'
+import { useEffect, useState } from 'react'
+import { db } from '@/lib/firebase'
+import { doc, getDoc } from 'firebase/firestore'
+
+type ForecastPeriod = {
+  name: string
+  startTime: string
+  isDaytime: boolean
+  temperature: number
+  temperatureUnit: string
+  shortForecast: string
+}
 
 export default function SubscriptionBadge() {
-  const { subscription, isPremium, loading } = useSubscription()
   const { user, loading: authLoading } = useAuth()
+  const [weather, setWeather] = useState<{ temp: number; unit: string; forecast: string } | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  // Hide while loading auth/subscription state
-  if (loading || authLoading) return null
+  useEffect(() => {
+    if (authLoading || !user) {
+      setLoading(false)
+      return
+    }
 
-  // Only show a badge for signed-in users; for visitors, don't show anything
-  if (!user) return null
+    let cancelled = false
 
-  // Show Premium badge only when premium; otherwise hide (avoid confusing "Free" tag in header)
-  if (!isPremium) return null
+    const loadWeather = async () => {
+      try {
+        // Get user's zip code from profile
+        const profileSnap = await getDoc(doc(db, 'users', user.uid))
+        const prof = profileSnap.exists() ? profileSnap.data() : null
+        const userZip = prof?.preferences?.zipCode || ''
 
-  const color = 'bg-emerald-100 text-emerald-700 border-emerald-300'
+        if (!userZip) {
+          if (!cancelled) {
+            setWeather(null)
+            setLoading(false)
+          }
+          return
+        }
+
+        // Fetch forecast
+        const res = await fetch(`/api/forecast?zip=${userZip}&t=${Date.now()}`, {
+          cache: 'no-store',
+        })
+
+        if (!res.ok) {
+          throw new Error(`Forecast ${res.status}`)
+        }
+
+        const data = await res.json()
+        const periods = (data.periods || []) as ForecastPeriod[]
+
+        if (periods.length > 0) {
+          // Get the first (current/next) period
+          const current = periods[0]
+          if (!cancelled) {
+            setWeather({
+              temp: current.temperature,
+              unit: current.temperatureUnit,
+              forecast: current.shortForecast,
+            })
+          }
+        }
+      } catch (error) {
+        console.error('Error loading weather:', error)
+        if (!cancelled) {
+          setWeather(null)
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false)
+        }
+      }
+    }
+
+    void loadWeather()
+
+    // Refresh weather when page becomes visible
+    const handleVisibilityChange = () => {
+      if (!document.hidden && user) {
+        void loadWeather()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      cancelled = true
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [user, authLoading])
+
+  // Hide while loading or if no user
+  if (loading || authLoading || !user) return null
+
+  // Hide if no weather data
+  if (!weather) return null
+
+  const color = 'bg-blue-100 text-blue-700 border-blue-300'
   return (
     <span className={`ml-2 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${color}`}>
-      Premium
-      {subscription?.cancelAtPeriodEnd && (
-        <span className="ml-2 text-[10px] text-amber-700">(cancels end of period)</span>
-      )}
+      {weather.temp}°{weather.unit}
     </span>
   )
 }
