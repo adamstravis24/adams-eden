@@ -291,7 +291,7 @@ export async function getAllProducts(): Promise<ShopifyProduct[]> {
   const pageSize = 250; // Shopify's maximum per request
 
   while (hasNextPage) {
-    const query = cursor
+    const query: string = cursor
       ? `#graphql
         query AllProducts($first: Int!, $after: String!) {
           products(first: $first, after: $after, sortKey: CREATED_AT, reverse: true) {
