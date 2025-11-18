@@ -37,12 +37,13 @@ async function getForecastForLatLon(lat: number, lon: number) {
     const forecast = await fcRes.json()
     const periods = (forecast?.properties?.periods || []) as NWSPeriod[]
     const now = new Date()
-    // Filter out past periods - only return future forecast periods
+    // Filter out past periods - include current period (where endTime is in future) and future periods
     return periods
       .filter((p) => {
         try {
-          const startTime = new Date(p.startTime)
-          return startTime > now
+          const endTime = new Date(p.endTime)
+          // Include if the period hasn't ended yet (current or future)
+          return endTime > now
         } catch {
           return false
         }
@@ -94,7 +95,14 @@ export async function GET(request: NextRequest) {
     }
 
     const periods = await getForecastForLatLon(lat, lon)
-    return NextResponse.json({ periods })
+    // Return with explicit no-cache headers to ensure fresh data
+    return NextResponse.json({ periods }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    })
   } catch (error) {
     console.error('Forecast API error:', error)
     return NextResponse.json({ error: 'Failed to fetch forecast' }, { status: 500 })

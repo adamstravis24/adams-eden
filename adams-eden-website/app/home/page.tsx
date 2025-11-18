@@ -76,8 +76,9 @@ export default function HomeDashboardPage() {
     const futureNights = forecast
       .filter((p) => {
         try {
-          const startTime = new Date(p.startTime)
-          return !p.isDaytime && startTime > now
+          // Include current night period (where endTime is in future) and future nights
+          const endTime = new Date(p.endTime || p.startTime)
+          return !p.isDaytime && endTime > now
         } catch {
           return false
         }
@@ -145,8 +146,9 @@ export default function HomeDashboardPage() {
                   // Filter out past periods - only keep future ones
                   const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
                     try {
-                      const startTime = new Date(p.startTime)
-                      return startTime > now
+                      // Include current period (where endTime is in future) and future periods
+                      const endTime = new Date(p.endTime || p.startTime)
+                      return endTime > now
                     } catch {
                       return false
                     }
@@ -168,43 +170,62 @@ export default function HomeDashboardPage() {
 
     void load()
     
-    // Refresh forecast when page becomes visible (user returns to tab)
+    // Refresh forecast periodically (every 15 minutes) to keep it current
+    const refreshForecast = () => {
+      if (cancelled || !user || !zip) return
+      
+      fetch(`/api/forecast?zip=${zip}&t=${Date.now()}`, {
+        cache: 'no-store',
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json()
+          }
+          throw new Error(`Forecast ${res.status}`)
+        })
+        .then((data) => {
+          if (cancelled) return
+          const now = new Date()
+          const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
+            try {
+              // Include current period (where endTime is in future) and future periods
+              const endTime = new Date(p.endTime || p.startTime)
+              return endTime > now
+            } catch {
+              return false
+            }
+          })
+          setForecast(futurePeriods.slice(0, 7))
+          setForecastError(null)
+        })
+        .catch(() => {
+          // Silently fail on refresh - don't overwrite existing forecast with error
+        })
+    }
+
+    const refreshInterval = setInterval(refreshForecast, 15 * 60 * 1000) // 15 minutes
+    
+    // Refresh forecast when page becomes visible or gains focus
     const handleVisibilityChange = () => {
       if (!document.hidden && user && zip) {
-        // Refetch forecast when page becomes visible
-        fetch(`/api/forecast?zip=${zip}&t=${Date.now()}`, {
-          cache: 'no-store',
-        })
-          .then((res) => {
-            if (res.ok) {
-              return res.json()
-            }
-            throw new Error(`Forecast ${res.status}`)
-          })
-          .then((data) => {
-            const now = new Date()
-            const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
-              try {
-                const startTime = new Date(p.startTime)
-                return startTime > now
-              } catch {
-                return false
-              }
-            })
-            setForecast(futurePeriods.slice(0, 7))
-            setForecastError(null)
-          })
-          .catch(() => {
-            // Silently fail on refresh - don't overwrite existing forecast with error
-          })
+        refreshForecast()
+      }
+    }
+
+    const handleFocus = () => {
+      if (user && zip) {
+        refreshForecast()
       }
     }
     
     document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('focus', handleFocus)
     
     return () => {
       cancelled = true
+      clearInterval(refreshInterval)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('focus', handleFocus)
     }
   }, [user, zip])
 

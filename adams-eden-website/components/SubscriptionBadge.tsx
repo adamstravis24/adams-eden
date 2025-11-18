@@ -8,6 +8,7 @@ import { doc, getDoc } from 'firebase/firestore'
 type ForecastPeriod = {
   name: string
   startTime: string
+  endTime: string
   isDaytime: boolean
   temperature: number
   temperatureUnit: string
@@ -55,9 +56,32 @@ export default function SubscriptionBadge() {
         const periods = (data.periods || []) as ForecastPeriod[]
 
         if (periods.length > 0) {
-          // Get the first (current/next) period
-          const current = periods[0]
-          if (!cancelled) {
+          const now = new Date()
+          
+          // Find the current period (where now is between startTime and endTime)
+          let current = periods.find((p) => {
+            try {
+              const start = new Date(p.startTime)
+              const end = new Date(p.endTime)
+              return start <= now && end > now
+            } catch {
+              return false
+            }
+          })
+          
+          // If no current period found, use the first upcoming period
+          if (!current) {
+            current = periods.find((p) => {
+              try {
+                const start = new Date(p.startTime)
+                return start > now
+              } catch {
+                return false
+              }
+            }) || periods[0]
+          }
+          
+          if (current && !cancelled) {
             setWeather({
               temp: current.temperature,
               unit: current.temperatureUnit,
@@ -79,18 +103,34 @@ export default function SubscriptionBadge() {
 
     void loadWeather()
 
-    // Refresh weather when page becomes visible
+    // Refresh weather frequently (every 15 minutes) to keep it current with hour-by-hour updates
+    const refreshInterval = setInterval(() => {
+      if (!cancelled && user) {
+        void loadWeather()
+      }
+    }, 15 * 60 * 1000) // 15 minutes - frequent updates for navigation badge
+
+    // Refresh weather when page becomes visible or gains focus
     const handleVisibilityChange = () => {
       if (!document.hidden && user) {
         void loadWeather()
       }
     }
 
+    const handleFocus = () => {
+      if (user) {
+        void loadWeather()
+      }
+    }
+
     document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('focus', handleFocus)
 
     return () => {
       cancelled = true
+      clearInterval(refreshInterval)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('focus', handleFocus)
     }
   }, [user, authLoading])
 
