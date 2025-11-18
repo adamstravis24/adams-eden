@@ -151,13 +151,16 @@ export default async function CategoryPage({
   searchParams,
 }: {
   params: { slug: string };
-  searchParams: { type?: string };
+  searchParams: Promise<{ type?: string }> | { type?: string };
 }) {
   const category = CATEGORIES[params.slug];
 
   if (!category) {
     notFound();
   }
+
+  // Handle searchParams as Promise (Next.js 15) or object (Next.js 14)
+  const resolvedSearchParams = searchParams instanceof Promise ? await searchParams : searchParams;
 
   const allProducts = await getAllProducts();
   let categoryProducts = filterProductsByCategory(
@@ -167,8 +170,10 @@ export default async function CategoryPage({
   );
 
   // Special handling for flowers - separate into annuals and perennials
+  // Declare at function scope so they're available in JSX
   let flowerAnnuals: ShopifyProduct[] = [];
   let flowerPerennials: ShopifyProduct[] = [];
+  
   if (params.slug === "flowers") {
     categoryProducts.forEach((product) => {
       const haystack = [
@@ -251,8 +256,8 @@ export default async function CategoryPage({
     vegetableTypes = Object.keys(vegetableGroups).sort();
 
     // Filter by type if searchParams.type is provided
-    if (searchParams.type && searchParams.type !== "all" && vegetableGroups[searchParams.type]) {
-      categoryProducts = vegetableGroups[searchParams.type];
+    if (resolvedSearchParams.type && resolvedSearchParams.type !== "all" && vegetableGroups[resolvedSearchParams.type]) {
+      categoryProducts = vegetableGroups[resolvedSearchParams.type];
     } else {
       // Sort all products A-Z for display
       categoryProducts = [...categoryProducts].sort((a, b) => a.title.localeCompare(b.title));
@@ -326,7 +331,7 @@ export default async function CategoryPage({
                     <Link
                       href="/shop/category/vegetables"
                       className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold transition ${
-                        !searchParams.type || searchParams.type === "all"
+                        !resolvedSearchParams.type || resolvedSearchParams.type === "all"
                           ? "border-primary-600 bg-primary-600 text-white"
                           : "border-primary-300 bg-white text-primary-700 hover:bg-primary-50 hover:border-primary-400"
                       }`}
@@ -338,7 +343,7 @@ export default async function CategoryPage({
                         key={type}
                         href={`/shop/category/vegetables?type=${type}`}
                         className={`rounded-lg border-2 px-4 py-2 text-sm font-semibold transition capitalize ${
-                          searchParams.type === type
+                          resolvedSearchParams.type === type
                             ? "border-primary-600 bg-primary-600 text-white"
                             : "border-primary-300 bg-white text-primary-700 hover:bg-primary-50 hover:border-primary-400"
                         }`}

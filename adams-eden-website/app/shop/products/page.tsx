@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 import { getAllProducts } from "@/lib/shopify";
-import { ProductGrid } from "@/components/shop/ProductGrid";
+import { ProductList } from "@/components/shop/ProductList";
 
 export const metadata: Metadata = {
   title: "All Products | Adams Eden Shop",
@@ -52,7 +52,7 @@ export default async function AllProductsPage() {
               </p>
             </div>
           ) : (
-            <ProductGrid products={products} />
+            <ProductList products={products} />
           )}
         </div>
       </section>
