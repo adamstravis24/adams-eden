@@ -101,7 +101,10 @@ export default function IdentifyScreen() {
           <Text style={[t.h2, { marginTop: 8 }]}>Plant Identification</Text>
           <Text style={[t.p, { textAlign: 'center' }]}>Take or pick a photo to identify the plant</Text>
           <Text style={{ marginTop: 4, fontSize: 12, color: apiInfo.present ? palette.primary : '#fca5a5' }}>
-            API key: {apiInfo.present ? `Detected (${apiInfo.preview})` : 'Missing EXPO_PUBLIC_PLANT_ID_API_KEY'}
+            API key:{' '}
+            {apiInfo.present
+              ? `Detected (${apiInfo.preview})`
+              : 'Missing Plant.id key (set EXPO_PUBLIC_PLANT_ID_API_KEY or PLANT_ID_API_KEY)'}
           </Text>
           <View style={{ flexDirection: 'row', marginTop: 12 }}>
             <TouchableOpacity style={[t.btn, t.btnPrimary, { marginRight: 8 }]} onPress={() => pickImage(true)}>

@@ -69,7 +69,7 @@ export default function PrivacyPolicy() {
               </p>
               <ul className="list-disc pl-6 text-slate-600 mb-4">
                 <li><strong>Firebase:</strong> Authentication, database storage, and analytics</li>
-                <li><strong>Open-Meteo API:</strong> Weather data for your location</li>
+                <li><strong>National Weather Service (NWS):</strong> Current weather and forecast data for your location</li>
                 <li><strong>NOAA Climate Data:</strong> Historical climate normals (optional)</li>
                 <li><strong>Payment Processors:</strong> Secure payment processing</li>
               </ul>
@@ -209,8 +209,8 @@ export default function PrivacyPolicy() {
               <ul className="list-disc pl-6 text-slate-600 mb-4">
                 <li><strong>Firebase:</strong> <a href="https://firebase.google.com/support/privacy" className="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">Firebase Privacy Policy</a></li>
                 <li><strong>Google Analytics:</strong> <a href="https://policies.google.com/privacy" className="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a></li>
-                <li><strong>Open-Meteo:</strong> <a href="https://open-meteo.com/en/terms" className="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">Open-Meteo Terms</a></li>
-                <li><strong>NOAA:</strong> <a href="https://www.noaa.gov/privacypolicy" className="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">NOAA Privacy Policy</a></li>
+                <li><strong>National Weather Service (NWS):</strong> <a href="https://www.weather.gov/disclaimer" className="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">NWS Disclaimer</a> | <a href="https://www.noaa.gov/privacypolicy" className="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">NOAA Privacy Policy</a></li>
+                <li><strong>NOAA Climate Data:</strong> <a href="https://www.noaa.gov/privacypolicy" className="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">NOAA Privacy Policy</a></li>
               </ul>
             </section>
 

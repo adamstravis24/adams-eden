@@ -60,16 +60,54 @@ export type Plant = {
   bloomSeason?: string; // Optional - when flowers bloom
 };
 
+export type PlantCustomField = {
+  id: string;
+  label: string;
+  value: string;
+};
+
+export type PlantTimelineEntry = {
+  id: string;
+  date: string; // ISO date
+  title: string;
+  notes?: string;
+  photoUri?: string;
+  createdAt: string;
+  category?: 'observation' | 'maintenance' | 'issue' | 'harvest' | 'custom';
+  priority?: 'low' | 'medium' | 'high';
+};
+
+export type PlantMetadata = {
+  variety?: string;
+  cultivar?: string;
+  source?: string;
+  potSize?: string;
+  soilMix?: string;
+  fertilizerSchedule?: string;
+  location?: string;
+  notes?: string;
+  customFields?: PlantCustomField[];
+};
+
 export type TrackedPlant = Plant & {
   trackingId: string;
   seedPlantedDate: string;
   daysGrown: number;
   plantedConfirmed: boolean;
+  variety?: string;
+  source?: string;
+  potSize?: string;
+  soilMix?: string;
+  fertilizerSchedule?: string;
+  location?: string;
+  notes?: string;
   // Watering reminder fields
   wateringFrequency: 'frequent' | 'average' | 'minimum' | 'custom'; // Auto-populated from plant data or user-set
   wateringIntervalDays: number; // Days between watering (e.g., 2, 5, 7)
   lastWatered?: string; // ISO date string of last watering
   wateringReminderEnabled: boolean; // Whether to show reminders
+  metadata?: PlantMetadata;
+  timeline?: PlantTimelineEntry[];
 };
 
 export type Garden = {

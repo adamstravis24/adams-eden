@@ -12,11 +12,15 @@ import {
   ActivityIndicator,
   Dimensions,
   StyleSheet,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useAuth } from '../context/AuthContext';
+import { useGarden } from '../context/GardenContext';
+import * as ImagePicker from 'expo-image-picker';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useTheme } from '../context/ThemeContext';
 import {
   collection,
@@ -43,6 +47,17 @@ interface Milestone {
   estimatedDays?: number;
 }
 
+interface TimelineEntry {
+  id: string;
+  date: string;
+  title: string;
+  notes?: string;
+  photoUri?: string;
+  createdAt: string;
+  category?: 'observation' | 'maintenance' | 'issue' | 'harvest' | 'custom';
+  priority?: 'low' | 'medium' | 'high';
+}
+
 interface TrackedPlant {
   id: string;
   plantId: string;
@@ -58,7 +73,21 @@ interface TrackedPlant {
   notes?: string;
   userId: string;
   createdAt: any;
+  timeline?: TimelineEntry[];
 }
+
+const LOG_CATEGORIES: Array<{ key: TimelineEntry['category']; label: string; icon: string }> = [
+  { key: 'observation', label: 'Observation', icon: 'eye-outline' },
+  { key: 'maintenance', label: 'Maintenance', icon: 'shovel' },
+  { key: 'issue', label: 'Issue', icon: 'alert-circle-outline' },
+  { key: 'harvest', label: 'Harvest', icon: 'fruit-cherries' },
+];
+
+const LOG_PRIORITIES: Array<{ key: TimelineEntry['priority']; label: string; icon: string }> = [
+  { key: 'low', label: 'Low', icon: 'arrow-down-circle-outline' },
+  { key: 'medium', label: 'Normal', icon: 'minus-circle-outline' },
+  { key: 'high', label: 'High', icon: 'arrow-up-circle-outline' },
+];
 
 interface Plant {
   id: string;
@@ -73,6 +102,7 @@ interface Plant {
 
 export default function TrackerScreenModern() {
   const { user } = useAuth();
+  const { addTimelineEntry } = useGarden();
   const { palette } = useTheme();
 
   const [trackedPlants, setTrackedPlants] = useState<TrackedPlant[]>([]);
@@ -85,6 +115,8 @@ export default function TrackerScreenModern() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showHarvestModal, setShowHarvestModal] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState<TrackedPlant | null>(null);
+  const [showLogModal, setShowLogModal] = useState(false);
+  const [logTargetPlant, setLogTargetPlant] = useState<TrackedPlant | null>(null);
 
   // Add/Edit form state
   const [searchTerm, setSearchTerm] = useState('');
@@ -107,6 +139,16 @@ export default function TrackerScreenModern() {
     weight: '',
     notes: '',
   });
+
+  const [logForm, setLogForm] = useState({
+    title: '',
+    date: new Date().toISOString().split('T')[0],
+    notes: '',
+    category: 'observation' as TimelineEntry['category'],
+    priority: 'medium' as TimelineEntry['priority'],
+  });
+  const [logPhoto, setLogPhoto] = useState<string | null>(null);
+  const [logUploading, setLogUploading] = useState(false);
 
   // Load plant database
   useEffect(() => {
@@ -157,6 +199,7 @@ export default function TrackerScreenModern() {
             notes: data.notes || '',
             userId: data.userId,
             createdAt: data.createdAt,
+            timeline: data.timeline || [],
           });
         });
         setTrackedPlants(plants);
@@ -199,6 +242,43 @@ export default function TrackerScreenModern() {
     const plantInfo = plantDatabase.find((p) => p.id === plant.plantId);
     const totalDays = plantInfo?.growthInfo?.daysToHarvest || 70;
     return Math.min(100, Math.round((daysPlanted / totalDays) * 100));
+  };
+
+  const formatTimelineDate = (value?: string): string => {
+    if (!value) return new Date().toLocaleString();
+    const parsed = new Date(value);
+    if (isNaN(parsed.getTime())) return value;
+    return parsed.toLocaleString(undefined, {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+  };
+
+  const getCategoryMeta = (category?: TimelineEntry['category']) => {
+    if (!category) return undefined;
+    const mapping = LOG_CATEGORIES.find((item) => item.key === category);
+    if (mapping) return mapping;
+    return {
+      key: category,
+      label: category.charAt(0).toUpperCase() + category.slice(1),
+      icon: 'note-text-outline',
+    };
+  };
+
+  const getPriorityMeta = (priority?: TimelineEntry['priority']) => {
+    if (!priority) return undefined;
+    switch (priority) {
+      case 'high':
+        return { label: 'High Priority', backgroundColor: '#fee2e2', textColor: '#b91c1c' };
+      case 'low':
+        return { label: 'Low Priority', backgroundColor: '#dcfce7', textColor: '#166534' };
+      case 'medium':
+      default:
+        return { label: 'Normal Priority', backgroundColor: '#fef3c7', textColor: '#b45309' };
+    }
   };
 
   const getCurrentStageAuto = (plant: TrackedPlant): string => {
@@ -488,6 +568,95 @@ export default function TrackerScreenModern() {
     });
   };
 
+  const openLogModal = (plant: TrackedPlant) => {
+    const baseDate = plant.plantedDate && plant.plantedDate.includes('T')
+      ? plant.plantedDate.split('T')[0]
+      : new Date().toISOString().split('T')[0];
+
+    setLogTargetPlant(plant);
+    setLogForm({
+      title: '',
+      date: baseDate,
+      notes: '',
+      category: 'observation',
+      priority: 'medium',
+    });
+    setLogPhoto(null);
+    setShowLogModal(true);
+  };
+
+  const handlePickLogPhoto = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.8,
+    });
+
+    if (!result.canceled && result.assets.length > 0) {
+      setLogPhoto(result.assets[0].uri);
+    }
+  };
+
+  const handleAddTimelineLog = async () => {
+    if (!user || !logTargetPlant) {
+      Alert.alert('Error', 'No plant selected for logging.');
+      return;
+    }
+
+    if (!logForm.title.trim() && !logForm.notes.trim() && !logPhoto) {
+      Alert.alert('Add details', 'Please add a title, notes, or photo for the log.');
+      return;
+    }
+
+    try {
+      setLogUploading(true);
+      const userUid = (user as any).uid || user.id;
+
+      let photoUrl: string | undefined;
+      if (logPhoto) {
+        const storage = getStorage();
+        const fileExt = logPhoto.split('.').pop() || 'jpg';
+        const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
+        const storageRef = ref(storage, `users/${userUid}/timeline/${logTargetPlant.id}/${fileName}`);
+
+        const response = await fetch(logPhoto);
+        const blob = await response.blob();
+        await uploadBytes(storageRef, blob);
+        photoUrl = await getDownloadURL(storageRef);
+      }
+
+      const parsedDate = logForm.date ? new Date(logForm.date) : new Date();
+      const entry: TimelineEntry = {
+        id: `log-${Date.now()}`,
+        title: logForm.title.trim() || 'Garden log',
+        notes: logForm.notes.trim() || undefined,
+        date: isNaN(parsedDate.getTime()) ? new Date().toISOString() : parsedDate.toISOString(),
+        photoUri: photoUrl,
+        createdAt: new Date().toISOString(),
+        category: logForm.category,
+        priority: logForm.priority,
+      };
+
+      await addTimelineEntry(logTargetPlant.id, entry);
+
+      Alert.alert('Logged', `${logTargetPlant.plantName} updated with a new timeline entry.`);
+      setShowLogModal(false);
+      setLogTargetPlant(null);
+      setLogForm({
+        title: '',
+        date: new Date().toISOString().split('T')[0],
+        notes: '',
+        category: 'observation',
+        priority: 'medium',
+      });
+      setLogPhoto(null);
+    } catch (error) {
+      console.error('Error adding timeline entry:', error);
+      Alert.alert('Error', 'Failed to save timeline entry. Please try again.');
+    } finally {
+      setLogUploading(false);
+    }
+  };
+
   // Stats calculations
   const plantedCount = trackedPlants.filter((p) => p.status === 'planted').length;
   const plannedCount = trackedPlants.filter((p) => p.status === 'planned').length;
@@ -718,6 +887,16 @@ export default function TrackerScreenModern() {
                             <Text style={[modernStyles.secondaryActionText, { color: '#dc2626' }]}>Delete</Text>
                           </TouchableOpacity>
                         </View>
+
+                        <View style={[modernStyles.plantActions, { marginTop: 8 }]}>
+                          <TouchableOpacity
+                            onPress={() => openLogModal(plant)}
+                            style={[modernStyles.secondaryAction, { borderColor: '#2563eb' }]}
+                          >
+                            <MaterialCommunityIcons name="note-plus" size={18} color="#2563eb" />
+                            <Text style={[modernStyles.secondaryActionText, { color: '#2563eb' }]}>Add Log</Text>
+                          </TouchableOpacity>
+                        </View>
                       </>
                     ) : (
                       <>
@@ -831,26 +1010,108 @@ export default function TrackerScreenModern() {
                           >
                             <MaterialCommunityIcons name="trash-can-outline" size={20} color="#dc2626" />
                           </TouchableOpacity>
+                          
+                          <TouchableOpacity
+                            onPress={() => openLogModal(plant)}
+                            style={[modernStyles.iconAction, { marginLeft: 8 }]}
+                          >
+                            <MaterialCommunityIcons name="note-plus" size={20} color="#2563eb" />
+                          </TouchableOpacity>
                         </View>
 
-                        {/* Plant Info */}
-                        {(plant.location || plant.notes) && (
-                          <View style={modernStyles.plantInfo}>
-                            {plant.location && (
-                              <View style={modernStyles.infoRow}>
-                                <MaterialCommunityIcons name="map-marker" size={14} color="#6b7280" />
-                                <Text style={modernStyles.infoRowText}>{plant.location}</Text>
+                      </>
+                    )}
+
+                    {/* Timeline */}
+                    {(() => {
+                      const timelineEntries = (plant.timeline || []).slice().sort((a, b) => {
+                        const aTime = new Date(a.date || a.createdAt || '').getTime();
+                        const bTime = new Date(b.date || b.createdAt || '').getTime();
+                        return (isNaN(bTime) ? 0 : bTime) - (isNaN(aTime) ? 0 : aTime);
+                      });
+                      if (!timelineEntries.length) return null;
+                      return (
+                        <View style={modernStyles.timelineSection}>
+                          <Text style={modernStyles.timelineHeader}>Plant Timeline</Text>
+                          {timelineEntries.map((entry) => {
+                            const categoryMeta = getCategoryMeta(entry.category);
+                            const priorityMeta = getPriorityMeta(entry.priority);
+                            return (
+                              <View key={entry.id} style={modernStyles.timelineRow}>
+                                <View style={modernStyles.timelineDotContainer}>
+                                  <View style={modernStyles.timelineDot} />
+                                  <View style={modernStyles.timelineLine} />
+                                </View>
+                                <View style={modernStyles.timelineCard}>
+                                  <Text style={modernStyles.timelineTitle}>{entry.title || 'Update'}</Text>
+                                  <Text style={modernStyles.timelineDate}>
+                                    {formatTimelineDate(entry.date || entry.createdAt)}
+                                  </Text>
+
+                                  {(categoryMeta || priorityMeta) && (
+                                    <View style={modernStyles.timelineMetaRow}>
+                                      {categoryMeta ? (
+                                        <View style={[modernStyles.timelineMetaTag, modernStyles.timelineCategoryTag]}>
+                                          <MaterialCommunityIcons
+                                            name={categoryMeta.icon || 'note-text-outline'}
+                                            size={14}
+                                            color="#0c4a6e"
+                                          />
+                                          <Text style={[modernStyles.timelineMetaText, { color: '#0c4a6e' }]}>
+                                            {categoryMeta.label}
+                                          </Text>
+                                        </View>
+                                      ) : null}
+
+                                      {priorityMeta ? (
+                                        <View
+                                          style={[
+                                            modernStyles.timelineMetaTag,
+                                            { backgroundColor: priorityMeta.backgroundColor },
+                                          ]}
+                                        >
+                                          <Text style={[modernStyles.timelineMetaText, { color: priorityMeta.textColor }]}>
+                                            {priorityMeta.label}
+                                          </Text>
+                                        </View>
+                                      ) : null}
+                                    </View>
+                                  )}
+
+                                  {entry.photoUri ? (
+                                    <Image
+                                      source={{ uri: entry.photoUri }}
+                                      style={modernStyles.timelinePhoto}
+                                      resizeMode="cover"
+                                    />
+                                  ) : null}
+                                  {entry.notes ? (
+                                    <Text style={modernStyles.timelineNotes}>{entry.notes}</Text>
+                                  ) : null}
+                                </View>
                               </View>
-                            )}
-                            {plant.notes && (
-                              <View style={modernStyles.infoRow}>
-                                <MaterialCommunityIcons name="note-text" size={14} color="#6b7280" />
-                                <Text style={modernStyles.infoRowText}>{plant.notes}</Text>
-                              </View>
-                            )}
+                            );
+                          })}
+                        </View>
+                      );
+                    })()}
+
+                    {/* Plant Info */}
+                    {(plant.location || plant.notes) && (
+                      <View style={modernStyles.plantInfo}>
+                        {plant.location && (
+                          <View style={modernStyles.infoRow}>
+                            <MaterialCommunityIcons name="map-marker" size={14} color="#6b7280" />
+                            <Text style={modernStyles.infoRowText}>{plant.location}</Text>
                           </View>
                         )}
-                      </>
+                        {plant.notes && (
+                          <View style={modernStyles.infoRow}>
+                            <MaterialCommunityIcons name="note-text" size={14} color="#6b7280" />
+                            <Text style={modernStyles.infoRowText}>{plant.notes}</Text>
+                          </View>
+                        )}
+                      </View>
                     )}
                   </View>
                 </View>
@@ -862,8 +1123,144 @@ export default function TrackerScreenModern() {
         <View style={{ height: 32 }} />
       </ScrollView>
 
-      {/* Modals remain the same but can be enhanced later */}
-      {/* For brevity, I'll include simplified versions */}
+      <Modal
+        transparent
+        animationType="fade"
+        visible={showLogModal}
+        onRequestClose={() => {
+          if (!logUploading) {
+            setShowLogModal(false);
+            setLogTargetPlant(null);
+          }
+        }}
+      >
+        <View style={modernStyles.logModalBackdrop}>
+          <View style={modernStyles.logModalCard}>
+            <View style={modernStyles.logModalHeader}>
+              <Text style={modernStyles.logModalTitle}>Add Timeline Entry</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  if (!logUploading) {
+                    setShowLogModal(false);
+                    setLogTargetPlant(null);
+                  }
+                }}
+              >
+                <MaterialCommunityIcons name="close" size={22} color="#374151" />
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <TextInput
+                placeholder="Title (e.g., Pruned basil)"
+                value={logForm.title}
+                onChangeText={(text) => setLogForm((prev) => ({ ...prev, title: text }))}
+                style={modernStyles.logInput}
+              />
+              <TextInput
+                placeholder="Date (YYYY-MM-DD)"
+                value={logForm.date}
+                onChangeText={(text) => setLogForm((prev) => ({ ...prev, date: text }))}
+                style={modernStyles.logInput}
+              />
+
+              <Text style={modernStyles.logSectionLabel}>Log Type</Text>
+              <View style={modernStyles.logChipRow}>
+                {LOG_CATEGORIES.map((option) => {
+                  const active = logForm.category === option.key;
+                  return (
+                    <TouchableOpacity
+                      key={option.key}
+                      style={[modernStyles.logChip, active && modernStyles.logChipActive]}
+                      onPress={() => setLogForm((prev) => ({ ...prev, category: option.key }))}
+                    >
+                      <MaterialCommunityIcons
+                        name={option.icon}
+                        size={14}
+                        color={active ? '#fff' : '#2563eb'}
+                      />
+                      <Text style={[modernStyles.logChipText, active && modernStyles.logChipTextActive]}>
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+
+              <Text style={modernStyles.logSectionLabel}>Priority</Text>
+              <View style={modernStyles.logChipRow}>
+                {LOG_PRIORITIES.map((option) => {
+                  const active = logForm.priority === option.key;
+                  return (
+                    <TouchableOpacity
+                      key={option.key}
+                      style={[modernStyles.logChip, active && modernStyles.logChipActive]}
+                      onPress={() => setLogForm((prev) => ({ ...prev, priority: option.key }))}
+                    >
+                      <MaterialCommunityIcons
+                        name={option.icon}
+                        size={14}
+                        color={active ? '#fff' : '#2563eb'}
+                      />
+                      <Text style={[modernStyles.logChipText, active && modernStyles.logChipTextActive]}>
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+
+              <TextInput
+                placeholder="Notes"
+                value={logForm.notes}
+                onChangeText={(text) => setLogForm((prev) => ({ ...prev, notes: text }))}
+                style={[modernStyles.logInput, modernStyles.logTextArea]}
+                multiline
+              />
+
+              {logPhoto ? (
+                <View style={modernStyles.logPhotoPreviewContainer}>
+                  <Image source={{ uri: logPhoto }} style={modernStyles.logPhotoPreview} resizeMode="cover" />
+                  <TouchableOpacity
+                    style={modernStyles.logPhotoRemove}
+                    onPress={() => setLogPhoto(null)}
+                  >
+                    <MaterialCommunityIcons name="close" size={16} color="#fff" />
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <TouchableOpacity style={modernStyles.logPhotoButton} onPress={handlePickLogPhoto}>
+                  <MaterialCommunityIcons name="image-plus" size={20} color="#2563eb" />
+                  <Text style={modernStyles.logPhotoButtonText}>Add Photo</Text>
+                </TouchableOpacity>
+              )}
+            </ScrollView>
+
+            <View style={modernStyles.logModalActions}>
+              <TouchableOpacity
+                style={[modernStyles.logModalButton, { backgroundColor: '#f3f4f6', marginRight: 12 }]}
+                onPress={() => {
+                  if (!logUploading) {
+                    setShowLogModal(false);
+                    setLogTargetPlant(null);
+                  }
+                }}
+              >
+                <Text style={[modernStyles.logModalButtonText, { color: '#374151' }]}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[modernStyles.logModalButton, { backgroundColor: logUploading ? '#93c5fd' : '#2563eb' }]}
+                onPress={handleAddTimelineLog}
+                disabled={logUploading}
+              >
+                <Text style={[modernStyles.logModalButtonText, { color: '#fff' }]}>
+                  {logUploading ? 'Saving...' : 'Save Log'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -1107,6 +1504,223 @@ const modernStyles = StyleSheet.create({
     fontSize: 12,
     color: '#9ca3af',
     fontWeight: '500',
+  },
+  timelineSection: {
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  timelineHeader: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#111827',
+    marginBottom: 10,
+  },
+  timelineRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  timelineDotContainer: {
+    alignItems: 'center',
+    width: 24,
+  },
+  timelineDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#16a34a',
+    marginTop: 6,
+  },
+  timelineLine: {
+    flex: 1,
+    width: 2,
+    backgroundColor: '#e5e7eb',
+    marginTop: 2,
+  },
+  timelineCard: {
+    flex: 1,
+    backgroundColor: '#f9fafb',
+    borderRadius: 12,
+    padding: 12,
+    marginLeft: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  timelineTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#111827',
+  },
+  timelineDate: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginTop: 2,
+  },
+  timelineNotes: {
+    fontSize: 13,
+    color: '#374151',
+    marginTop: 8,
+    lineHeight: 18,
+  },
+  timelineMetaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  timelineMetaTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 999,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    marginRight: 8,
+    backgroundColor: '#f3f4f6',
+  },
+  timelineMetaText: {
+    fontSize: 12,
+    fontWeight: '600',
+    marginLeft: 4,
+  },
+  timelineCategoryTag: {
+    backgroundColor: '#e0f2fe',
+  },
+  timelinePhoto: {
+    width: '100%',
+    height: 160,
+    borderRadius: 10,
+    marginTop: 8,
+  },
+  logModalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logModalCard: {
+    width: width - 48,
+    maxHeight: '80%',
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.18,
+    shadowRadius: 12,
+    elevation: 10,
+  },
+  logModalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  logModalTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#111827',
+  },
+  logInput: {
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    fontSize: 14,
+    marginTop: 12,
+  },
+  logTextArea: {
+    height: 110,
+    textAlignVertical: 'top',
+  },
+  logPhotoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    borderRadius: 10,
+    paddingVertical: 12,
+    marginTop: 16,
+  },
+  logPhotoButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#2563eb',
+    marginLeft: 6,
+  },
+  logSectionLabel: {
+    marginTop: 16,
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#1f2937',
+  },
+  logChipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 8,
+  },
+  logChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderWidth: 1,
+    borderColor: '#dbeafe',
+    backgroundColor: '#fff',
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  logChipActive: {
+    backgroundColor: '#2563eb',
+    borderColor: '#2563eb',
+  },
+  logChipText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#2563eb',
+    marginLeft: 6,
+  },
+  logChipTextActive: {
+    color: '#fff',
+  },
+  logPhotoPreviewContainer: {
+    marginTop: 16,
+    position: 'relative',
+  },
+  logPhotoPreview: {
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+  },
+  logPhotoRemove: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logModalActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  logModalButton: {
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  logModalButtonText: {
+    fontSize: 15,
+    fontWeight: '700',
   },
   activeBadge: {
     backgroundColor: '#16a34a',

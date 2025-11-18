@@ -284,26 +284,65 @@ export function formatMoney(
   }).format(Number(money.amount));
 }
 
-export async function getAllProducts(first = 250): Promise<ShopifyProduct[]> {
-  const query = `#graphql
-    query AllProducts($first: Int!) {
-      products(first: $first, sortKey: CREATED_AT, reverse: true) {
-        edges {
-          node {
-            ${PRODUCT_CARD_FIELDS}
+export async function getAllProducts(): Promise<ShopifyProduct[]> {
+  const allProducts: ShopifyProduct[] = [];
+  let hasNextPage = true;
+  let cursor: string | null = null;
+  const pageSize = 250; // Shopify's maximum per request
+
+  while (hasNextPage) {
+    const query = cursor
+      ? `#graphql
+        query AllProducts($first: Int!, $after: String!) {
+          products(first: $first, after: $after, sortKey: CREATED_AT, reverse: true) {
+            edges {
+              node {
+                ${PRODUCT_CARD_FIELDS}
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
           }
         }
-      }
-    }
-  `;
+      `
+      : `#graphql
+        query AllProducts($first: Int!) {
+          products(first: $first, sortKey: CREATED_AT, reverse: true) {
+            edges {
+              node {
+                ${PRODUCT_CARD_FIELDS}
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+          }
+        }
+      `;
 
-  const data = await shopifyFetch<{
-    products: {
-      edges: Array<{ node: ShopifyProductRaw }>;
-    };
-  }>(query, { first }, { cache: "no-store", tags: ["shopify-products"] });
+    const variables = cursor ? { first: pageSize, after: cursor } : { first: pageSize };
 
-  return data.products.edges.map((edge) => normalizeProduct(edge.node));
+    const data = await shopifyFetch<{
+      products: {
+        edges: Array<{ node: ShopifyProductRaw }>;
+        pageInfo: {
+          hasNextPage: boolean;
+          endCursor: string | null;
+        };
+      };
+    }>(query, variables, { cache: "no-store", tags: ["shopify-products"] });
+
+    const products = data.products.edges.map((edge) => normalizeProduct(edge.node));
+    allProducts.push(...products);
+
+    hasNextPage = data.products.pageInfo.hasNextPage;
+    cursor = data.products.pageInfo.endCursor;
+  }
+
+  return allProducts;
 }
 
 export async function getProductByHandle(

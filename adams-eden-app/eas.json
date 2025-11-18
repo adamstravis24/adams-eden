@@ -15,7 +15,10 @@
       }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_ANDROID_JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+      }
     },
     "production": {
       "autoIncrement": true

@@ -5,11 +5,11 @@ import rawPlantDataset from '../../assets/data/plant-data.json';
 import comprehensivePlantDatabase from '../../assets/data/comprehensive-plant-database.json';
 import { lookupZip, ZipStationRecord } from '../services/zipStationLookup';
 import { getNoaaNormalsForZip } from '../services/noaaClimateService';
-import { Plant, PlantPeriod, PlantScheduleWindow, TrackedPlant, Garden, RawPlantDataset, RawPlant, RawScheduleWindow } from '../types/plants';
+import { Plant, PlantPeriod, PlantScheduleWindow, TrackedPlant, Garden, RawPlantDataset, RawPlant, RawScheduleWindow, PlantMetadata, PlantTimelineEntry } from '../types/plants';
 import { LocationInfo } from '../types/location';
 import { fetchWeather, WeatherBundle, mapWeatherCodeToText } from '../services/weatherService';
 import { db } from '../services/firebase';
-import { collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot, arrayUnion } from 'firebase/firestore';
 import { rescheduleWateringReminderIfChanged, cancelWateringReminder, onPlantWatered, checkOverdueWateringReminders } from '../services/notifications';
 import { useAuth } from './AuthContext';
 
@@ -453,6 +453,8 @@ type GardenContextType = {
   logWatering: (trackingId: string) => void;
   updateWateringSettings: (trackingId: string, frequency: TrackedPlant['wateringFrequency'], intervalDays?: number) => void;
   toggleWateringReminder: (trackingId: string, enabled: boolean) => void;
+  addTimelineEntry: (trackingId: string, entry: PlantTimelineEntry) => void;
+  updateTrackedPlantDetails: (trackingId: string, updates: { metadata?: PlantMetadata; timeline?: PlantTimelineEntry[]; notes?: string }) => void;
   calculateProgress: (plant: TrackedPlant) => {
     daysPassed: number;
     percentComplete: number;
@@ -909,6 +911,17 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         const plantName = data.plantName || data.commonName || 'Unknown Plant';
         const plantSlug = data.slug || (plantName ? plantName.toLowerCase().replace(/\s+/g, '-') : 'unknown');
         
+        const metadata: PlantMetadata = {
+          ...(data.metadata || {}),
+          variety: data.metadata?.variety ?? data.variety ?? '',
+          location: data.metadata?.location ?? data.location ?? '',
+          notes: data.metadata?.notes ?? data.notes ?? '',
+        };
+
+        const timeline: PlantTimelineEntry[] = Array.isArray(data.timeline)
+          ? data.timeline
+          : [];
+
         const tracked: TrackedPlant = {
           id: data.plantId || data.id || docSnap.id,
           slug: plantSlug,
@@ -918,6 +931,13 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           indoorOutdoor: 'outdoor',
           minZone: data.minZone || 1,
           maxZone: data.maxZone || 13,
+          variety: metadata.variety,
+          source: metadata.source,
+          potSize: metadata.potSize,
+          soilMix: metadata.soilMix,
+          fertilizerSchedule: metadata.fertilizerSchedule,
+          location: metadata.location,
+          notes: metadata.notes || '',
           // Use Firestore field names
           trackingId: docSnap.id,
           seedPlantedDate: data.plantedDate || data.seedPlantedDate || new Date().toISOString(),
@@ -930,6 +950,8 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           wateringIntervalDays: data.wateringIntervalDays || 4,
           lastWatered: data.lastWatered,
           wateringReminderEnabled: data.wateringReminderEnabled !== undefined ? data.wateringReminderEnabled : true,
+          metadata,
+          timeline,
           // Merge with plant from database for full details if available
           ...(plantDatabase.find(p => p.slug === plantSlug) || {}),
         } as TrackedPlant;
@@ -1027,18 +1049,42 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
 
     try {
-      // Create tracker document in Firestore
       const now = new Date().toISOString();
+      const initialTimeline: PlantTimelineEntry[] = [
+        {
+          id: `log-${Date.now()}`,
+          date: now,
+          title: 'Tracking started',
+          notes: 'Plant added to your garden tracker.',
+          createdAt: now,
+          category: 'observation',
+          priority: 'low',
+        },
+      ];
+
+      const metadata: PlantMetadata = {
+        variety: '',
+        source: '',
+        potSize: '',
+        soilMix: '',
+        fertilizerSchedule: '',
+        location: '',
+        notes: '',
+        customFields: [],
+      };
+
       const newPlant = {
         plantId: plant.id,
         plantName: plant.name,
         slug: plant.slug,
         emoji: plant.image || '🌱',
         status: 'planned', // Start as planned, user can mark as planted later
-        plantedDate: now,
+        plantedDate: '',
         quantity: 1,
         location: '',
         notes: '',
+        metadata,
+        timeline: initialTimeline,
         milestones: [
           { name: 'Germination', reached: false, estimatedDays: 7 },
           { name: 'Seedling', reached: false, estimatedDays: 21 },
@@ -1102,8 +1148,20 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     if (!user) return;
 
     try {
+      const now = new Date().toISOString();
+      const timelineEntry: PlantTimelineEntry = {
+        id: `log-${Date.now()}`,
+        date: now,
+        title: 'Watered',
+        notes: 'Watering logged via Adams Eden.',
+        createdAt: now,
+        category: 'maintenance',
+        priority: 'medium',
+      };
+
       await updateDoc(doc(db, 'users', user.id, 'tracker', trackingId), {
-        lastWatered: new Date().toISOString(),
+        lastWatered: now,
+        timeline: arrayUnion(timelineEntry),
       });
       
       // Cancel pending watering reminders since plant was just watered
@@ -1164,6 +1222,18 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       // Real-time listener will update local state automatically
     } catch (error) {
       console.error('Error toggling watering reminder:', error);
+    }
+  };
+
+  const addTimelineEntry = async (trackingId: string, entry: PlantTimelineEntry) => {
+    if (!user) return;
+
+    try {
+      await updateDoc(doc(db, 'users', user.id, 'tracker', trackingId), {
+        timeline: arrayUnion(entry),
+      });
+    } catch (error) {
+      console.error('Error adding timeline entry:', error);
     }
   };
 
@@ -1278,6 +1348,7 @@ export const GardenProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         logWatering,
         updateWateringSettings,
         toggleWateringReminder,
+        addTimelineEntry,
         calculateProgress,
       }}
     >

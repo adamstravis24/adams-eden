@@ -151,18 +151,32 @@ export default function Navigation() {
                       </div>
                       
                       <Link
+                        href="/shop/category/flowers"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🌸 Flowers
+                      </Link>
+                      <Link
+                        href="/shop/category/vegetables"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🥕 Vegetables
+                      </Link>
+                      <Link
+                        href="/shop/category/herbs"
+                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
+                        onClick={() => setShowShopMenu(false)}
+                      >
+                        🌿 Herbs
+                      </Link>
+                      <Link
                         href="/shop/category/houseplants"
                         className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
                         onClick={() => setShowShopMenu(false)}
                       >
                         🪴 Houseplants
-                      </Link>
-                      <Link
-                        href="/shop/category/outdoor-plants"
-                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
-                        onClick={() => setShowShopMenu(false)}
-                      >
-                        🌿 Outdoor Plants
                       </Link>
                       <Link
                         href="/shop/category/succulents-cacti"
@@ -172,39 +186,11 @@ export default function Navigation() {
                         🌵 Succulents & Cacti
                       </Link>
                       <Link
-                        href="/shop/category/herbs-edibles"
+                        href="/shop/category/gardening-supplies"
                         className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
                         onClick={() => setShowShopMenu(false)}
                       >
-                        🌱 Herbs & Edibles
-                      </Link>
-                      <Link
-                        href="/shop/category/lighting"
-                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
-                        onClick={() => setShowShopMenu(false)}
-                      >
-                        💡 Lighting
-                      </Link>
-                      <Link
-                        href="/shop/category/hydroponics"
-                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
-                        onClick={() => setShowShopMenu(false)}
-                      >
-                        💧 Hydroponics
-                      </Link>
-                      <Link
-                        href="/shop/category/soil-amendments"
-                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
-                        onClick={() => setShowShopMenu(false)}
-                      >
-                        🪨 Soil & Amendments
-                      </Link>
-                      <Link
-                        href="/shop/category/tools-supplies"
-                        className="block px-4 py-2 text-slate-600 hover:bg-primary-50/60 hover:text-slate-900 transition"
-                        onClick={() => setShowShopMenu(false)}
-                      >
-                        🛠️ Tools & Supplies
+                        🛠️ Gardening Supplies
                       </Link>
                     </div>
                   </div>

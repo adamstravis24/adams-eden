@@ -30,6 +30,7 @@ export type NoaaClimateSummary = {
 };
 
 const cache = new Map<string, NoaaClimateSummary>();
+let hasLoggedMissingToken = false;
 
 function getApiToken(): string | undefined {
   return (
@@ -88,7 +89,11 @@ type FetchOptions = {
 async function fetchNoaaData(stations: string[], options?: FetchOptions): Promise<NoaaApiResult[]> {
   const token = getApiToken();
   if (!token) {
-    throw new Error('NOAA API token missing. Set EXPO_PUBLIC_NOAA_TOKEN in your environment.');
+    if (!hasLoggedMissingToken) {
+      hasLoggedMissingToken = true;
+      console.warn('NOAA API token missing. Define EXPO_PUBLIC_NOAA_TOKEN or NOAA_TOKEN to enable frost/freeze date lookups.');
+    }
+    return [];
   }
 
   const params = new URLSearchParams({

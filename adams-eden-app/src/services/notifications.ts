@@ -9,6 +9,22 @@ const WATERING_MAP_KEY = '@adams_eden_watering_schedules_v1';
 const WEATHER_CACHE_KEY = '@adams_eden_weather_v1'; // same as GardenContext
 const LOCATION_KEY = '@adams_eden_state_v1'; // GardenContext persists state here
 
+const ANDROID_NOTIFICATION_COLOR = '#16a34a';
+
+function classifyFrost(minTempF: number | undefined) {
+  if (typeof minTempF !== 'number' || Number.isNaN(minTempF)) {
+    return null;
+  }
+  const rounded = Math.round(minTempF);
+  if (rounded <= 32) {
+    return { type: 'freeze', rounded };
+  }
+  if (rounded <= 36) {
+    return { type: 'frost', rounded };
+  }
+  return { type: 'none', rounded };
+}
+
 // Calculate temperature-adjusted watering interval
 async function getTemperatureAdjustedInterval(baseIntervalDays: number): Promise<number> {
   try {
@@ -69,7 +85,7 @@ export async function initializeNotifications() {
       importance: Notifications.AndroidImportance.DEFAULT,
       sound: undefined,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#16a34a',
+      lightColor: ANDROID_NOTIFICATION_COLOR,
     });
   }
 }
@@ -126,6 +142,7 @@ export async function scheduleWateringReminder(trackingId: string, lastWateredIS
       title: 'Watering reminder',
       body: `Time to water your plants 💧 (${adjustedIntervalDays} day interval)`,
       sound: undefined,
+      color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
     },
     trigger: {
       date: firstReminderDate,
@@ -141,6 +158,7 @@ export async function scheduleWateringReminder(trackingId: string, lastWateredIS
       title: 'Watering reminder - Urgent!',
       body: 'Your plants are overdue for watering! 💧🚨',
       sound: undefined,
+      color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
     },
     trigger: {
       date: secondReminderDate,
@@ -216,25 +234,25 @@ TaskManager.defineTask(WEATHER_TASK, async () => {
     // Decide alerts: freeze <= 32F, frost risk <= 36F
     const today = bundle.daily?.[0];
     if (today) {
-      const min = today.minF;
-      if (typeof min === 'number') {
-        if (min <= 32) {
-          await Notifications.scheduleNotificationAsync({
-            content: {
-              title: 'Freeze warning ❄️',
-              body: `Overnight low ${Math.round(min)}°F. Protect sensitive plants.`,
-            },
-            trigger: null, // immediate
-          });
-        } else if (min <= 36) {
-          await Notifications.scheduleNotificationAsync({
-            content: {
-              title: 'Frost risk 🌫️',
-              body: `Overnight low ${Math.round(min)}°F. Consider covers for tender plants.`,
-            },
-            trigger: null,
-          });
-        }
+      const classification = classifyFrost(today.minF);
+      if (classification?.type === 'freeze') {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'Freeze warning ❄️',
+            body: `Overnight low ${classification.rounded}°F. Protect sensitive plants.`,
+            color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
+          },
+          trigger: null, // immediate
+        });
+      } else if (classification?.type === 'frost') {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'Frost risk 🌫️',
+            body: `Overnight low ${classification.rounded}°F. Consider covers for tender plants.`,
+            color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
+          },
+          trigger: null,
+        });
       }
     }
 
@@ -266,6 +284,7 @@ export async function testFrostWarningNotification() {
       content: {
         title: 'Freeze warning ❄️',
         body: `Overnight low 28°F. Protect sensitive plants.`,
+        color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
       },
       trigger: null, // immediate
     });
@@ -282,6 +301,7 @@ export async function testFrostRiskNotification() {
       content: {
         title: 'Frost risk 🌫️',
         body: `Overnight low 36°F. Consider covers for tender plants.`,
+        color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
       },
       trigger: null, // immediate
     });
@@ -299,6 +319,7 @@ export async function testWateringReminder() {
         title: 'Watering reminder',
         body: `Time to water your plants 💧 (4 day interval)`,
         sound: undefined,
+        color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
       },
       trigger: null, // immediate
     });
@@ -316,6 +337,7 @@ export async function testUrgentWateringReminder() {
         title: 'Watering reminder - Urgent!',
         body: 'Your plants are overdue for watering! 💧🚨',
         sound: undefined,
+        color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
       },
       trigger: null, // immediate
     });
@@ -333,6 +355,7 @@ export async function testOverdueWateringReminder() {
         title: 'Urgent! - Water your plants',
         body: 'Tomato needs watering! 💧 (7 days since last watering)',
         sound: undefined,
+        color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
       },
       trigger: null, // immediate
     });
@@ -370,6 +393,7 @@ export async function checkOverdueWateringReminders(trackedPlants: Array<{tracki
             title: `${urgency} - Water your plants`,
             body: `${plant.name || 'Plant'} needs watering! 💧 (${daysSinceWatered} days since last watering)`,
             sound: undefined,
+            color: Platform.OS === 'android' ? ANDROID_NOTIFICATION_COLOR : undefined,
           },
           trigger: null, // immediate
         });

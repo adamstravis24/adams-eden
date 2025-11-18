@@ -1,5 +1,5 @@
 // Plant.id API v3 service wrapper
-// Reads API key from EXPO_PUBLIC_PLANT_ID_API_KEY
+import { optionalEnv } from '../utils/env';
 
 export type PlantIdSuggestion = {
   id?: string | number;
@@ -29,12 +29,24 @@ export type PlantIdResponse = {
 
 const API_URL = 'https://api.plant.id/v3/identification';
 
+let loggedKeyStatus = false;
+
 function getApiKey(): string | undefined {
-  // Expo public envs are inlined at build
-  // Use EXPO_PUBLIC_PLANT_ID_API_KEY for client-side calls
-  // You can also proxy via your server if you prefer to keep the key private
-  // eslint-disable-next-line no-undef
-  return (process as any).env?.EXPO_PUBLIC_PLANT_ID_API_KEY || undefined;
+  const raw =
+    optionalEnv('PLANT_ID_API_KEY') ??
+    optionalEnv('EXPO_PUBLIC_PLANT_ID_API_KEY') ??
+    undefined;
+
+  if (__DEV__ && !loggedKeyStatus) {
+    if (raw) {
+      console.log('[plantId] Using API key', `${raw.trim().slice(0, 4)}…${raw.trim().slice(-4)}`);
+    } else {
+      console.warn('[plantId] API key missing (PLANT_ID_API_KEY or EXPO_PUBLIC_PLANT_ID_API_KEY)');
+    }
+    loggedKeyStatus = true;
+  }
+
+  return typeof raw === 'string' && raw.trim() !== '' ? raw.trim() : undefined;
 }
 
 export function getPlantIdApiKeyInfo(): { present: boolean; preview?: string } {
@@ -62,7 +74,9 @@ export async function identifyPlantFromBase64(imagesBase64: string[], options?: 
 }): Promise<PlantIdResponse> {
   const apiKey = getApiKey();
   if (!apiKey) {
-    throw new Error('Missing EXPO_PUBLIC_PLANT_ID_API_KEY. Add it to your env and restart the app.');
+    throw new Error(
+      'Missing Plant.id API key. Define EXPO_PUBLIC_PLANT_ID_API_KEY or PLANT_ID_API_KEY in your environment.'
+    );
   }
 
   // Build query params per v3 examples (details as comma-separated list)

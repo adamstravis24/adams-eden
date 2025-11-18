@@ -1,20 +1,28 @@
-import { ShopifyProduct, ShopifyMoney } from './types';
+import { optionalEnv } from '../utils/env';
+import { ShopifyProduct, ShopifyMoney, ShopifyCartLineInput } from './types';
 
-const storeDomain = process.env.EXPO_PUBLIC_SHOPIFY_STORE_DOMAIN;
-const storeToken = process.env.EXPO_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+const storeDomainRaw = optionalEnv('NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN');
+const storeDomain = storeDomainRaw
+  ? storeDomainRaw.replace(/^https?:\/\//, '').replace(/\/+$/, '')
+  : undefined;
+const storeToken = optionalEnv('NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN');
 const apiVersion = '2024-07';
 
-if (!storeDomain || !storeToken) {
-  console.warn('Shopify credentials not configured. Shop will not work.');
-}
+let loggedMissingConfig = false;
 
-const endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
+const endpoint = storeDomain
+  ? `https://${storeDomain}/api/${apiVersion}/graphql.json`
+  : null;
 
 export async function shopifyFetch<TData, TVariables = Record<string, unknown>>(
   query: string,
   variables?: TVariables
 ): Promise<TData | null> {
-  if (!storeDomain || !storeToken) {
+  if (!storeDomain || !storeToken || !endpoint) {
+    if (__DEV__ && !loggedMissingConfig) {
+      console.warn('[shopify] Storefront credentials missing. Set NEXT_PUBLIC_SHOPIFY_* env vars.');
+      loggedMissingConfig = true;
+    }
     return null;
   }
 
@@ -90,10 +98,10 @@ const PRODUCT_CARD_FIELDS = `
   }
 `;
 
-export async function getAllProducts(first = 250): Promise<ShopifyProduct[]> {
+export async function getAllProducts(first = 250): Promise<ShopifyProduct[] | null> {
   const query = `#graphql
     query AllProducts($first: Int!) {
-      products(first: $first, sortKey: CREATED_AT, reverse: true) {
+      products(first: $first, sortKey: UPDATED_AT, reverse: true) {
         edges {
           node {
             ${PRODUCT_CARD_FIELDS}
@@ -109,7 +117,7 @@ export async function getAllProducts(first = 250): Promise<ShopifyProduct[]> {
     };
   }>(query, { first });
 
-  if (!data) return [];
+  if (!data) return null;
 
   return data.products.edges.map((edge) => ({
     ...edge.node,
@@ -124,3 +132,56 @@ export function formatMoney(money: ShopifyMoney, locale: string = 'en-US'): stri
     currency: money.currencyCode,
   }).format(Number(money.amount));
 }
+
+export async function createCartCheckoutUrl(
+  lines: ShopifyCartLineInput[]
+): Promise<string | null> {
+  if (!lines.length) return null;
+  if (!storeDomain || !storeToken || !endpoint) {
+    if (__DEV__) {
+      console.warn('[shopify] Cannot create cart because credentials are missing.');
+    }
+    throw new Error('Shopify credentials are not configured.');
+  }
+
+  const mutation = `#graphql
+    mutation CartCreate($lines: [CartLineInput!]!) {
+      cartCreate(input: { lines: $lines }) {
+        cart {
+          checkoutUrl
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const data = await shopifyFetch<{
+    cartCreate: {
+      cart: { checkoutUrl: string } | null;
+      userErrors: Array<{ field: string[] | null; message: string }>;
+    };
+  }>(mutation, { lines });
+
+  const errors = data?.cartCreate?.userErrors ?? [];
+  if (errors.length) {
+    console.error('Shopify cartCreate errors:', errors);
+    throw new Error(errors.map((error) => error.message).join('\n'));
+  }
+
+  const checkoutUrl = data?.cartCreate?.cart?.checkoutUrl ?? null;
+  if (!checkoutUrl) {
+    throw new Error('Shopify did not return a checkout URL.');
+  }
+
+  return checkoutUrl;
+}
+
+export function getProductUrl(handle: string): string | null {
+  if (!storeDomain) return null;
+  return `https://${storeDomain}/products/${handle}`;
+}
+
+export const isShopifyConfigured = Boolean(storeDomain && storeToken);
