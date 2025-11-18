@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { getAllProducts, ShopifyProduct } from "@/lib/shopify";
 import { ProductList } from "@/components/shop/ProductList";
+import { ScrollToSection } from "@/components/shop/ScrollToSection";
 
 type CategoryInfo = {
   name: string;
@@ -310,26 +311,18 @@ export default async function CategoryPage({
               {/* Subcategory Navigation for Flowers */}
               {resolvedParams.slug === "flowers" && (
                 <div className="mt-6 flex gap-4">
-                  <a
-                    href="#perennials"
+                  <ScrollToSection
+                    targetId="flowers-perennials"
                     className="rounded-lg border-2 border-primary-300 bg-white px-6 py-2.5 text-sm font-semibold text-primary-700 transition hover:bg-primary-50 hover:border-primary-400"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.getElementById('flowers-perennials')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }}
                   >
                     🌺 Perennials
-                  </a>
-                  <a
-                    href="#annuals"
+                  </ScrollToSection>
+                  <ScrollToSection
+                    targetId="flowers-annuals"
                     className="rounded-lg border-2 border-primary-300 bg-white px-6 py-2.5 text-sm font-semibold text-primary-700 transition hover:bg-primary-50 hover:border-primary-400"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.getElementById('flowers-annuals')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }}
                   >
                     🌻 Annuals
-                  </a>
+                  </ScrollToSection>
                 </div>
               )}
               
