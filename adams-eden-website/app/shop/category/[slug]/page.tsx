@@ -14,7 +14,7 @@ type CategoryInfo = {
   icon: string;
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300; // Revalidate every 5 minutes
 
 const CATEGORIES: Record<string, CategoryInfo> = {
   "flowers": {

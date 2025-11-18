@@ -22,6 +22,10 @@ const endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
 type ShopifyFetchOptions = {
   cache?: RequestCache;
   tags?: string[];
+  next?: {
+    revalidate?: number;
+    tags?: string[];
+  };
 };
 
 export async function shopifyFetch<TData, TVariables = Record<string, unknown>>(
@@ -42,8 +46,8 @@ export async function shopifyFetch<TData, TVariables = Record<string, unknown>>(
     method: "POST",
     headers,
     body: JSON.stringify({ query, variables }),
-    cache: options.cache ?? "no-store",
-    next: options.tags ? { tags: options.tags } : undefined,
+    cache: options.cache,
+    next: options.next || (options.tags ? { tags: options.tags } : undefined),
   });
 
   const body = await response.json();
@@ -333,7 +337,12 @@ export async function getAllProducts(): Promise<ShopifyProduct[]> {
           endCursor: string | null;
         };
       };
-    }>(query, variables, { cache: "no-store", tags: ["shopify-products"] });
+    }>(query, variables, { 
+      next: { 
+        revalidate: 300, // Cache for 5 minutes
+        tags: ["shopify-products"] 
+      } 
+    });
 
     const products = data.products.edges.map((edge) => normalizeProduct(edge.node));
     allProducts.push(...products);

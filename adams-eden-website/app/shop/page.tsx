@@ -9,8 +9,7 @@ export const metadata: Metadata = {
     "Browse hand-raised plants, curated bundles, and gardening essentials from Adams Eden's greenhouse.",
 };
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0; // Always fetch fresh data
+export const revalidate = 300; // Revalidate every 5 minutes
 
 export default async function ShopPage() {
   const products = await getAllProducts();
