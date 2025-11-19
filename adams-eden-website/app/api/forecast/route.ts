@@ -83,9 +83,15 @@ export async function GET(request: NextRequest) {
       const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'localhost:3000'
       const origin = `${proto}://${host}`
       const zipUrl = `${origin}/api/zip-lookup?zip=${zip}`
+      console.log('Forecast API: Looking up ZIP:', zip, 'via', zipUrl)
       const zipRes = await fetch(zipUrl)
-      if (!zipRes.ok) return NextResponse.json({ error: 'ZIP not found' }, { status: 404 })
+      if (!zipRes.ok) {
+        const errorText = await zipRes.text()
+        console.error('Forecast API: ZIP lookup failed:', zipRes.status, errorText)
+        return NextResponse.json({ error: 'ZIP not found', details: errorText }, { status: 404 })
+      }
       const record = await zipRes.json()
+      console.log('Forecast API: ZIP lookup result:', record.latitude, record.longitude, record.location)
       lat = record.latitude
       lon = record.longitude
     }

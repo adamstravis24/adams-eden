@@ -55,12 +55,15 @@ export async function GET(request: NextRequest) {
     loadZipData();
 
     const normalized = normalizeZip(zip);
+    console.log('ZIP lookup: Looking up normalized ZIP:', normalized);
     const record = zipIndex?.get(normalized) || null;
 
     if (!record) {
+      console.warn('ZIP lookup: ZIP code not found:', normalized);
       return NextResponse.json({ error: 'ZIP code not found' }, { status: 404 });
     }
 
+    console.log('ZIP lookup: Found record for', normalized, '->', record.location, record.latitude, record.longitude);
     return NextResponse.json(record);
   } catch (error) {
     console.error('Error looking up ZIP:', error);
