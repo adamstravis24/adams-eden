@@ -22,21 +22,21 @@ const CATEGORIES: Record<string, CategoryInfo> = {
     name: "Flowers",
     description: "Beautiful blooms for your garden",
     keywords: ["flower", "bloom", "blossom", "petal", "perennial", "annual", "ornamental", "seed", "seeds", "marigold", "zinnia", "sunflower", "daisy", "rose", "tulip", "daffodil", "lily", "iris", "peony", "hydrangea", "petunia", "pansy", "viola", "cosmos", "nasturtium", "calendula", "snapdragon", "delphinium", "larkspur", "aster", "chrysanthemum", "dianthus", "carnation"],
-    excludeKeywords: ["vegetable", "herb", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed"],
+    excludeKeywords: ["vegetable", "herb", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed"],
     icon: "🌸",
   },
   "flowers-perennials": {
     name: "Flowers - Perennials",
     description: "Flowers that return year after year",
     keywords: ["flower", "bloom", "blossom", "petal", "perennial", "ornamental", "seed", "seeds", "rose", "peony", "hydrangea", "iris", "lily", "daffodil", "tulip", "hosta", "daylily", "coneflower", "echinacea", "black-eyed susan", "rudbeckia", "salvia", "lavender", "sedum", "astilbe", "coral bells", "heuchera", "bleeding heart", "dicentra", "phlox", "delphinium", "larkspur", "dianthus", "carnation"],
-    excludeKeywords: ["annual", "vegetable", "herb", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed"],
+    excludeKeywords: ["annual", "vegetable", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed"],
     icon: "🌺",
   },
   "flowers-annuals": {
     name: "Flowers - Annuals",
     description: "Bright annual flowers for seasonal color",
     keywords: ["flower", "bloom", "blossom", "petal", "annual", "ornamental", "seed", "seeds", "marigold", "zinnia", "sunflower", "petunia", "pansy", "viola", "cosmos", "nasturtium", "calendula", "snapdragon", "impatiens", "begonia", "geranium", "coleus", "sweet alyssum", "lobelia", "verbena", "portulaca", "moss rose"],
-    excludeKeywords: ["perennial", "vegetable", "herb", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed"],
+    excludeKeywords: ["perennial", "vegetable", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed"],
     icon: "🌻",
   },
   "vegetables": {
@@ -50,7 +50,7 @@ const CATEGORIES: Record<string, CategoryInfo> = {
     name: "Herbs",
     description: "Fresh culinary herbs and aromatic plants",
     keywords: ["herb", "culinary", "aromatic", "spice", "seed", "seeds", "basil", "oregano", "thyme", "rosemary", "sage", "mint", "parsley", "cilantro", "coriander", "dill", "chive", "tarragon", "marjoram", "chervil", "fennel", "lavender", "lemongrass", "lemon balm", "stevia", "chamomile", "echinacea", "medicinal herb", "shiso", "cardamom", "bee balm", "anise hyssop"],
-    excludeKeywords: ["vegetable", "flower", "houseplant", "indoor", "succulent", "cactus", "diatomaceous earth", "diatomaceous", "light", "lamp", "soil", "pot", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "bed", "beds", "garden bed", "raised bed"],
+    excludeKeywords: ["vegetable", "houseplant", "indoor", "succulent", "cactus", "diatomaceous earth", "diatomaceous", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed"],
     icon: "🌿",
   },
   "houseplants": {
@@ -169,6 +169,79 @@ function filterProductsByCategory(
         }
         
         // Include products with vegetable names (even if they mention herbs or other keywords in description)
+        return true;
+      }
+    }
+
+    // For flowers category specifically, check for flower names first
+    const isFlowerCategory = keywords.includes("flower") || keywords.includes("bloom") || keywords.includes("blossom");
+    if (isFlowerCategory) {
+      // List of flower names to check (include both singular and plural forms)
+      const flowerNames = ["marigold", "marigolds", "zinnia", "zinnias", "sunflower", "sunflowers", "daisy", "daisies", "rose", "roses", 
+        "tulip", "tulips", "daffodil", "daffodils", "lily", "lilies", "iris", "peony", "peonies", "hydrangea", "hydrangeas", 
+        "petunia", "petunias", "pansy", "pansies", "viola", "violas", "cosmos", "nasturtium", "nasturtiums", "calendula", 
+        "snapdragon", "snapdragons", "delphinium", "delphiniums", "larkspur", "larkspurs", "aster", "asters", 
+        "chrysanthemum", "chrysanthemums", "dianthus", "carnation", "carnations", "hosta", "hostas", "daylily", "daylilies", 
+        "coneflower", "coneflowers", "echinacea", "black-eyed susan", "rudbeckia", "salvia", "sedum", "astilbe", 
+        "coral bells", "heuchera", "bleeding heart", "dicentra", "phlox", "impatiens", "begonia", "begonias", 
+        "geranium", "geraniums", "coleus", "sweet alyssum", "lobelia", "verbena", "portulaca", "moss rose"];
+      
+      const hasFlowerName = flowerNames.some(name => haystack.includes(name));
+      
+      // If it has a flower name, include it (unless it's clearly a supply product)
+      if (hasFlowerName) {
+        const isClearSupply = haystack.includes(" supply ") || 
+                             haystack.includes(" tool ") || 
+                             haystack.includes(" equipment ") ||
+                             haystack.includes(" fertilizer ") ||
+                             haystack.includes(" planter ") ||
+                             haystack.includes(" garden bed ") ||
+                             haystack.includes(" raised bed ") ||
+                             haystack.startsWith("supply ") ||
+                             haystack.startsWith("tool ") ||
+                             haystack.startsWith("equipment ") ||
+                             haystack.startsWith("fertilizer ") ||
+                             haystack.startsWith("planter ");
+        
+        if (isClearSupply) {
+          return false;
+        }
+        
+        // Include products with flower names
+        return true;
+      }
+    }
+
+    // For herbs category specifically, check for herb names first
+    const isHerbCategory = keywords.includes("herb") || keywords.includes("culinary") || keywords.includes("aromatic");
+    if (isHerbCategory) {
+      // List of herb names to check (include both singular and plural forms)
+      const herbNames = ["basil", "oregano", "thyme", "rosemary", "sage", "mint", "parsley", "cilantro", "coriander", 
+        "dill", "chive", "chives", "tarragon", "marjoram", "chervil", "fennel", "lavender", "lemongrass", "lemon balm", 
+        "stevia", "chamomile", "echinacea", "shiso", "cardamom", "bee balm", "anise hyssop"];
+      
+      const hasHerbName = herbNames.some(name => haystack.includes(name));
+      
+      // If it has a herb name, include it (unless it's clearly a supply product)
+      if (hasHerbName) {
+        const isClearSupply = haystack.includes(" supply ") || 
+                             haystack.includes(" tool ") || 
+                             haystack.includes(" equipment ") ||
+                             haystack.includes(" fertilizer ") ||
+                             haystack.includes(" planter ") ||
+                             haystack.includes(" garden bed ") ||
+                             haystack.includes(" raised bed ") ||
+                             haystack.startsWith("supply ") ||
+                             haystack.startsWith("tool ") ||
+                             haystack.startsWith("equipment ") ||
+                             haystack.startsWith("fertilizer ") ||
+                             haystack.startsWith("planter ");
+        
+        if (isClearSupply) {
+          return false;
+        }
+        
+        // Include products with herb names
         return true;
       }
     }
