@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 
-async function getForecastForLatLon(lat: number, lon: number) {
+async function getForecastForLatLon(lat: number, lon: number, includeRaw = false) {
   type NWSPeriod = {
     name: string
     startTime: string
@@ -18,7 +18,7 @@ async function getForecastForLatLon(lat: number, lon: number) {
   // NWS requires a descriptive User-Agent with contact info
   const headers = {
     'User-Agent': 'AdamsEdenApp/1.0 (contact: support@adamsedenbranson.com)',
-    'Accept': 'application/geo+json'
+    Accept: 'application/geo+json',
   }
 
   const pointsUrl = `https://api.weather.gov/points/${lat},${lon}`
@@ -34,32 +34,39 @@ async function getForecastForLatLon(lat: number, lon: number) {
   if (!fcRes.ok) {
     throw new Error(`NWS forecast error ${fcRes.status}`)
   }
-    const forecast = await fcRes.json()
-    const periods = (forecast?.properties?.periods || []) as NWSPeriod[]
-    const now = new Date()
-    // Filter out past periods - include current period (where endTime is in future) and future periods
-    return periods
-      .filter((p) => {
-        try {
-          const endTime = new Date(p.endTime)
-          // Include if the period hasn't ended yet (current or future)
-          return endTime > now
-        } catch {
-          return false
-        }
-      })
-      .map((p) => ({
-        name: p.name,
-        startTime: p.startTime,
-        endTime: p.endTime,
-        isDaytime: p.isDaytime,
-        temperature: p.temperature,
-        temperatureUnit: p.temperatureUnit,
-        windSpeed: p.windSpeed,
-        windDirection: p.windDirection,
-        shortForecast: p.shortForecast,
-        detailedForecast: p.detailedForecast
-      }))
+  const forecast = await fcRes.json()
+  const rawPeriods = (forecast?.properties?.periods || []) as NWSPeriod[]
+  const now = new Date()
+
+  const filtered = rawPeriods
+    .filter((p) => {
+      try {
+        const endTime = new Date(p.endTime)
+        return endTime > now
+      } catch {
+        return false
+      }
+    })
+    .map((p) => ({
+      name: p.name,
+      startTime: p.startTime,
+      endTime: p.endTime,
+      isDaytime: p.isDaytime,
+      temperature: p.temperature,
+      temperatureUnit: p.temperatureUnit,
+      windSpeed: p.windSpeed,
+      windDirection: p.windDirection,
+      shortForecast: p.shortForecast,
+      detailedForecast: p.detailedForecast,
+    }))
+
+  return {
+    periods: filtered,
+    rawCount: rawPeriods.length,
+    rawPeriods: includeRaw ? rawPeriods : undefined,
+    forecastProperties: includeRaw ? forecast?.properties : undefined,
+    pointsProperties: includeRaw ? points?.properties : undefined,
+  }
 }
 
 export async function GET(request: NextRequest) {
@@ -100,18 +107,48 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Provide zip or lat/lon' }, { status: 400 })
     }
 
-    const periods = await getForecastForLatLon(lat, lon)
-    console.log('Forecast API: Returning', periods.length, 'periods for lat/lon', lat, lon)
+    const debug = searchParams.get('debug') === '1'
+    const forecastData = await getForecastForLatLon(lat, lon, debug)
+    console.log(
+      'Forecast API: Returning',
+      forecastData.periods.length,
+      'periods (raw:',
+      forecastData.rawCount,
+      ') for lat/lon',
+      lat,
+      lon
+    )
     // Return with explicit no-cache headers to ensure fresh data
-    return NextResponse.json({ periods }, {
-      headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
-        'Pragma': 'no-cache',
-        'Expires': '0',
+    return NextResponse.json(
+      {
+        periods: forecastData.periods,
+        meta: {
+          rawCount: forecastData.rawCount,
+          lat,
+          lon,
+          debug: debug
+            ? {
+                rawPeriods: forecastData.rawPeriods,
+                forecastProperties: forecastData.forecastProperties,
+                pointsProperties: forecastData.pointsProperties,
+              }
+            : undefined,
+        },
       },
-    })
+      {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+          Pragma: 'no-cache',
+          Expires: '0',
+        },
+      }
+    )
   } catch (error) {
     console.error('Forecast API error:', error)
-    return NextResponse.json({ error: 'Failed to fetch forecast', details: error instanceof Error ? error.message : String(error) }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to fetch forecast', details: error instanceof Error ? error.message : String(error) },
+      { status: 500 }
+    )
   }
 }
+
