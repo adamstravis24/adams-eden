@@ -38,7 +38,7 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
   const rawPeriods = (forecast?.properties?.periods || []) as NWSPeriod[]
   const now = new Date()
 
-  let filtered = rawPeriods
+  const filtered = rawPeriods
     .filter((p) => {
       try {
         const endTime = new Date(p.endTime)
@@ -58,10 +58,35 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
       windDirection: p.windDirection,
       shortForecast: p.shortForecast,
       detailedForecast: p.detailedForecast,
-    }))
+    ))
+
+  const periods =
+    filtered.length > 0 || rawPeriods.length === 0
+      ? filtered
+      : rawPeriods.map((p) => ({
+          name: p.name,
+          startTime: p.startTime,
+          endTime: p.endTime,
+          isDaytime: p.isDaytime,
+          temperature: p.temperature,
+          temperatureUnit: p.temperatureUnit,
+          windSpeed: p.windSpeed,
+          windDirection: p.windDirection,
+          shortForecast: p.shortForecast,
+          detailedForecast: p.detailedForecast,
+        }))
+
+  if (filtered.length === 0 && rawPeriods.length > 0) {
+    console.warn(
+      '[Forecast API] No future periods remained after filtering; using raw periods instead. Now:',
+      now.toISOString(),
+      'first raw end:',
+      rawPeriods[0]?.endTime
+    )
+  }
 
   return {
-    periods: filtered,
+    periods,
     rawCount: rawPeriods.length,
     rawPeriods: includeRaw ? rawPeriods : undefined,
     forecastProperties: includeRaw ? forecast?.properties : undefined,
@@ -151,4 +176,8 @@ export async function GET(request: NextRequest) {
     )
   }
 }
+
+
+
+
 
