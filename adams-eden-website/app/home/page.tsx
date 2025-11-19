@@ -133,19 +133,25 @@ export default function HomeDashboardPage() {
           console.log('Home page: Loading forecast for ZIP:', userZip)
           try {
             const rec = await lookupZip(userZip)
+            console.log('Home page: ZIP lookup result:', rec ? 'found' : 'not found')
             if (rec) {
-              const clim = await getNoaaNormalsForZip(rec)
-              if (!cancelled) setClimate(clim)
-              // fetch forecast via our API
+              try {
+                const clim = await getNoaaNormalsForZip(rec)
+                if (!cancelled) setClimate(clim)
+              } catch (climateError) {
+                console.error('Home page: Error loading climate data:', climateError)
+              }
+              
+              // fetch forecast via our API (independent of climate data)
               try {
                 console.log('Home page: Fetching forecast API for ZIP:', userZip)
                 const res = await fetch(`/api/forecast?zip=${userZip}&t=${Date.now()}`, {
                   cache: 'no-store',
                 })
-                console.log('Home page: Forecast API response status:', res.status)
+                console.log('Home page: Forecast API response status:', res.status, res.statusText)
                 if (res.ok) {
                   const data = await res.json()
-                  console.log('Home page: Received forecast data:', data.periods?.length || 0, 'periods')
+                  console.log('Home page: Received forecast data:', data.periods?.length || 0, 'periods', data)
                   const now = new Date()
                   // Filter out past periods - only keep future ones
                   const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
@@ -162,18 +168,25 @@ export default function HomeDashboardPage() {
                   if (!cancelled) {
                     setForecast(futurePeriods.slice(0, 7))
                     setForecastError(null)
+                    console.log('Home page: Forecast state updated with', futurePeriods.length, 'periods')
                   }
                 } else {
                   const errorText = await res.text()
-                  console.error('Forecast API error:', res.status, errorText)
-                  throw new Error(`Forecast ${res.status}: ${errorText}`)
+                  console.error('Home page: Forecast API error:', res.status, errorText)
+                  if (!cancelled) setForecastError(`Forecast unavailable (${res.status})`)
                 }
               } catch (error) {
-                console.error('Error fetching forecast on home page:', error)
+                console.error('Home page: Error fetching forecast:', error)
                 if (!cancelled) setForecastError('Forecast unavailable')
               }
+            } else {
+              console.warn('Home page: ZIP lookup returned no record for:', userZip)
             }
-          } catch { /* ignore */ }
+          } catch (error) {
+            console.error('Home page: Error in ZIP/climate/forecast loading:', error)
+          }
+        } else {
+          console.log('Home page: No ZIP code found in profile')
         }
       } finally {
         // no-op
