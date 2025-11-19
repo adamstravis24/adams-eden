@@ -130,6 +130,7 @@ export default function HomeDashboardPage() {
 
         // Climate normals and forecast if ZIP exists
         if (userZip) {
+          console.log('Home page: Loading forecast for ZIP:', userZip)
           try {
             const rec = await lookupZip(userZip)
             if (rec) {
@@ -137,9 +138,11 @@ export default function HomeDashboardPage() {
               if (!cancelled) setClimate(clim)
               // fetch forecast via our API
               try {
+                console.log('Home page: Fetching forecast API for ZIP:', userZip)
                 const res = await fetch(`/api/forecast?zip=${userZip}&t=${Date.now()}`, {
                   cache: 'no-store',
                 })
+                console.log('Home page: Forecast API response status:', res.status)
                 if (res.ok) {
                   const data = await res.json()
                   console.log('Home page: Received forecast data:', data.periods?.length || 0, 'periods')

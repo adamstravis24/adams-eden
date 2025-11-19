@@ -30,12 +30,16 @@ export default function SubscriptionBadge() {
 
     const loadWeather = async () => {
       try {
+        console.log('SubscriptionBadge: loadWeather called for user:', user.uid)
         // Get user's zip code from profile
         const profileSnap = await getDoc(doc(db, 'users', user.uid))
         const prof = profileSnap.exists() ? profileSnap.data() : null
+        console.log('SubscriptionBadge: Profile data:', prof)
         const userZip = prof?.preferences?.zipCode || ''
+        console.log('SubscriptionBadge: User ZIP from profile:', userZip)
 
         if (!userZip) {
+          console.warn('SubscriptionBadge: No ZIP code found in profile')
           if (!cancelled) {
             setWeather(null)
             setLoading(false)
@@ -43,10 +47,12 @@ export default function SubscriptionBadge() {
           return
         }
 
+        console.log('SubscriptionBadge: Fetching forecast for ZIP:', userZip)
         // Fetch forecast
         const res = await fetch(`/api/forecast?zip=${userZip}&t=${Date.now()}`, {
           cache: 'no-store',
         })
+        console.log('SubscriptionBadge: Forecast API response status:', res.status)
 
         if (!res.ok) {
           const errorText = await res.text()
