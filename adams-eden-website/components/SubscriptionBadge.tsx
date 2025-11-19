@@ -49,50 +49,79 @@ export default function SubscriptionBadge() {
         })
 
         if (!res.ok) {
-          throw new Error(`Forecast ${res.status}`)
+          const errorText = await res.text()
+          console.error('Forecast API error:', res.status, errorText)
+          throw new Error(`Forecast ${res.status}: ${errorText}`)
         }
 
         const data = await res.json()
         const periods = (data.periods || []) as ForecastPeriod[]
 
+        console.log('SubscriptionBadge: Received periods:', periods.length)
+
         if (periods.length > 0) {
           const now = new Date()
           
-          // Find the current period (where now is between startTime and endTime)
-          let current = periods.find((p) => {
+          // Filter to only future periods (where endTime is in the future)
+          const futurePeriods = periods.filter((p) => {
             try {
-              const start = new Date(p.startTime)
               const end = new Date(p.endTime)
-              return start <= now && end > now
-            } catch {
+              return end > now
+            } catch (e) {
+              console.error('Error parsing period end date:', e, p)
               return false
             }
           })
           
-          // If no current period found, use the first upcoming period
+          if (futurePeriods.length === 0) {
+            console.warn('SubscriptionBadge: No future periods found, using first period')
+            // Fallback to first period if all are in the past (shouldn't happen, but safety check)
+            const firstPeriod = periods[0]
+            if (firstPeriod && !cancelled) {
+              setWeather({
+                temp: firstPeriod.temperature,
+                unit: firstPeriod.temperatureUnit,
+                forecast: firstPeriod.shortForecast,
+              })
+            }
+            return
+          }
+          
+          // Find the current period (where now is between startTime and endTime)
+          let current = futurePeriods.find((p) => {
+            try {
+              const start = new Date(p.startTime)
+              const end = new Date(p.endTime)
+              return start <= now && end > now
+            } catch (e) {
+              console.error('Error parsing period dates:', e, p)
+              return false
+            }
+          })
+          
+          // If no current period found, use the first future period
           if (!current) {
-            current = periods.find((p) => {
-              try {
-                const start = new Date(p.startTime)
-                return start > now
-              } catch {
-                return false
-              }
-            }) || periods[0]
+            current = futurePeriods[0]
           }
           
           if (current && !cancelled) {
+            console.log('SubscriptionBadge: Setting weather:', current.temperature, current.temperatureUnit, current.shortForecast)
             setWeather({
               temp: current.temperature,
               unit: current.temperatureUnit,
               forecast: current.shortForecast,
             })
+          } else {
+            console.warn('SubscriptionBadge: No valid period found after filtering')
           }
+        } else {
+          console.warn('SubscriptionBadge: No periods received from API')
         }
       } catch (error) {
-        console.error('Error loading weather:', error)
+        console.error('Error loading weather in SubscriptionBadge:', error)
         if (!cancelled) {
           setWeather(null)
+          setLoading(false)
         }
       } finally {
         if (!cancelled) {

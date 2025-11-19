@@ -95,6 +95,7 @@ export async function GET(request: NextRequest) {
     }
 
     const periods = await getForecastForLatLon(lat, lon)
+    console.log('Forecast API: Returning', periods.length, 'periods for lat/lon', lat, lon)
     // Return with explicit no-cache headers to ensure fresh data
     return NextResponse.json({ periods }, {
       headers: {
@@ -105,6 +106,6 @@ export async function GET(request: NextRequest) {
     })
   } catch (error) {
     console.error('Forecast API error:', error)
-    return NextResponse.json({ error: 'Failed to fetch forecast' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to fetch forecast', details: error instanceof Error ? error.message : String(error) }, { status: 500 })
   }
 }

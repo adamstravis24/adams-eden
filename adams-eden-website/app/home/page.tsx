@@ -142,6 +142,7 @@ export default function HomeDashboardPage() {
                 })
                 if (res.ok) {
                   const data = await res.json()
+                  console.log('Home page: Received forecast data:', data.periods?.length || 0, 'periods')
                   const now = new Date()
                   // Filter out past periods - only keep future ones
                   const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
@@ -149,15 +150,23 @@ export default function HomeDashboardPage() {
                       // Include current period (where endTime is in future) and future periods
                       const endTime = new Date(p.endTime || p.startTime)
                       return endTime > now
-                    } catch {
+                    } catch (e) {
+                      console.error('Error parsing period date:', e, p)
                       return false
                     }
                   })
-                  if (!cancelled) setForecast(futurePeriods.slice(0, 7))
+                  console.log('Home page: Filtered to', futurePeriods.length, 'future periods')
+                  if (!cancelled) {
+                    setForecast(futurePeriods.slice(0, 7))
+                    setForecastError(null)
+                  }
                 } else {
-                  throw new Error(`Forecast ${res.status}`)
+                  const errorText = await res.text()
+                  console.error('Forecast API error:', res.status, errorText)
+                  throw new Error(`Forecast ${res.status}: ${errorText}`)
                 }
-              } catch {
+              } catch (error) {
+                console.error('Error fetching forecast on home page:', error)
                 if (!cancelled) setForecastError('Forecast unavailable')
               }
             }
