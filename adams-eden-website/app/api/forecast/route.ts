@@ -58,7 +58,7 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
       windDirection: p.windDirection,
       shortForecast: p.shortForecast,
       detailedForecast: p.detailedForecast,
-    ))
+    ));
 
   const periods =
     filtered.length > 0 || rawPeriods.length === 0
@@ -176,6 +176,7 @@ export async function GET(request: NextRequest) {
     )
   }
 }
+
 
 
 
