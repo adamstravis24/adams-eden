@@ -38,7 +38,7 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
   const rawPeriods = (forecast?.properties?.periods || []) as NWSPeriod[]
   const now = new Date()
 
-  const filtered = rawPeriods
+  let filtered = rawPeriods
     .filter((p) => {
       try {
         const endTime = new Date(p.endTime)
