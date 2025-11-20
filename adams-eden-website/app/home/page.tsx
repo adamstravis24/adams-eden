@@ -200,17 +200,9 @@ export default function HomeDashboardPage() {
         })
         .then((data) => {
           if (cancelled) return
-          const now = new Date()
-          const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
-            try {
-              // Include current period (where endTime is in future) and future periods
-              const endTime = new Date(p.endTime || p.startTime)
-              return endTime > now
-            } catch {
-              return false
-            }
-          })
-          setForecast(futurePeriods.slice(0, 7))
+          const periods = data.periods || []
+          // Use periods directly from API (API already handles filtering/fallback)
+          setForecast(periods.slice(0, 7))
           setForecastError(null)
         })
         .catch(() => {
@@ -218,7 +210,7 @@ export default function HomeDashboardPage() {
         })
     }
 
-    const refreshInterval = setInterval(refreshForecast, 15 * 60 * 1000) // 15 minutes
+    const refreshInterval = setInterval(refreshForecast, 5 * 60 * 1000) // 5 minutes - more frequent updates
     
     // Refresh forecast when page becomes visible or gains focus
     const handleVisibilityChange = () => {

@@ -22,7 +22,11 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
   }
 
   const pointsUrl = `https://api.weather.gov/points/${lat},${lon}`
-  const pointsRes = await fetch(pointsUrl, { headers })
+  const pointsRes = await fetch(pointsUrl, { 
+    headers,
+    cache: 'no-store',
+    next: { revalidate: 0 }
+  })
   if (!pointsRes.ok) {
     throw new Error(`NWS points error ${pointsRes.status}`)
   }
@@ -30,7 +34,17 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
   const forecastUrl: string | undefined = points?.properties?.forecast
   if (!forecastUrl) throw new Error('No forecast URL from NWS points')
 
-  const fcRes = await fetch(forecastUrl, { headers })
+  // Add timestamp to forecast URL to bust cache
+  const cacheBuster = `?t=${Date.now()}`
+  const forecastUrlWithCache = forecastUrl.includes('?') 
+    ? `${forecastUrl}&t=${Date.now()}`
+    : `${forecastUrl}${cacheBuster}`
+  
+  const fcRes = await fetch(forecastUrlWithCache, { 
+    headers,
+    cache: 'no-store',
+    next: { revalidate: 0 }
+  })
   if (!fcRes.ok) {
     throw new Error(`NWS forecast error ${fcRes.status}`)
   }
