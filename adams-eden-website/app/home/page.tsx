@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Calendar, Leaf, NotebookPen, Pickaxe, Settings, Sprout, Thermometer, ShoppingBag, Wind } from 'lucide-react'
+import SevenDayForecast from '@/components/SevenDayForecast'
 import { useAuth } from '@/contexts/AuthContext'
 import { db } from '@/lib/firebase'
 import { collection, doc, getDoc, getDocs, limit, orderBy, query } from 'firebase/firestore'
@@ -155,8 +156,9 @@ export default function HomeDashboardPage() {
                   const periods = data.periods || []
                   
                   // Use periods directly from API (API already handles filtering/fallback)
+                  // Need at least 14 periods for 7 days (day + night per day)
                   if (!cancelled) {
-                    setForecast(periods.slice(0, 7))
+                    setForecast(periods.slice(0, 14))
                     setForecastError(null)
                     console.log('Home page: Forecast state updated with', periods.length, 'periods')
                   }
@@ -202,7 +204,8 @@ export default function HomeDashboardPage() {
           if (cancelled) return
           const periods = data.periods || []
           // Use periods directly from API (API already handles filtering/fallback)
-          setForecast(periods.slice(0, 7))
+          // Need at least 14 periods for 7 days (day + night per day)
+          setForecast(periods.slice(0, 14))
           setForecastError(null)
         })
         .catch(() => {
@@ -331,18 +334,7 @@ export default function HomeDashboardPage() {
             </div>
             {zip ? (
               forecast && forecast.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {forecast.slice(0, 6).map((p, idx) => (
-                    <div key={idx} className="rounded-xl bg-gray-50 p-3">
-                      <div className="text-xs font-medium text-gray-700">{p.name}</div>
-                      <div className="text-2xl font-bold text-gray-900">{p.temperature}°{p.temperatureUnit}</div>
-                      <div className="text-xs text-gray-600">{p.shortForecast}</div>
-                      <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
-                        <Wind className="w-3.5 h-3.5" /> {p.windSpeed} {p.windDirection}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <SevenDayForecast periods={forecast} />
               ) : (
                 <div className="text-sm text-gray-600">{forecastError || 'Loading forecast...'}</div>
               )
