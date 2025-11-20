@@ -22,21 +22,21 @@ const CATEGORIES: Record<string, CategoryInfo> = {
     name: "Flowers",
     description: "Beautiful blooms for your garden",
     keywords: ["flower", "bloom", "blossom", "petal", "perennial", "annual", "ornamental", "seed", "seeds", "marigold", "zinnia", "sunflower", "daisy", "rose", "tulip", "daffodil", "lily", "iris", "peony", "hydrangea", "petunia", "pansy", "viola", "cosmos", "nasturtium", "calendula", "snapdragon", "delphinium", "larkspur", "aster", "chrysanthemum", "dianthus", "carnation"],
-    excludeKeywords: ["vegetable", "herb", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed"],
+    excludeKeywords: ["vegetable", "herb", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed", "broadleaf sage", "extrakta sage", "italian parsley", "kitchen sage", "rosemary", "tatsoi", "mustard", "triple curled parsley", "white sage"],
     icon: "🌸",
   },
   "flowers-perennials": {
     name: "Flowers - Perennials",
     description: "Flowers that return year after year",
     keywords: ["flower", "bloom", "blossom", "petal", "perennial", "ornamental", "seed", "seeds", "rose", "peony", "hydrangea", "iris", "lily", "daffodil", "tulip", "hosta", "daylily", "coneflower", "echinacea", "black-eyed susan", "rudbeckia", "salvia", "lavender", "sedum", "astilbe", "coral bells", "heuchera", "bleeding heart", "dicentra", "phlox", "delphinium", "larkspur", "dianthus", "carnation"],
-    excludeKeywords: ["annual", "vegetable", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed"],
+    excludeKeywords: ["annual", "vegetable", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed", "broadleaf sage", "extrakta sage", "italian parsley", "kitchen sage", "rosemary", "tatsoi", "mustard", "triple curled parsley", "white sage"],
     icon: "🌺",
   },
   "flowers-annuals": {
     name: "Flowers - Annuals",
     description: "Bright annual flowers for seasonal color",
     keywords: ["flower", "bloom", "blossom", "petal", "annual", "ornamental", "seed", "seeds", "marigold", "zinnia", "sunflower", "petunia", "pansy", "viola", "cosmos", "nasturtium", "calendula", "snapdragon", "impatiens", "begonia", "geranium", "coleus", "sweet alyssum", "lobelia", "verbena", "portulaca", "moss rose"],
-    excludeKeywords: ["perennial", "vegetable", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed"],
+    excludeKeywords: ["perennial", "vegetable", "houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed", "broadleaf sage", "extrakta sage", "italian parsley", "kitchen sage", "rosemary", "tatsoi", "mustard", "triple curled parsley", "white sage"],
     icon: "🌻",
   },
   "vegetables": {
@@ -218,7 +218,8 @@ function filterProductsByCategory(
       // List of herb names to check (include both singular and plural forms)
       const herbNames = ["basil", "oregano", "thyme", "rosemary", "sage", "mint", "parsley", "cilantro", "coriander", 
         "dill", "chive", "chives", "tarragon", "marjoram", "chervil", "fennel", "lavender", "lemongrass", "lemon balm", 
-        "stevia", "chamomile", "echinacea", "shiso", "cardamom", "bee balm", "anise hyssop"];
+        "stevia", "chamomile", "echinacea", "shiso", "cardamom", "bee balm", "anise hyssop", "broadleaf sage", 
+        "extrakta sage", "italian parsley", "kitchen sage", "white sage", "triple curled parsley", "tatsoi", "mustard"];
       
       const hasHerbName = herbNames.some(name => haystack.includes(name));
       
