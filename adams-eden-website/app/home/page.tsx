@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Calendar, Leaf, NotebookPen, Pickaxe, Settings, Sprout, Thermometer, ShoppingBag, Wind } from 'lucide-react'
+import { Calendar, Leaf, NotebookPen, Pickaxe, Settings, Sprout, Thermometer, ShoppingBag } from 'lucide-react'
 import SevenDayForecast from '@/components/SevenDayForecast'
 import { useAuth } from '@/contexts/AuthContext'
 import { db } from '@/lib/firebase'
