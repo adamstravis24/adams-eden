@@ -152,23 +152,13 @@ export default function HomeDashboardPage() {
                 if (res.ok) {
                   const data = await res.json()
                   console.log('Home page: Received forecast data:', data.periods?.length || 0, 'periods', data)
-                  const now = new Date()
-                  // Filter out past periods - only keep future ones
-                  const futurePeriods = (data.periods || []).filter((p: ForecastPeriod) => {
-                    try {
-                      // Include current period (where endTime is in future) and future periods
-                      const endTime = new Date(p.endTime || p.startTime)
-                      return endTime > now
-                    } catch (e) {
-                      console.error('Error parsing period date:', e, p)
-                      return false
-                    }
-                  })
-                  console.log('Home page: Filtered to', futurePeriods.length, 'future periods')
+                  const periods = data.periods || []
+                  
+                  // Use periods directly from API (API already handles filtering/fallback)
                   if (!cancelled) {
-                    setForecast(futurePeriods.slice(0, 7))
+                    setForecast(periods.slice(0, 7))
                     setForecastError(null)
-                    console.log('Home page: Forecast state updated with', futurePeriods.length, 'periods')
+                    console.log('Home page: Forecast state updated with', periods.length, 'periods')
                   }
                 } else {
                   const errorText = await res.text()

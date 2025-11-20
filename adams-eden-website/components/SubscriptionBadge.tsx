@@ -177,7 +177,7 @@ export default function SubscriptionBadge() {
 
   const color = 'bg-blue-100 text-blue-700 border-blue-300'
   return (
-    <span className={`ml-2 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${color}`}>
+    <span className={`ml-2 inline-flex items-center rounded-full border px-3 py-1 text-sm font-semibold ${color}`}>
       {weather.temp}°{weather.unit}
     </span>
   )
