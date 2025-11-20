@@ -24,8 +24,7 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
   const pointsUrl = `https://api.weather.gov/points/${lat},${lon}`
   const pointsRes = await fetch(pointsUrl, { 
     headers,
-    cache: 'no-store',
-    next: { revalidate: 0 }
+    cache: 'no-store'
   })
   if (!pointsRes.ok) {
     throw new Error(`NWS points error ${pointsRes.status}`)
@@ -33,17 +32,10 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
   const points = await pointsRes.json()
   const forecastUrl: string | undefined = points?.properties?.forecast
   if (!forecastUrl) throw new Error('No forecast URL from NWS points')
-
-  // Add timestamp to forecast URL to bust cache
-  const cacheBuster = `?t=${Date.now()}`
-  const forecastUrlWithCache = forecastUrl.includes('?') 
-    ? `${forecastUrl}&t=${Date.now()}`
-    : `${forecastUrl}${cacheBuster}`
   
-  const fcRes = await fetch(forecastUrlWithCache, { 
+  const fcRes = await fetch(forecastUrl, { 
     headers,
-    cache: 'no-store',
-    next: { revalidate: 0 }
+    cache: 'no-store'
   })
   if (!fcRes.ok) {
     throw new Error(`NWS forecast error ${fcRes.status}`)
@@ -74,29 +66,48 @@ async function getForecastForLatLon(lat: number, lon: number, includeRaw = false
       detailedForecast: p.detailedForecast,
     }))
 
-  const periods =
-    filtered.length > 0 || rawPeriods.length === 0
-      ? filtered
-      : rawPeriods.map((p) => ({
-          name: p.name,
-          startTime: p.startTime,
-          endTime: p.endTime,
-          isDaytime: p.isDaytime,
-          temperature: p.temperature,
-          temperatureUnit: p.temperatureUnit,
-          windSpeed: p.windSpeed,
-          windDirection: p.windDirection,
-          shortForecast: p.shortForecast,
-          detailedForecast: p.detailedForecast,
-        }))
+  // Always return periods - use filtered if available, otherwise use all raw periods
+  let periods: Array<{
+    name: string
+    startTime: string
+    endTime: string
+    isDaytime: boolean
+    temperature: number
+    temperatureUnit: string
+    windSpeed: string
+    windDirection: string
+    shortForecast: string
+    detailedForecast?: string
+  }>
 
-  if (filtered.length === 0 && rawPeriods.length > 0) {
+  if (filtered.length > 0) {
+    periods = filtered
+  } else if (rawPeriods.length > 0) {
+    // Fallback: use all raw periods if filtering removed everything
     console.warn(
-      '[Forecast API] No future periods remained after filtering; using raw periods instead. Now:',
+      '[Forecast API] No future periods remained after filtering; using all raw periods instead. Now:',
       now.toISOString(),
+      'raw periods count:',
+      rawPeriods.length,
       'first raw end:',
       rawPeriods[0]?.endTime
     )
+    periods = rawPeriods.map((p) => ({
+      name: p.name,
+      startTime: p.startTime,
+      endTime: p.endTime,
+      isDaytime: p.isDaytime,
+      temperature: p.temperature,
+      temperatureUnit: p.temperatureUnit,
+      windSpeed: p.windSpeed,
+      windDirection: p.windDirection,
+      shortForecast: p.shortForecast,
+      detailedForecast: p.detailedForecast,
+    }))
+  } else {
+    // No periods at all
+    periods = []
+    console.warn('[Forecast API] No periods received from NWS')
   }
 
   return {
