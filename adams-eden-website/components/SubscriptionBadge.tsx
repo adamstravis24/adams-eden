@@ -21,8 +21,8 @@ export default function SubscriptionBadge() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (authLoading || !user) {
-      setLoading(false)
+    // Don't wait for auth - show weather for everyone
+    if (authLoading) {
       return
     }
 
@@ -30,21 +30,22 @@ export default function SubscriptionBadge() {
 
     const loadWeather = async () => {
       try {
-        console.log('SubscriptionBadge: loadWeather called for user:', user.uid)
-        // Get user's zip code from profile
-        const profileSnap = await getDoc(doc(db, 'users', user.uid))
-        const prof = profileSnap.exists() ? profileSnap.data() : null
-        console.log('SubscriptionBadge: Profile data:', prof)
-        const userZip = prof?.preferences?.zipCode || ''
-        console.log('SubscriptionBadge: User ZIP from profile:', userZip)
-
+        let userZip = ''
+        
+        // Try to get ZIP from user profile if logged in
+        if (user) {
+          console.log('SubscriptionBadge: loadWeather called for user:', user.uid)
+          const profileSnap = await getDoc(doc(db, 'users', user.uid))
+          const prof = profileSnap.exists() ? profileSnap.data() : null
+          console.log('SubscriptionBadge: Profile data:', prof)
+          userZip = prof?.preferences?.zipCode || ''
+          console.log('SubscriptionBadge: User ZIP from profile:', userZip)
+        }
+        
+        // Use default ZIP (Branson, MO) if no user ZIP
         if (!userZip) {
-          console.warn('SubscriptionBadge: No ZIP code found in profile')
-          if (!cancelled) {
-            setWeather(null)
-            setLoading(false)
-          }
-          return
+          userZip = '65616' // Default to Branson, MO
+          console.log('SubscriptionBadge: Using default ZIP:', userZip)
         }
 
         console.log('SubscriptionBadge: Fetching forecast for ZIP:', userZip)
@@ -140,22 +141,20 @@ export default function SubscriptionBadge() {
 
     // Refresh weather frequently (every 15 minutes) to keep it current with hour-by-hour updates
     const refreshInterval = setInterval(() => {
-      if (!cancelled && user) {
+      if (!cancelled) {
         void loadWeather()
       }
     }, 15 * 60 * 1000) // 15 minutes - frequent updates for navigation badge
 
     // Refresh weather when page becomes visible or gains focus
     const handleVisibilityChange = () => {
-      if (!document.hidden && user) {
+      if (!document.hidden) {
         void loadWeather()
       }
     }
 
     const handleFocus = () => {
-      if (user) {
-        void loadWeather()
-      }
+      void loadWeather()
     }
 
     document.addEventListener('visibilitychange', handleVisibilityChange)
@@ -169,8 +168,8 @@ export default function SubscriptionBadge() {
     }
   }, [user, authLoading])
 
-  // Hide while loading or if no user
-  if (loading || authLoading || !user) return null
+  // Hide while loading
+  if (loading || authLoading) return null
 
   // Hide if no weather data
   if (!weather) return null
