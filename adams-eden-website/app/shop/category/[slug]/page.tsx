@@ -43,7 +43,7 @@ const CATEGORIES: Record<string, CategoryInfo> = {
     name: "Vegetables",
     description: "Fresh vegetables for your kitchen garden",
     keywords: ["vegetable", "veggie", "seed", "seeds", "tomato", "carrot", "lettuce", "pepper", "cucumber", "squash", "bean", "pea", "corn", "broccoli", "cabbage", "onion", "garlic", "potato", "spinach", "kale", "radish", "beet", "turnip", "eggplant", "zucchini", "pepper", "bell pepper", "jalapeño", "habanero", "okra", "brussels sprout", "cauliflower", "asparagus", "artichoke", "leek", "shallot", "celery", "parsnip", "rutabaga", "kohlrabi", "swiss chard", "collard", "mustard green", "bok choy", "pak choi", "banana pepper", "mung bean", "mustard", "pimento", "royal burgundy", "winter wheat", "purslane", "miner's lettuce"],
-    excludeKeywords: ["houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed", "gift", "gift card", "gift wrap", "herb", "culinary", "aromatic", "spice", "basil", "oregano", "thyme", "rosemary", "sage", "mint", "parsley", "cilantro", "coriander", "dill", "chive", "tarragon", "marjoram", "chervil", "fennel", "lavender", "lemongrass", "lemon balm", "stevia", "chamomile", "echinacea", "medicinal"],
+    excludeKeywords: ["houseplant", "indoor", "succulent", "cactus", "light", "lamp", "soil", "planter", "fertilizer", "tool", "supply", "equipment", "hydro", "garden bed", "raised bed", "gift", "gift card", "gift wrap", "herb", "culinary", "aromatic", "spice", "basil", "oregano", "thyme", "rosemary", "sage", "mint", "parsley", "cilantro", "coriander", "dill", "chive", "tarragon", "marjoram", "chervil", "fennel", "lavender", "lemongrass", "lemon balm", "stevia", "chamomile", "echinacea", "medicinal", "alaska mix nasturtium", "american wild licorice", "american wisteria", "wisteria", "apricot peach strawflower", "strawflower", "astragalus", "birdhouse bottle gourd", "bottle gourd", "licorice"],
     icon: "🥕",
   },
   "herbs": {
@@ -184,7 +184,9 @@ function filterProductsByCategory(
         "chrysanthemum", "chrysanthemums", "dianthus", "carnation", "carnations", "hosta", "hostas", "daylily", "daylilies", 
         "coneflower", "coneflowers", "echinacea", "black-eyed susan", "rudbeckia", "salvia", "sedum", "astilbe", 
         "coral bells", "heuchera", "bleeding heart", "dicentra", "phlox", "impatiens", "begonia", "begonias", 
-        "geranium", "geraniums", "coleus", "sweet alyssum", "lobelia", "verbena", "portulaca", "moss rose"];
+        "geranium", "geraniums", "coleus", "sweet alyssum", "lobelia", "verbena", "portulaca", "moss rose",
+        "alaska mix nasturtium", "american wild licorice", "american wisteria", "wisteria", "apricot peach strawflower", 
+        "strawflower", "astragalus", "birdhouse bottle gourd", "bottle gourd", "licorice"];
       
       const hasFlowerName = flowerNames.some(name => haystack.includes(name));
       
